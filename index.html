@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+  <script src="https://gumroad.com/js/gumroad.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js" crossorigin></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
@@ -655,7 +656,7 @@
       transition: transform 0.28s var(--ease), box-shadow 0.28s var(--ease);
       cursor: pointer;
     }
-    .course-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(0,0,0,0.1); }
+    .course-card.live:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(0,0,0,0.1); }
 
     .course-thumb { width: 100%; aspect-ratio: 1/1; }
 
@@ -1819,7 +1820,7 @@ const { useState, useEffect, useRef, useCallback } = React;
 ══════════════════════════════════════════ */
 const COURSES = [
   {
-    id: 1, order: '01', slug: 'como-dibujar',
+    id: 1, order: '01', slug: 'como-dibujar', price: '$17',
     title_es: 'CÓMO DIBUJAR CUALQUIER COSA',
     title_en: 'HOW TO DRAW ANYTHING',
     level_es: 'PRINCIPIANTE', level_en: 'BEGINNER',
@@ -1857,7 +1858,7 @@ const COURSES = [
     ],
   },
   {
-    id: 2, order: '02', slug: 'dibuja-cabeza',
+    id: 2, order: '02', slug: 'dibuja-cabeza', price: '$9.99', gumroad_url: 'https://ruiveran.gumroad.com/l/dibujalacabezacomounexperto',
     title_es: 'DIBUJA LA CABEZA COMO UN EXPERTO',
     title_en: 'DRAW THE HEAD LIKE AN EXPERT',
     level_es: 'INTERMEDIO', level_en: 'INTERMEDIATE',
@@ -1887,7 +1888,7 @@ const COURSES = [
     ],
   },
   {
-    id: 3, order: '03', slug: 'dibuja-anatomia',
+    id: 3, order: '03', slug: 'dibuja-anatomia', price: '$17', gumroad_url: 'https://ruiveran.gumroad.com/l/dibuja-anatomia-en-accion',
     title_es: 'DIBUJA ANATOMÍA EN ACCIÓN',
     title_en: 'DRAW ANATOMY IN ACTION',
     level_es: 'INTERMEDIO', level_en: 'INTERMEDIATE',
@@ -1925,7 +1926,7 @@ const COURSES = [
     ],
   },
   {
-    id: 4, order: '04', slug: 'pinta-escenas',
+    id: 4, order: '04', slug: 'pinta-escenas', price: '$17',
     title_es: 'PINTA ESCENAS CON LUZ Y COLOR',
     title_en: 'PAINT SCENES WITH LIGHT & COLOR',
     level_es: 'AVANZADO', level_en: 'ADVANCED',
@@ -2620,39 +2621,66 @@ function CoursesPage({ lang, goTo, setCourse, onLogin, addPurchase }) {
       )}
 
       <div className="courses-grid anim d2" style={{ marginTop:'3.9rem', marginBottom:'3.9rem' }}>
-        {COURSES.map(c => (
-          <div key={c.id} className="course-card" onClick={() => { setCourse(c); goTo('curso'); }}>
-            <div className="course-thumb" style={{ background: c.gradient }} />
-            <div className="course-body">
-              <div style={{ display:'flex', alignItems:'center', gap:'0.4rem', marginBottom:'0.4rem' }}>
-                <p className="course-level" style={{ margin:0 }}>{t(c.level_es, c.level_en)}</p>
-                <div style={{ marginLeft:'auto', display:'flex', alignItems:'center', gap:'0.25rem' }}>
-                  <span style={{ color:'var(--clr-orange)', fontSize:'0.975rem', letterSpacing:'1.5px' }}>★★★★★</span>
-                  <span style={{ fontFamily:'var(--fh)', fontWeight:800, fontSize:'1.02rem', color:'var(--clr-black)' }}>{c.rating || 4.9}</span>
-                  <span style={{ fontFamily:'var(--fb)', fontSize:'0.9rem', color:'var(--clr-muted)' }}>({(c.reviews || 1248).toLocaleString()})</span>
+        {COURSES.map(c => {
+          const isLive = !!c.gumroad_url;
+          const handleClick = () => {
+            if (!isLive) return;
+            if (window.GumroadOverlay) window.GumroadOverlay.show(c.gumroad_url);
+            else window.open(c.gumroad_url, '_blank');
+          };
+          return (
+            <div key={c.id}
+              className={`course-card${isLive ? ' live' : ''}`}
+              onClick={handleClick}
+              style={{ cursor: isLive ? 'pointer' : 'default', position:'relative' }}
+            >
+              {/* PRÓXIMAMENTE overlay for locked courses */}
+              {!isLive && (
+                <div style={{
+                  position:'absolute', inset:0, zIndex:4,
+                  display:'flex', alignItems:'flex-start', justifyContent:'flex-end',
+                  padding:'0.8rem',
+                  pointerEvents:'none',
+                }}>
+                  <span style={{
+                    fontFamily:'var(--fh)', fontWeight:800, fontSize:'0.6rem',
+                    letterSpacing:'0.18em', textTransform:'uppercase',
+                    padding:'3px 9px', background:'rgba(10,10,10,0.68)', color:'rgba(255,255,255,0.7)',
+                  }}>PRÓXIMAMENTE</span>
                 </div>
-              </div>
-              <h3 className="course-name">{t(c.title_es, c.title_en)}</h3>
-              {c.short_es && (
-                <p style={{ fontFamily:'var(--fb)', fontSize:'0.78rem', lineHeight:1.6, color:'var(--clr-muted)', marginBottom:'0.7rem',
-                  display:'-webkit-box', WebkitLineClamp:3, WebkitBoxOrient:'vertical', overflow:'hidden' }}>
-                  {t(c.short_es, c.short_en)}
-                </p>
               )}
-              <div className="feat-chips">
-                {(t(c.features_es, c.features_en) || []).slice(0, 2).map((f,i) => (
-                  <span key={i} className="feat-chip feat-chip-sm">{f}</span>
-                ))}
-              </div>
-              <div className="course-pricing">
-                <div>
-                  <div className="price-big">$4.99</div>
-                  <div className="price-lbl">{t('/mes · todos los cursos','/mo · all courses')}</div>
+              <div className="course-thumb" style={{ background: c.gradient, filter: isLive ? 'none' : 'brightness(0.7)' }} />
+              <div className="course-body" style={{ opacity: isLive ? 1 : 0.55 }}>
+                <div style={{ display:'flex', alignItems:'center', gap:'0.4rem', marginBottom:'0.4rem' }}>
+                  <p className="course-level" style={{ margin:0 }}>{t(c.level_es, c.level_en)}</p>
+                  <div style={{ marginLeft:'auto', display:'flex', alignItems:'center', gap:'0.25rem' }}>
+                    <span style={{ color:'var(--clr-orange)', fontSize:'0.975rem', letterSpacing:'1.5px' }}>★★★★★</span>
+                    <span style={{ fontFamily:'var(--fh)', fontWeight:800, fontSize:'1.02rem', color:'var(--clr-black)' }}>{c.rating || 4.9}</span>
+                    <span style={{ fontFamily:'var(--fb)', fontSize:'0.9rem', color:'var(--clr-muted)' }}>({(c.reviews || 1248).toLocaleString()})</span>
+                  </div>
+                </div>
+                <h3 className="course-name">{t(c.title_es, c.title_en)}</h3>
+                {c.short_es && (
+                  <p style={{ fontFamily:'var(--fb)', fontSize:'0.78rem', lineHeight:1.6, color:'var(--clr-muted)', marginBottom:'0.7rem',
+                    display:'-webkit-box', WebkitLineClamp:3, WebkitBoxOrient:'vertical', overflow:'hidden' }}>
+                    {t(c.short_es, c.short_en)}
+                  </p>
+                )}
+                <div className="feat-chips">
+                  {(t(c.features_es, c.features_en) || []).slice(0, 2).map((f,i) => (
+                    <span key={i} className="feat-chip feat-chip-sm">{f}</span>
+                  ))}
+                </div>
+                <div className="course-pricing">
+                  <div>
+                    <div className="price-big">{c.price || '$17'}</div>
+                    <div className="price-lbl">{t('pago único · acceso permanente','one-time · permanent access')}</div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <div className="bundle-banner anim d3" style={{ marginTop:'1.95rem' }} onClick={() => goTo('vivo')}>
