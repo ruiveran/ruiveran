@@ -111,6 +111,19 @@
       padding: 0;
     }
     .nav-menu button:hover, .nav-menu button.active { color: var(--clr-orange); }
+    .nav-menu a {
+      font-family: var(--fh) !important;
+      font-weight: 600;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      color: var(--clr-muted) !important;
+      text-transform: uppercase;
+      text-decoration: none !important;
+      transition: color 0.2s;
+      padding: 0;
+      display: inline-block;
+    }
+    .nav-menu a:hover { color: var(--clr-orange) !important; }
 
     .nav-right {
       display: flex;
@@ -1786,6 +1799,142 @@
       .course-alumnos-resenas { grid-template-columns: 1fr !important; }
       .detail-carousel-wrap { position: static; aspect-ratio: 1/1; }
     }
+
+    /* ── Hamburger button ── */
+    .nav-burger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      margin-left: 0.5rem;
+      flex-shrink: 0;
+    }
+    .nav-burger span {
+      display: block;
+      height: 1.5px;
+      background: var(--clr-black);
+      transition: transform 0.28s ease, opacity 0.2s ease, width 0.2s ease;
+      transform-origin: center;
+    }
+    .nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* ── Mobile drawer ── */
+    .nav-drawer-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.38);
+      z-index: 1100;
+      opacity: 0;
+      transition: opacity 0.28s ease;
+    }
+    .nav-drawer-backdrop.open { opacity: 1; }
+    .nav-drawer {
+      position: fixed;
+      top: 0; right: 0; bottom: 0;
+      width: min(300px, 82vw);
+      background: var(--clr-white);
+      z-index: 1101;
+      transform: translateX(100%);
+      transition: transform 0.32s cubic-bezier(0.4,0,0.2,1);
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      border-left: 1px solid var(--clr-border);
+    }
+    .nav-drawer.open { transform: translateX(0); }
+    .nav-drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.4rem;
+      height: var(--nav-h);
+      border-bottom: 1px solid var(--clr-border);
+      flex-shrink: 0;
+    }
+    .nav-drawer-logo {
+      font-family: var(--fh);
+      font-weight: 900;
+      font-size: 1.1rem;
+      letter-spacing: 0.04em;
+      color: var(--clr-black);
+    }
+    .nav-drawer-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: var(--clr-muted);
+      padding: 4px;
+      line-height: 1;
+    }
+    .nav-drawer-items {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 0.6rem 0;
+      overflow-y: auto;
+    }
+    .nav-drawer-item {
+      display: flex;
+      align-items: center;
+      padding: 0.85rem 1.6rem;
+      font-family: var(--fh);
+      font-weight: 700;
+      font-size: 0.88rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--clr-muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      text-decoration: none;
+      transition: color 0.18s, background 0.18s;
+      border-bottom: 1px solid var(--clr-border);
+    }
+    .nav-drawer-item:last-of-type { border-bottom: none; }
+    .nav-drawer-item:hover, .nav-drawer-item.active { color: var(--clr-orange); background: rgba(255,69,0,0.04); }
+    .nav-drawer-item.vivo {
+      color: var(--clr-orange);
+      border: 1px solid var(--clr-orange);
+      margin: 0.9rem 1.6rem;
+      padding: 0.65rem 1.2rem;
+      border-bottom: 1px solid var(--clr-orange);
+    }
+    .nav-drawer-item.vivo:hover { background: var(--clr-orange); color: #fff; }
+    .nav-drawer-socials {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.1rem 1.6rem;
+      border-top: 1px solid var(--clr-border);
+      flex-shrink: 0;
+    }
+    .nav-drawer-lang {
+      margin-left: auto;
+      font-family: var(--fh);
+      font-weight: 800;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      background: none;
+      border: 1px solid var(--clr-border);
+      cursor: pointer;
+      color: var(--clr-muted);
+      padding: 3px 10px;
+    }
+    @media (max-width: 960px) {
+      .nav-burger { display: flex; }
+      .nav-right { display: none; }
+    }
     @media (max-width: 600px) {
       :root { --frame: 8px; }
       .gallery-grid { columns: 1; }
@@ -1966,11 +2115,11 @@ const COURSES = [
 ];
 
 const TESTIMONIALS = [
-  { id:1, name:'Valentina R.', flag:'🇻🇪', stars:5, avatar:'linear-gradient(135deg,#F2A07B 0%,#E87040 100%)', es:'Llevaba 2 años intentando aprender a dibujar sin resultados. Con este curso en 3 semanas noté un cambio brutal en mi trabajo.', en:'Spent 2 years trying to learn to draw with no results. In 3 weeks with this course I noticed a massive change in my work.' },
-  { id:2, name:'Camilo S.', flag:'🇨🇴', stars:5, avatar:'linear-gradient(135deg,#4a9be8 0%,#1a5fa0 100%)', es:'El mejor curso de anatomía que existe en español. Punto. Ruiveran explica de una forma que ningún otro profesor logra.', en:'The best anatomy course in Spanish. Period. Ruiveran explains in a way no other teacher manages to.' },
-  { id:3, name:'Diego M.', flag:'🇲🇽', stars:5, avatar:'linear-gradient(135deg,#e84a4a 0%,#a01a1a 100%)', es:'Pasé de dibujar garabatos a ilustraciones que la gente me pide. El valor de este material es increíble para el precio.', en:'Went from drawing scribbles to illustrations people ask me for. The value of this content is incredible for the price.' },
-  { id:4, name:'Sofía L.', flag:'🇦🇷', stars:5, avatar:'linear-gradient(135deg,#a07be8 0%,#6040b0 100%)', es:'Las clases en vivo cambiaron todo. Tener feedback directo es algo que ningún curso grabado puede reemplazar.', en:'The live classes changed everything. Having direct feedback is something no recorded course can replace.' },
-  { id:5, name:'Matías P.', flag:'🇺🇾', stars:5, avatar:'linear-gradient(135deg,#4ae8a0 0%,#1aa060 100%)', es:'Compré el bundle completo y fue la mejor decisión del año. Es como una academia entera por el precio de un café.', en:'Bought the complete bundle and it was the best decision of the year. It\'s like an entire academy for the price of a coffee.' },
+  { id:4, name:'Rodrigo Adonay', flag:'🇲🇽', stars:5, avatar:'linear-gradient(135deg,#a07be8 0%,#6040b0 100%)', es:'El hecho de ser nivel 2 me ayudó bastante principalmente por la retroalimentación de las tareas. Con cada tarea sentía una mejora, tanto en la técnica de dibujo como en el análisis de referencias, y lo pude comprobar en el proyecto final — todo fluía de una mejor manera y quedé sorprendido con el resultado.', en:'Being level 2 helped me a lot, mainly because of the feedback on assignments. With each assignment I felt improvement in both drawing technique and reference analysis — I confirmed it in the final project where everything flowed better and I was surprised by the result.' },
+  { id:3, name:'Vin Nito', flag:'🇲🇽', stars:5, avatar:'linear-gradient(135deg,#e84a4a 0%,#a01a1a 100%)', es:'El curso vale completamente la pena, es uno de los más completos que vi. Los PDFs eran buenos, la explicación era clara y aparte de que eran bonitos. El método es muy efectivo. Tu explicación era buena y explicabas con paciencia cada aspecto, eres buena onda respondiendo las dudas. 〜⁠(⁠꒪⁠꒳⁠꒪⁠)⁠〜', en:'The course is completely worth it, one of the most complete I\'ve seen. The PDFs were good, the explanation was clear and they were beautiful too. The method is very effective. You explained patiently every aspect, you\'re cool answering questions. 〜⁠(⁠꒪⁠꒳⁠꒪⁠)⁠〜' },
+  { id:2, name:'Kurt Laumann', flag:'🇵🇪', stars:5, avatar:'linear-gradient(135deg,#4a9be8 0%,#1a5fa0 100%)', es:'Excelente profesor, siempre atento con tus necesidades y metas artísticas. Sobre todo para alguien como yo que está escogiendo arte digital como segunda carrera. Sabe a qué temas darle prioridad para avanzar de manera más eficiente y generar una base artística sólida y confiable.', en:'Excellent teacher, always attentive to your needs and artistic goals. Especially for someone like me choosing digital art as a second career. He knows which topics to prioritize to advance efficiently and build a solid, reliable artistic foundation.' },
+  { id:5, name:'Bruno Cerda', flag:'🇨🇱', stars:5, avatar:'linear-gradient(135deg,#FF7A00 0%,#c43800 100%)', es:'Maestro!! Qué puedo decir? Maravillosas clases. No solo es un viaje por los músculos de cada zona del cuerpo, sino también un vistazo a la lógica y entendimiento de su funcionamiento para aplicarlos en una ilustración. Clases recomendadísimas 🔥🔥🔥', en:'Teacher!! What can I say? Wonderful classes. Not just a journey through the muscles of each body area, but also a look at the logic and understanding of how they work to apply them in an illustration. Highly recommended classes 🔥🔥🔥' },
+  { id:1, name:'Danilo López', flag:'🇲🇽', stars:5, avatar:'linear-gradient(135deg,#F2A07B 0%,#E87040 100%)', es:'Es un curso bastante completo y muy entendible, un plus son los PDFs de apoyo para la realización de los trabajos.', en:'It\'s a very complete and understandable course, a plus are the support PDFs for completing the assignments.' },
 ];
 
 const GALLERY = [
@@ -2137,68 +2286,147 @@ function useReveal() {
 /* ══════════════════════════════════════════
    NAV
 ══════════════════════════════════════════ */
-function Nav({ lang, setLang, page, goTo, loggedIn }) {
+function Nav({ lang, setLang, page, goTo }) {
   const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 10);
     window.addEventListener('scroll', fn);
     return () => window.removeEventListener('scroll', fn);
   }, []);
 
+  // Close drawer on page change
+  useEffect(() => { setOpen(false); }, [page]);
+
+  // Prevent body scroll when drawer open
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [open]);
+
   const navItems = [
-    { key:'cursos',   es:'CURSOS',        en:'COURSES'      },
-    { key:'vivo',     es:'CLASE EN VIVO', en:'LIVE CLASS'   },
-    { key:'prints',   es:'TIENDA',        en:'STORE'        },
-    { key:'contacto', es:'CONTACTO',      en:'CONTACT'      },
-    { key:'login',    es:'MIS CLASES',    en:'MY CLASSES'   },
+    { key:'home',     es:'INICIO',        en:'HOME'                                      },
+    { key:'cursos',   es:'CURSOS',        en:'COURSES',  href:'https://ruiveran.gumroad.com/' },
+    { key:'vivo',     es:'CLASE EN VIVO', en:'LIVE CLASS' },
+    { key:'prints',   es:'TIENDA',        en:'STORE',    href:'https://www.inprnt.com/' },
+    { key:'contacto', es:'CONTACTO',      en:'CONTACT'   },
+  ];
+
+  const handleItem = (item) => {
+    setOpen(false);
+    if (!item.href) goTo(item.key);
+  };
+
+  const socials = [
+    { href:'https://instagram.com', icon:<IcoInsta />, title:'Instagram' },
+    { href:'https://tiktok.com',    icon:<IcoTT />,    title:'TikTok'    },
+    { href:'https://youtube.com',   icon:<IcoYT />,    title:'YouTube'   },
+    { href:'https://discord.gg',    icon:<IcoDC />,    title:'Discord'   },
   ];
 
   return (
-    <nav className={`nav${scrolled ? ' scrolled' : ''}`}>
-      <span className="nav-logo" onClick={() => goTo('home')}>
-        RUIVERAN<span className="dot">.</span>
-      </span>
-      <ul className="nav-menu">
-        {navItems.map(i => (
-          <li key={i.key}>
-            {(i.key === 'login' || i.key === 'vivo') ? (
-              <button
-                className={page === (i.key === 'login' ? (loggedIn ? 'dashboard' : 'login') : 'vivo') ? 'active' : ''}
-                onClick={() => i.key === 'login' ? goTo(loggedIn ? 'dashboard' : 'login') : goTo('vivo')}
-                style={{
-                  border: i.key === 'login'
-                    ? '1.5px solid #1a1a1a'
-                    : '1.5px solid var(--clr-orange)',
-                  color: i.key === 'login'
-                    ? ((page === 'dashboard' || page === 'login') ? '#fff' : '#1a1a1a')
-                    : (page === 'vivo' ? '#fff' : 'var(--clr-orange)'),
-                  background: i.key === 'login'
-                    ? ((page === 'dashboard' || page === 'login') ? '#1a1a1a' : 'transparent')
-                    : (page === 'vivo' ? 'var(--clr-orange)' : 'transparent'),
-                  padding: '4px 14px',
-                  transition: 'all 0.2s',
-                }}
+    <>
+      <nav className={`nav${scrolled ? ' scrolled' : ''}`}>
+        <span className="nav-logo" onClick={() => goTo('home')}>
+          RUIVERAN<span className="dot">.</span>
+        </span>
+
+        {/* Desktop menu */}
+        <ul className="nav-menu">
+          {navItems.map(i => (
+            <li key={i.key}>
+              {i.href ? (
+                <a href={i.href} target="_blank" rel="noopener noreferrer"
+                  style={{ textDecoration:'none', color:'inherit' }}>
+                  {lang === 'es' ? i.es : i.en}
+                </a>
+              ) : i.key === 'vivo' ? (
+                <button
+                  className={page === 'vivo' ? 'active' : ''}
+                  onClick={() => goTo('vivo')}
+                  style={{
+                    border: '1.5px solid var(--clr-orange)',
+                    color: page === 'vivo' ? '#fff' : 'var(--clr-orange)',
+                    background: page === 'vivo' ? 'var(--clr-orange)' : 'transparent',
+                    padding: '4px 14px',
+                    transition: 'all 0.2s',
+                  }}
+                >
+                  {lang === 'es' ? i.es : i.en}
+                </button>
+              ) : (
+                <button className={page === i.key ? 'active' : ''} onClick={() => goTo(i.key)}>
+                  {lang === 'es' ? i.es : i.en}
+                </button>
+              )}
+            </li>
+          ))}
+        </ul>
+
+        {/* Desktop right */}
+        <div className="nav-right">
+          {socials.map(s => (
+            <a key={s.title} href={s.href} target="_blank" className="nav-icon-btn" title={s.title}>{s.icon}</a>
+          ))}
+          <button className="nav-lang" onClick={() => setLang(lang === 'es' ? 'en' : 'es')}>
+            {lang === 'es' ? 'EN' : 'ES'}
+          </button>
+        </div>
+
+        {/* Hamburger */}
+        <button className={`nav-burger${open ? ' open' : ''}`} onClick={() => setOpen(o => !o)} aria-label="Menu">
+          <span /><span /><span />
+        </button>
+      </nav>
+
+      {/* Backdrop */}
+      <div
+        className={`nav-drawer-backdrop${open ? ' open' : ''}`}
+        style={{ display: open ? 'block' : 'none', position:'fixed', inset:0, background:'rgba(0,0,0,0.38)', zIndex:1100 }}
+        onClick={() => setOpen(false)}
+      />
+
+      {/* Drawer */}
+      <div className={`nav-drawer${open ? ' open' : ''}`}>
+        <div className="nav-drawer-header">
+          <span className="nav-drawer-logo">RUIVERAN<span style={{ color:'var(--clr-orange)' }}>.</span></span>
+          <button className="nav-drawer-close" onClick={() => setOpen(false)}>✕</button>
+        </div>
+
+        <div className="nav-drawer-items">
+          {navItems.map(i => (
+            i.href ? (
+              <a key={i.key}
+                href={i.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="nav-drawer-item"
+                onClick={() => setOpen(false)}
+              >
+                {lang === 'es' ? i.es : i.en}
+              </a>
+            ) : (
+              <button key={i.key}
+                className={`nav-drawer-item${i.key === 'vivo' ? ' vivo' : ''}${page === i.key ? ' active' : ''}`}
+                onClick={() => handleItem(i)}
               >
                 {lang === 'es' ? i.es : i.en}
               </button>
-            ) : (
-              <button className={page === i.key ? 'active' : ''} onClick={() => goTo(i.key)}>
-                {lang === 'es' ? i.es : i.en}
-              </button>
-            )}
-          </li>
-        ))}
-      </ul>
-      <div className="nav-right">
-        <a href="https://instagram.com" target="_blank" className="nav-icon-btn" title="Instagram"><IcoInsta /></a>
-        <a href="https://tiktok.com" target="_blank" className="nav-icon-btn" title="TikTok"><IcoTT /></a>
-        <a href="https://youtube.com" target="_blank" className="nav-icon-btn" title="YouTube"><IcoYT /></a>
-        <a href="https://discord.gg" target="_blank" className="nav-icon-btn" title="Discord"><IcoDC /></a>
-        <button className="nav-lang" onClick={() => setLang(lang === 'es' ? 'en' : 'es')}>
-          {lang === 'es' ? 'EN' : 'ES'}
-        </button>
+            )
+          ))}
+        </div>
+
+        <div className="nav-drawer-socials">
+          {socials.map(s => (
+            <a key={s.title} href={s.href} target="_blank" className="nav-icon-btn" title={s.title}>{s.icon}</a>
+          ))}
+          <button className="nav-drawer-lang" onClick={() => setLang(lang === 'es' ? 'en' : 'es')}>
+            {lang === 'es' ? 'EN' : 'ES'}
+          </button>
+        </div>
       </div>
-    </nav>
+    </>
   );
 }
 
@@ -2267,129 +2495,6 @@ function HeroCarousel() {
 }
 
 /* ══════════════════════════════════════════
-   PRODUCT ISLAND (shared modal)
-══════════════════════════════════════════ */
-/* ══════════════════════════════════════════
-   MINI LOGIN FORM — embedded inside islands
-══════════════════════════════════════════ */
-function MiniLoginForm({ lang, onSuccess, defaultTab = 'register' }) {
-  const t = (es, en) => lang === 'es' ? es : en;
-  const [tab, setTab] = useState(defaultTab);
-  const [form, setForm] = useState({ name:'', email:'', pass:'' });
-  const [err, setErr] = useState('');
-  const submit = () => {
-    if (!form.email || !form.pass || (tab === 'register' && !form.name)) {
-      setErr(t('Completa todos los campos.','Fill in all fields.')); return;
-    }
-    setErr('');
-    onSuccess({ email: form.email, name: form.name || form.email.split('@')[0] });
-  };
-  return (
-    <div>
-      <div style={{ display:'flex', marginBottom:'0.9rem', borderBottom:'1px solid var(--clr-border)' }}>
-        {['login','register'].map(k => (
-          <button key={k} onClick={() => { setTab(k); setErr(''); }} style={{
-            flex:1, background:'none', border:'none', cursor:'pointer',
-            fontFamily:'var(--fh)', fontWeight:800, fontSize:'0.72rem',
-            letterSpacing:'0.1em', textTransform:'uppercase',
-            color: tab === k ? 'var(--clr-orange)' : 'var(--clr-muted)',
-            borderBottom: tab === k ? '2px solid var(--clr-orange)' : '2px solid transparent',
-            paddingBottom:'0.55rem', marginBottom:'-1px', transition:'color 0.2s',
-          }}>
-            {k === 'login' ? t('INICIAR SESIÓN','LOG IN') : t('CREAR CUENTA','SIGN UP')}
-          </button>
-        ))}
-      </div>
-      {tab === 'register' && (
-        <div className="fgroup" style={{ marginBottom:'0.55rem' }}>
-          <label className="flabel">{t('NOMBRE','NAME')}</label>
-          <input className="finput" value={form.name} onChange={e => setForm({...form,name:e.target.value})} placeholder={t('Tu nombre','Your name')} />
-        </div>
-      )}
-      <div className="fgroup" style={{ marginBottom:'0.55rem' }}>
-        <label className="flabel">EMAIL</label>
-        <input className="finput" type="email" value={form.email} onChange={e => setForm({...form,email:e.target.value})} placeholder="tu@email.com" />
-      </div>
-      <div className="fgroup" style={{ marginBottom:'0.75rem' }}>
-        <label className="flabel">{t('CONTRASEÑA','PASSWORD')}</label>
-        <input className="finput" type="password" value={form.pass} onChange={e => setForm({...form,pass:e.target.value})} placeholder="••••••••" />
-      </div>
-      {err && <p style={{ fontFamily:'var(--fb)', fontSize:'0.72rem', color:'var(--clr-orange)', marginBottom:'0.55rem' }}>{err}</p>}
-      <button className="btn btn-orange" style={{ width:'100%', justifyContent:'center' }} onClick={submit}>
-        {tab === 'login' ? t('ENTRAR Y CONFIRMAR','LOG IN & CONFIRM') : t('CREAR CUENTA Y CONFIRMAR','CREATE ACCOUNT & CONFIRM')} <IcoArr />
-      </button>
-    </div>
-  );
-}
-
-function ProductIsland({ product, lang, onClose }) {
-  const t = (es, en) => lang === 'es' ? es : en;
-  const [email, setEmail] = useState('');
-  const [done, setDone] = useState(false);
-  const [err, setErr] = useState('');
-  if (!product) return null;
-  const isFree = product.price === 'GRATIS';
-
-  const handleSubmit = () => {
-    if (!email || !email.includes('@')) { setErr(t('Ingresa un email válido.', 'Enter a valid email.')); return; }
-    setErr('');
-    setDone(true);
-  };
-
-  return (
-    <div className="island-backdrop" onClick={onClose}>
-      <div className="island-box" onClick={e => e.stopPropagation()}>
-        <button className="island-close" onClick={onClose}>✕</button>
-        <div className="island-img" style={{ background: product.gradient }} />
-        <div className="island-body">
-          <div className="island-edition">{t(product.edition_es, product.edition_en)}</div>
-          <div className="island-title">{t(product.title_es, product.title_en)}</div>
-          {isFree
-            ? <div className="island-price" style={{ color:'var(--clr-black)' }}>GRATIS</div>
-            : <div className="island-price">{product.price || '$20'}</div>
-          }
-          {done ? (
-            <div style={{ textAlign:'center', padding:'1.2rem 0' }}>
-              <div style={{ fontFamily:'var(--fh)', fontWeight:800, fontSize:'1.1rem', color:'var(--clr-orange)', marginBottom:'0.4rem' }}>
-                ✓ {isFree ? t('¡LINK ENVIADO!','LINK SENT!') : t('¡PEDIDO RECIBIDO!','ORDER RECEIVED!')}
-              </div>
-              <p style={{ fontFamily:'var(--fb)', fontSize:'0.8rem', color:'var(--clr-muted)', lineHeight:1.6 }}>
-                {t(`Revisa tu bandeja de entrada en ${email}.`, `Check your inbox at ${email}.`)}
-              </p>
-            </div>
-          ) : (
-            <>
-              <p style={{ fontFamily:'var(--fb)', fontSize:'0.8rem', color:'var(--clr-muted)', marginBottom:'1rem', lineHeight:1.55 }}>
-                {isFree
-                  ? t('Ingresa tu email y te enviamos el link de descarga.', 'Enter your email and we\'ll send you the download link.')
-                  : t('Ingresa tu email para confirmar tu pedido.', 'Enter your email to confirm your order.')
-                }
-              </p>
-              <input
-                type="email"
-                placeholder={t('tu@email.com', 'your@email.com')}
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                onKeyDown={e => e.key === 'Enter' && handleSubmit()}
-                style={{
-                  width:'100%', padding:'0.65rem 0.9rem', fontFamily:'var(--fb)', fontSize:'0.88rem',
-                  border:'1px solid var(--clr-border)', background:'var(--clr-bg)', color:'var(--clr-black)',
-                  outline:'none', boxSizing:'border-box', marginBottom:'0.6rem',
-                }}
-              />
-              {err && <p style={{ fontFamily:'var(--fb)', fontSize:'0.75rem', color:'#cc2200', marginBottom:'0.5rem' }}>{err}</p>}
-              <button className="btn btn-orange" style={{ width:'100%', justifyContent:'center' }} onClick={handleSubmit}>
-                {isFree ? t('OBTENER GRATIS','GET FOR FREE') : t('CONFIRMAR PEDIDO','CONFIRM ORDER')} <IcoArr />
-              </button>
-            </>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ══════════════════════════════════════════
    IMAGE LIGHTBOX
 ══════════════════════════════════════════ */
 function Lightbox({ item, onClose }) {
@@ -2414,7 +2519,7 @@ function Lightbox({ item, onClose }) {
 ══════════════════════════════════════════ */
 const BUYABLE_INDICES = new Set([1, 4, 7, 10]);
 
-function GalleryItem({ item, index, onCart, onOpen }) {
+function GalleryItem({ item, onOpen }) {
   const ref = useRef(null);
   const [vis, setVis] = useState(false);
   useEffect(() => {
@@ -2422,18 +2527,12 @@ function GalleryItem({ item, index, onCart, onOpen }) {
     if (ref.current) obs.observe(ref.current);
     return () => obs.disconnect();
   }, []);
-  const hasBuy = BUYABLE_INDICES.has(index);
   return (
     <div ref={ref} className={`gallery-item pin-item${vis ? ' pin-in' : ''}`} onClick={() => onOpen(item)}>
       <div className="gallery-thumb" style={{ aspectRatio: `300/${item.h}`, background: item.g }} />
       <div className="gallery-over">
         <div className="gallery-over-content">
           <span className="gallery-over-title">{item.title}</span>
-          {hasBuy && (
-            <button className="gallery-over-cart" onClick={e => { e.stopPropagation(); onCart(item); }} title="Ver en tienda">
-              <IcoCart />
-            </button>
-          )}
         </div>
       </div>
     </div>
@@ -2442,32 +2541,14 @@ function GalleryItem({ item, index, onCart, onOpen }) {
 
 function PinterestGallery({ lang }) {
   const [lightbox, setLightbox] = useState(null);
-  const [island, setIsland] = useState(null);
-
-  const getProduct = (item) => {
-    const idx = GALLERY.indexOf(item);
-    if (idx === 1) return PRINTS[0];
-    if (idx === 4) return PRINTS[1];
-    if (idx === 7) return PRINTS[2];
-    if (idx === 10) return PRINTS[3];
-    return null;
-  };
-
   return (
     <>
       <div className="gallery-grid">
         {GALLERY.map((p, i) => (
-          <GalleryItem
-            key={i}
-            item={p}
-            index={i}
-            onOpen={(item) => setLightbox(item)}
-            onCart={(item) => { const pr = getProduct(item); if (pr) setIsland(pr); }}
-          />
+          <GalleryItem key={i} item={p} onOpen={(item) => setLightbox(item)} />
         ))}
       </div>
       {lightbox && <Lightbox item={lightbox} onClose={() => setLightbox(null)} />}
-      {island && <ProductIsland product={island} lang={lang} onClose={() => setIsland(null)} />}
     </>
   );
 }
@@ -2515,9 +2596,9 @@ function HomePage({ lang, goTo }) {
               </div>
             </div>
             <div className="hero-ctas">
-              <button className="btn btn-orange" onClick={() => goTo('cursos')}>
+              <a href="https://ruiveran.gumroad.com/" target="_blank" rel="noopener noreferrer" className="btn btn-orange" style={{ textDecoration:'none' }}>
                 {lang === 'es' ? 'EXPLORAR CURSOS' : 'EXPLORE COURSES'} <IcoArr />
-              </button>
+              </a>
               <button className="btn btn-outline" onClick={() => goTo('vivo')}>
                 {lang === 'es' ? 'CLASES EN VIVO' : 'LIVE CLASSES'}
               </button>
@@ -2541,889 +2622,7 @@ function HomePage({ lang, goTo }) {
   );
 }
 
-/* ══════════════════════════════════════════
-   COURSES PAGE
-══════════════════════════════════════════ */
-function CoursesPage({ lang, goTo, setCourse, onLogin, addPurchase }) {
-  const ref = useReveal();
-  const t = (es, en) => lang === 'es' ? es : en;
-  const [bundleModal, setBundleModal] = useState(false);
-  const [bundleDone, setBundleDone] = useState(false);
-  const [subModal, setSubModal] = useState(false);
-
-  const handleBundleSuccess = () => {
-    if (onLogin) onLogin();
-    if (addPurchase) addPurchase({ id:'bundle', name: t('Bundle — Todos los Cursos','Bundle — All Courses'), type:'bundle', gradient:'linear-gradient(135deg,#0f0f1a 0%,#1a1035 30%,#2d1b5e 60%,#FF4500 100%)', price:'$47' });
-    setBundleDone(true);
-  };
-
-  const handleSubSuccess = () => {
-    if (onLogin) onLogin();
-    setSubModal(false);
-    goTo('plans');
-  };
-
-  return (
-    <div ref={ref} className="section">
-      <div className="s-header">
-        <span className="s-tag anim">{t('ESCUELA DE FUNDAMENTOS','SCHOOL OF FUNDAMENTALS')}</span>
-        <h2 className="s-title anim d1">{t('CURSOS','COURSES')}</h2>
-        <p className="s-sub anim d2">
-          {t('Cuatro cursos diseñados en secuencia. Cada uno construye sobre el anterior.','Four courses designed in sequence. Each one builds on the previous.')}
-        </p>
-      </div>
-
-      <div className="bundle-banner anim d2" onClick={() => setBundleModal(true)}>
-        <div className="bundle-banner-left">
-          <div>
-            <p className="bundle-banner-tag" style={{ color:'var(--clr-orange)' }}>★ {t('MEJOR VALOR · ACCESO PERMANENTE','BEST VALUE · PERMANENT ACCESS')}</p>
-            <div className="bundle-banner-title" style={{ color:'#E8E4DC' }}>{t('BUNDLE — TODOS LOS CURSOS','BUNDLE — ALL COURSES')}</div>
-            <div className="bundle-banner-desc" style={{ color:'#D4CFC7' }}>{t('4 cursos completos, de una vez, para siempre. Ahorrás $19 vs compra individual.','4 complete courses, once, forever. Save $19 vs individual purchase.')}</div>
-          </div>
-          <div className="bundle-sep" />
-          <div>
-            <div className="bundle-banner-price" style={{ color:'#fff' }}>$47</div>
-            <div className="bundle-banner-sub" style={{ color:'#F8F5EF' }}>{t('pago único','one-time payment')}</div>
-          </div>
-        </div>
-        <button className="btn btn-orange" onClick={e => { e.stopPropagation(); setBundleModal(true); }}>
-          {t('OBTENER BUNDLE','GET BUNDLE')} <IcoArr />
-        </button>
-      </div>
-
-      {bundleModal && (
-        <div className="island-backdrop" onClick={() => setBundleModal(false)}>
-          <div className="island-box" onClick={e => e.stopPropagation()}>
-            <button className="island-close" onClick={() => setBundleModal(false)}>✕</button>
-            <div className="island-img" style={{ background:'linear-gradient(135deg, #0f0f1a 0%, #1a1035 30%, #2d1b5e 60%, #FF4500 100%)' }} />
-            <div className="island-body">
-              <div className="island-edition">★ {t('MEJOR VALOR · ACCESO PERMANENTE','BEST VALUE · PERMANENT ACCESS')}</div>
-              <div className="island-title">{t('BUNDLE — TODOS LOS CURSOS','BUNDLE — ALL COURSES')}</div>
-              <div className="island-meta">{t('4 cursos · Acceso vitalicio · Ahorrás $19','4 courses · Lifetime access · Save $19')}</div>
-              <div className="island-price">$47</div>
-              {bundleDone ? (
-                <div style={{ textAlign:'center', padding:'1rem 0' }}>
-                  <div style={{ fontFamily:'var(--fh)', fontWeight:800, fontSize:'1.1rem', color:'var(--clr-orange)', marginBottom:'0.4rem' }}>✓ {t('¡BUNDLE ACTIVADO!','BUNDLE ACTIVATED!')}</div>
-                  <p style={{ fontFamily:'var(--fb)', fontSize:'0.8rem', color:'var(--clr-muted)', marginBottom:'1rem' }}>{t('Acceso a los 4 cursos disponible en Mis Clases.','Access to all 4 courses available in My Classes.')}</p>
-                  <button className="btn btn-orange" style={{ width:'100%', justifyContent:'center' }} onClick={() => { setBundleModal(false); goTo('dashboard'); }}>{t('IR A MIS CLASES','GO TO MY CLASSES')} <IcoArr /></button>
-                </div>
-              ) : (
-                <>
-                  <p style={{ fontFamily:'var(--fb)', fontSize:'0.82rem', color:'var(--clr-muted)', marginBottom:'1rem', lineHeight:1.55 }}>
-                    {t('Inicia sesión o crea una cuenta para activar el acceso permanente a los 4 cursos.','Log in or create an account to activate permanent access to all 4 courses.')}
-                  </p>
-                  <MiniLoginForm lang={lang} onSuccess={handleBundleSuccess} />
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-
-      <div className="courses-grid anim d2" style={{ marginTop:'3.9rem', marginBottom:'3.9rem' }}>
-        {COURSES.map(c => {
-          const isLive = !!c.gumroad_url;
-          const handleClick = () => {
-            if (!isLive) return;
-            if (window.GumroadOverlay) window.GumroadOverlay.show(c.gumroad_url);
-            else window.open(c.gumroad_url, '_blank');
-          };
-          return (
-            <div key={c.id}
-              className={`course-card${isLive ? ' live' : ''}`}
-              onClick={handleClick}
-              style={{ cursor: isLive ? 'pointer' : 'default', position:'relative' }}
-            >
-              {/* PRÓXIMAMENTE overlay for locked courses */}
-              {!isLive && (
-                <div style={{
-                  position:'absolute', inset:0, zIndex:4,
-                  display:'flex', alignItems:'flex-start', justifyContent:'flex-end',
-                  padding:'0.8rem',
-                  pointerEvents:'none',
-                }}>
-                  <span style={{
-                    fontFamily:'var(--fh)', fontWeight:800, fontSize:'0.6rem',
-                    letterSpacing:'0.18em', textTransform:'uppercase',
-                    padding:'3px 9px', background:'rgba(10,10,10,0.68)', color:'rgba(255,255,255,0.7)',
-                  }}>PRÓXIMAMENTE</span>
-                </div>
-              )}
-              <div className="course-thumb" style={{ background: c.gradient, filter: isLive ? 'none' : 'brightness(0.7)' }} />
-              <div className="course-body" style={{ opacity: isLive ? 1 : 0.55 }}>
-                <div style={{ display:'flex', alignItems:'center', gap:'0.4rem', marginBottom:'0.4rem' }}>
-                  <p className="course-level" style={{ margin:0 }}>{t(c.level_es, c.level_en)}</p>
-                  <div style={{ marginLeft:'auto', display:'flex', alignItems:'center', gap:'0.25rem' }}>
-                    <span style={{ color:'var(--clr-orange)', fontSize:'0.975rem', letterSpacing:'1.5px' }}>★★★★★</span>
-                    <span style={{ fontFamily:'var(--fh)', fontWeight:800, fontSize:'1.02rem', color:'var(--clr-black)' }}>{c.rating || 4.9}</span>
-                    <span style={{ fontFamily:'var(--fb)', fontSize:'0.9rem', color:'var(--clr-muted)' }}>({(c.reviews || 1248).toLocaleString()})</span>
-                  </div>
-                </div>
-                <h3 className="course-name">{t(c.title_es, c.title_en)}</h3>
-                {c.short_es && (
-                  <p style={{ fontFamily:'var(--fb)', fontSize:'0.78rem', lineHeight:1.6, color:'var(--clr-muted)', marginBottom:'0.7rem',
-                    display:'-webkit-box', WebkitLineClamp:3, WebkitBoxOrient:'vertical', overflow:'hidden' }}>
-                    {t(c.short_es, c.short_en)}
-                  </p>
-                )}
-                <div className="feat-chips">
-                  {(t(c.features_es, c.features_en) || []).slice(0, 2).map((f,i) => (
-                    <span key={i} className="feat-chip feat-chip-sm">{f}</span>
-                  ))}
-                </div>
-                <div className="course-pricing">
-                  <div>
-                    <div className="price-big">{c.price || '$17'}</div>
-                    <div className="price-lbl">{t('pago único · acceso permanente','one-time · permanent access')}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="bundle-banner anim d3" style={{ marginTop:'1.95rem' }} onClick={() => goTo('vivo')}>
-        <div className="bundle-banner-left">
-          <div>
-            <p className="bundle-banner-tag" style={{ color:'var(--clr-orange)' }}>● {t('INSCRIPCIÓN ABIERTA','ENROLLMENT OPEN')}</p>
-            <div className="bundle-banner-title" style={{ color:'#E8E4DC' }}>{t('CLASES EN VIVO — MENTORÍA DIRECTA','LIVE CLASSES — DIRECT MENTORSHIP')}</div>
-            <div className="bundle-banner-desc" style={{ color:'#D4CFC7' }}>{t('Asesoramiento, correcciones, proyecto final y preguntas en vivo.','Mentoring, corrections, final project and live Q&A.')}</div>
-          </div>
-          <div className="bundle-sep" />
-          <div>
-            <div className="bundle-banner-price" style={{ color:'#fff' }}>$65</div>
-            <div className="bundle-banner-sub" style={{ color:'#F8F5EF' }}>{t('por mes','per month')}</div>
-          </div>
-        </div>
-        <button className="btn btn-orange" onClick={e => { e.stopPropagation(); goTo('vivo'); }}>
-          {t('VER CLASES','SEE CLASSES')} <IcoArr />
-        </button>
-      </div>
-
-      {subModal && (
-        <div className="island-backdrop" onClick={() => setSubModal(false)}>
-          <div className="island-box" onClick={e => e.stopPropagation()}>
-            <button className="island-close" onClick={() => setSubModal(false)}>✕</button>
-            <div className="island-img" style={{ background:'linear-gradient(135deg,#FF4500 0%,#c43800 40%,#7a2200 100%)' }} />
-            <div className="island-body">
-              <div className="island-edition">{t('ACCESO TOTAL','FULL ACCESS')}</div>
-              <div className="island-title">{t('SUSCRIPCIÓN','SUBSCRIPTION')}</div>
-              <div className="island-meta">{t('Cancela cuando quieras','Cancel anytime')}</div>
-              <div className="island-price">$4.99<span style={{ fontFamily:'var(--fb)', fontWeight:400, fontSize:'1rem', color:'var(--clr-muted)', letterSpacing:0 }}>/mes</span></div>
-              <div style={{ background:'rgba(255,69,0,0.07)', border:'1px solid rgba(255,69,0,0.25)', borderRadius:'2px', padding:'8px 12px', marginBottom:'1rem' }}>
-                <div style={{ fontFamily:'var(--fh)', fontWeight:800, fontSize:'0.72rem', letterSpacing:'0.1em', color:'var(--clr-orange)', textTransform:'uppercase', marginBottom:'2px' }}>
-                  ✦ {t('UNA SUSCRIPCIÓN — TODOS LOS CURSOS','ONE SUBSCRIPTION — ALL COURSES')}
-                </div>
-                <div style={{ fontFamily:'var(--fb)', fontSize:'0.72rem', color:'var(--clr-muted)', lineHeight:1.5 }}>
-                  {t('Accedés a los 4 cursos completos de la academia por $4.99/mes. Sin restricciones.','Get access to all 4 academy courses for $4.99/mo. No restrictions.')}
-                </div>
-              </div>
-              <MiniLoginForm lang={lang} onSuccess={handleSubSuccess} defaultTab="register" />
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-/* ══════════════════════════════════════════
-   DETAIL MINI CAROUSEL
-══════════════════════════════════════════ */
-const SLIDE_GRADIENTS = [
-  'linear-gradient(135deg, #0f0f1a 0%, #1a1035 50%, #2d1b5e 100%)',
-  'linear-gradient(135deg, #0a1628 0%, #1e3a5f 50%, #0d4f3c 100%)',
-  'linear-gradient(135deg, #1a0a0a 0%, #4a0e1e 50%, #8b1a2a 100%)',
-  'linear-gradient(135deg, #0a0a1f 0%, #1a1a4e 35%, #0f2a4a 70%, #1a3a2a 100%)',
-  'linear-gradient(135deg, #1a1a00 0%, #4a3300 50%, #7a5500 100%)',
-  'linear-gradient(135deg, #001a1a 0%, #003333 50%, #005555 100%)',
-  'linear-gradient(135deg, #1a000a 0%, #4a0020 50%, #800040 100%)',
-];
-
-function DetailMiniCarousel({ gradient, aspectRatio = '4/3' }) {
-  const slides = SLIDE_GRADIENTS.map((g, i) => i === 0 ? gradient : g);
-  const [idx, setIdx] = useState(0);
-  const [hovered, setHovered] = useState(false);
-  const [fading, setFading] = useState(false);
-  const [prevIdx, setPrevIdx] = useState(null);
-
-  const go = (next) => {
-    if (fading) return;
-    setPrevIdx(idx);
-    setFading(true);
-    setIdx(next);
-    setTimeout(() => { setPrevIdx(null); setFading(false); }, 600);
-  };
-  const goNext = () => go((idx + 1) % slides.length);
-  const goPrev = () => go((idx - 1 + slides.length) % slides.length);
-
-  const containerStyle = aspectRatio
-    ? { position:'relative', width:'100%', aspectRatio, overflow:'hidden', cursor:'pointer' }
-    : { position:'relative', width:'100%', height:'100%', minHeight:'320px', overflow:'hidden', cursor:'pointer' };
-
-  return (
-    <div
-      style={containerStyle}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      {prevIdx !== null && (
-        <div style={{ position:'absolute', inset:0, background: slides[prevIdx], transition:'opacity 0.6s', opacity: fading ? 0 : 1 }} />
-      )}
-      <div style={{ position:'absolute', inset:0, background: slides[idx], transition: fading ? 'opacity 0.6s' : 'none', opacity: fading ? 1 : 1 }} />
-
-      {/* arrows */}
-      {['l','r'].map(side => (
-        <button key={side} onClick={side === 'l' ? goPrev : goNext}
-          style={{
-            position:'absolute', top:'50%', transform:'translateY(-50%)',
-            [side === 'l' ? 'left' : 'right']: '0.8rem',
-            zIndex:4, background:'rgba(0,0,0,0.45)', backdropFilter:'blur(6px)',
-            border:'1px solid rgba(255,255,255,0.18)', color:'#fff',
-            width:36, height:36, display:'flex', alignItems:'center', justifyContent:'center',
-            cursor:'pointer', opacity: hovered ? 1 : 0, transition:'opacity 0.22s, background 0.2s',
-            borderRadius:0,
-          }}>
-          {side === 'l' ? <IcoArrL /> : <IcoArr />}
-        </button>
-      ))}
-
-      {/* dots */}
-      <div style={{ position:'absolute', bottom:'0.7rem', left:'50%', transform:'translateX(-50%)', display:'flex', gap:5, opacity: hovered ? 1 : 0.4, transition:'opacity 0.22s' }}>
-        {slides.map((_, i) => (
-          <button key={i} onClick={() => go(i)}
-            style={{ width:5, height:5, borderRadius:'50%', border:'none', cursor:'pointer', padding:0,
-              background: i === idx ? 'var(--clr-orange)' : 'rgba(255,255,255,0.5)',
-              transform: i === idx ? 'scale(1.5)' : 'scale(1)', transition:'all 0.2s' }} />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/* ══════════════════════════════════════════
-   COURSE DETAIL PAGE
-══════════════════════════════════════════ */
-/* per-course gallery subsets — varied count + heights */
-function CurrItem({ lessonTitle, lessonNum, centered, active, onSelect, lang }) {
-  const t = (es, en) => lang === 'en' ? en : es;
-  return (
-    <div
-      className={`curr-item${centered ? ' centered' : ''}${active ? ' ci-active' : ''}`}
-      onClick={onSelect}
-    >
-      <div className="curr-week">{t('Lección','Lesson')} {lessonNum}</div>
-      <div className="curr-title">{lessonTitle}</div>
-    </div>
-  );
-}
-
-
-const SW_BY_COURSE = {
-  1: [ // Cómo Dibujar — 6 items, mix portrait + 2 landscape
-    { g:'linear-gradient(135deg,#1a0d33 0%,#4a1a66 50%,#7a2a99 100%)', h:260, name:'Valentina R.' },
-    { g:'linear-gradient(135deg,#001a1a 0%,#004a4a 50%,#008888 100%)', h:130, name:'Camilo S.' }, // landscape
-    { g:'linear-gradient(135deg,#1a0000 0%,#6a1a00 50%,#cc3300 100%)', h:310, name:'Diego M.' },
-    { g:'linear-gradient(135deg,#0a0a2a 0%,#1a2a6a 50%,#3a4aaa 100%)', h:190, name:'Sofía L.' },
-    { g:'linear-gradient(135deg,#1a1500 0%,#5a4a00 50%,#aa8800 100%)', h:115, name:'Matías P.' }, // landscape
-    { g:'linear-gradient(135deg,#001a0a 0%,#005a22 50%,#009944 100%)', h:280, name:'Lucía C.' },
-  ],
-  2: [ // Dibuja la Cabeza — 5 items, 1 landscape
-    { g:'linear-gradient(135deg,#0a1628 0%,#1e3a5f 50%,#2e6a9f 100%)', h:295, name:'Andrés V.' },
-    { g:'linear-gradient(135deg,#1a000a 0%,#6a1a00 50%,#cc3300 100%)', h:120, name:'Daniela F.' }, // landscape
-    { g:'linear-gradient(135deg,#001018 0%,#003355 50%,#006699 100%)', h:240, name:'Isabela M.' },
-    { g:'linear-gradient(135deg,#180a00 0%,#4a1800 50%,#882200 100%)', h:175, name:'Rodrigo T.' },
-    { g:'linear-gradient(135deg,#0a1800 0%,#2a4a00 50%,#558800 100%)', h:285, name:'Camila V.' },
-  ],
-  3: [ // Anatomía — 7 items, 2 landscape
-    { g:'linear-gradient(135deg,#1a0a0a 0%,#6a1a1a 50%,#cc3333 100%)', h:210, name:'Valentina R.' },
-    { g:'linear-gradient(135deg,#0a0a2a 0%,#2a2a6a 50%,#4a4aaa 100%)', h:300, name:'Diego M.' },
-    { g:'linear-gradient(135deg,#001a0a 0%,#005a22 50%,#009944 100%)', h:115, name:'Sofía L.' }, // landscape
-    { g:'linear-gradient(135deg,#1a0d33 0%,#4a1a66 50%,#8833cc 100%)', h:255, name:'Camilo S.' },
-    { g:'linear-gradient(135deg,#1a1500 0%,#6a5500 50%,#cc9900 100%)', h:130, name:'Andrés V.' }, // landscape
-    { g:'linear-gradient(135deg,#180a00 0%,#5a2200 50%,#aa4400 100%)', h:270, name:'Lucía C.' },
-    { g:'linear-gradient(135deg,#001018 0%,#003a55 50%,#0077aa 100%)', h:195, name:'Matías P.' },
-  ],
-  4: [ // Pinta Escenas — 6 items, 1 landscape
-    { g:'linear-gradient(135deg,#0a0a1f 0%,#1a1a4e 50%,#3a3a99 100%)', h:280, name:'Daniela F.' },
-    { g:'linear-gradient(135deg,#001818 0%,#004a4a 50%,#009999 100%)', h:120, name:'Isabela M.' }, // landscape
-    { g:'linear-gradient(135deg,#1a1500 0%,#5a4a00 50%,#aa8800 100%)', h:340, name:'Camila V.' },
-    { g:'linear-gradient(135deg,#0a1628 0%,#1e3a5f 50%,#3a6aaa 100%)', h:180, name:'Rodrigo T.' },
-    { g:'linear-gradient(135deg,#1a000a 0%,#5a0022 50%,#aa0044 100%)', h:255, name:'Valentina R.' },
-    { g:'linear-gradient(135deg,#0a1800 0%,#224400 50%,#448800 100%)', h:190, name:'Diego M.' },
-  ],
-};
-
-function AlumnosCarousel({ courseId }) {
-  const items = SW_BY_COURSE[courseId] || SW_BY_COURSE[1];
-  const total = items.length;
-  const [idx, setIdx] = useState(0);
-
-  const prev = () => setIdx(i => (i - 1 + total) % total);
-  const next = () => setIdx(i => (i + 1) % total);
-
-  return (
-    <div style={{ position:'relative', width:'100%', aspectRatio:'4/5', overflow:'hidden', background:'#111' }}>
-
-      {/* All slides stacked — active one on top with opacity:1, rest hidden */}
-      {items.map((item, i) => (
-        <div key={i} style={{
-          position: 'absolute', inset: 0,
-          background: item.g,
-          opacity: i === idx ? 1 : 0,
-          zIndex: i === idx ? 2 : 1,
-          transition: 'opacity 0.55s ease',
-        }} />
-      ))}
-
-      {/* Name label */}
-      <div style={{
-        position:'absolute', bottom:0, left:0, right:0, zIndex:10,
-        background:'linear-gradient(to top, rgba(0,0,0,0.68) 0%, transparent 100%)',
-        padding:'2rem 1.2rem 0.9rem',
-        pointerEvents:'none',
-      }}>
-        <span style={{ fontFamily:'var(--fh)', fontSize:'0.7rem', fontWeight:700, letterSpacing:'0.16em', color:'#fff', textTransform:'uppercase' }}>
-          {items[idx].name}
-        </span>
-      </div>
-
-      {/* Prev arrow */}
-      <button onClick={prev} style={{
-        position:'absolute', left:'0.5rem', top:'50%', transform:'translateY(-50%)',
-        zIndex:11, background:'rgba(0,0,0,0.25)', border:'none',
-        color:'rgba(255,255,255,0.7)', width:26, height:26,
-        display:'flex', alignItems:'center', justifyContent:'center',
-        cursor:'pointer', fontSize:'1rem', lineHeight:1,
-      }}>‹</button>
-
-      {/* Next arrow */}
-      <button onClick={next} style={{
-        position:'absolute', right:'0.5rem', top:'50%', transform:'translateY(-50%)',
-        zIndex:11, background:'rgba(0,0,0,0.25)', border:'none',
-        color:'rgba(255,255,255,0.7)', width:26, height:26,
-        display:'flex', alignItems:'center', justifyContent:'center',
-        cursor:'pointer', fontSize:'1rem', lineHeight:1,
-      }}>›</button>
-
-      {/* Dot indicators */}
-      <div style={{
-        position:'absolute', bottom:'0.7rem', right:'0.8rem', zIndex:11,
-        display:'flex', gap:4,
-      }}>
-        {items.map((_, i) => (
-          <button key={i} onClick={() => setIdx(i)} style={{
-            width: i === idx ? 14 : 5, height:5,
-            borderRadius:3, border:'none', cursor:'pointer', padding:0,
-            background: i === idx ? 'var(--clr-orange)' : 'rgba(255,255,255,0.35)',
-            transition:'width 0.25s ease, background 0.25s ease',
-          }} />
-        ))}
-      </div>
-
-    </div>
-  );
-}
-
-
-const MEMPHIS_AVATARS = [
-  // 1 — Valentina R. — warm coral + geometric
-  ({ size=40 }) => (
-    <svg width={size} height={size} viewBox="0 0 40 40" style={{ borderRadius:'50%', flexShrink:0 }}>
-      <clipPath id="mp1"><circle cx="20" cy="20" r="20"/></clipPath>
-      <g clipPath="url(#mp1)">
-        <rect width="40" height="40" fill="#F2A07B"/>
-        <circle cx="8" cy="8" r="5" fill="#FF6B6B" opacity=".7"/>
-        <rect x="26" y="4" width="8" height="8" fill="#FFE066" opacity=".8" transform="rotate(20 30 8)"/>
-        <circle cx="34" cy="28" r="4" fill="#7B5EA7" opacity=".6"/>
-        <rect x="2" y="28" width="6" height="6" fill="#4ECDC4" opacity=".7" transform="rotate(-15 5 31)"/>
-        {/* face */}
-        <circle cx="20" cy="19" r="11" fill="#FDDBB4"/>
-        <circle cx="16.5" cy="17" r="1.8" fill="#3A2A1A"/>
-        <circle cx="23.5" cy="17" r="1.8" fill="#3A2A1A"/>
-        <circle cx="17" cy="16.4" r="0.6" fill="#fff"/>
-        <circle cx="24" cy="16.4" r="0.6" fill="#fff"/>
-        <path d="M15.5 22 Q20 25.5 24.5 22" stroke="#3A2A1A" strokeWidth="1.4" fill="none" strokeLinecap="round"/>
-        <circle cx="14.5" cy="20.5" r="2" fill="#FF9A7B" opacity=".5"/>
-        <circle cx="25.5" cy="20.5" r="2" fill="#FF9A7B" opacity=".5"/>
-      </g>
-    </svg>
-  ),
-  // 2 — Camilo S. — teal + triangles
-  ({ size=40 }) => (
-    <svg width={size} height={size} viewBox="0 0 40 40" style={{ borderRadius:'50%', flexShrink:0 }}>
-      <clipPath id="mp2"><circle cx="20" cy="20" r="20"/></clipPath>
-      <g clipPath="url(#mp2)">
-        <rect width="40" height="40" fill="#1A7A6E"/>
-        <polygon points="2,2 10,2 6,9" fill="#FFE066" opacity=".8"/>
-        <polygon points="30,5 40,5 35,14" fill="#FF6B6B" opacity=".7"/>
-        <polygon points="0,32 8,32 4,40" fill="#4ECDC4" opacity=".8"/>
-        <circle cx="35" cy="35" r="6" fill="#7B5EA7" opacity=".5"/>
-        <circle cx="20" cy="19" r="11" fill="#C8A97A"/>
-        <circle cx="16.5" cy="17" r="1.8" fill="#2A1A0A"/>
-        <circle cx="23.5" cy="17" r="1.8" fill="#2A1A0A"/>
-        <circle cx="17" cy="16.4" r="0.6" fill="#fff"/>
-        <circle cx="24" cy="16.4" r="0.6" fill="#fff"/>
-        <path d="M15.5 22 Q20 25.5 24.5 22" stroke="#2A1A0A" strokeWidth="1.4" fill="none" strokeLinecap="round"/>
-        <circle cx="14.5" cy="20.5" r="2" fill="#D4956A" opacity=".5"/>
-        <circle cx="25.5" cy="20.5" r="2" fill="#D4956A" opacity=".5"/>
-      </g>
-    </svg>
-  ),
-  // 3 — Diego M. — purple + dots
-  ({ size=40 }) => (
-    <svg width={size} height={size} viewBox="0 0 40 40" style={{ borderRadius:'50%', flexShrink:0 }}>
-      <clipPath id="mp3"><circle cx="20" cy="20" r="20"/></clipPath>
-      <g clipPath="url(#mp3)">
-        <rect width="40" height="40" fill="#5A2D82"/>
-        {[6,14,22,30,38].map(x => [4,12,20,28,36].map(y => (
-          <circle key={`${x}${y}`} cx={x} cy={y} r="1.5" fill="#FFE066" opacity=".4"/>
-        )))}
-        <circle cx="20" cy="19" r="11" fill="#E8C49A"/>
-        <circle cx="16.5" cy="17" r="1.8" fill="#1A0A2A"/>
-        <circle cx="23.5" cy="17" r="1.8" fill="#1A0A2A"/>
-        <circle cx="17" cy="16.4" r="0.6" fill="#fff"/>
-        <circle cx="24" cy="16.4" r="0.6" fill="#fff"/>
-        <path d="M15.5 22 Q20 25.5 24.5 22" stroke="#1A0A2A" strokeWidth="1.4" fill="none" strokeLinecap="round"/>
-        <rect x="7" y="28" width="26" height="12" fill="#5A2D82" rx="6"/>
-      </g>
-    </svg>
-  ),
-  // 4 — Sofía L. — yellow + squiggles
-  ({ size=40 }) => (
-    <svg width={size} height={size} viewBox="0 0 40 40" style={{ borderRadius:'50%', flexShrink:0 }}>
-      <clipPath id="mp4"><circle cx="20" cy="20" r="20"/></clipPath>
-      <g clipPath="url(#mp4)">
-        <rect width="40" height="40" fill="#FFD54F"/>
-        <path d="M0 8 Q5 4 10 8 Q15 12 20 8 Q25 4 30 8 Q35 12 40 8" stroke="#FF6B6B" strokeWidth="2" fill="none" opacity=".7"/>
-        <path d="M0 16 Q5 12 10 16 Q15 20 20 16 Q25 12 30 16 Q35 20 40 16" stroke="#7B5EA7" strokeWidth="2" fill="none" opacity=".6"/>
-        <circle cx="20" cy="19" r="11" fill="#FDDBB4"/>
-        <circle cx="16.5" cy="17" r="1.8" fill="#3A2000"/>
-        <circle cx="23.5" cy="17" r="1.8" fill="#3A2000"/>
-        <circle cx="17" cy="16.4" r="0.6" fill="#fff"/>
-        <circle cx="24" cy="16.4" r="0.6" fill="#fff"/>
-        <path d="M15.5 22 Q20 25.5 24.5 22" stroke="#3A2000" strokeWidth="1.4" fill="none" strokeLinecap="round"/>
-        <circle cx="14.5" cy="20.5" r="2" fill="#FFB347" opacity=".5"/>
-        <circle cx="25.5" cy="20.5" r="2" fill="#FFB347" opacity=".5"/>
-        {/* hair */}
-        <path d="M10 18 Q9 10 20 8 Q31 10 30 18" fill="#8B4513" opacity=".9"/>
-      </g>
-    </svg>
-  ),
-  // 5 — Matías P. — navy + stars
-  ({ size=40 }) => (
-    <svg width={size} height={size} viewBox="0 0 40 40" style={{ borderRadius:'50%', flexShrink:0 }}>
-      <clipPath id="mp5"><circle cx="20" cy="20" r="20"/></clipPath>
-      <g clipPath="url(#mp5)">
-        <rect width="40" height="40" fill="#0D2B4E"/>
-        <polygon points="6,4 7,7 10,7 7.5,9 8.5,12 6,10 3.5,12 4.5,9 2,7 5,7" fill="#FFE066" opacity=".9"/>
-        <polygon points="32,6 33,9 36,9 33.5,11 34.5,14 32,12 29.5,14 30.5,11 28,9 31,9" fill="#FFE066" opacity=".7"/>
-        <polygon points="18,2 19,5 22,5 19.5,7 20.5,10 18,8 15.5,10 16.5,7 14,5 17,5" fill="#FF6B6B" opacity=".7"/>
-        <circle cx="20" cy="19" r="11" fill="#D4A574"/>
-        <circle cx="16.5" cy="17" r="1.8" fill="#1A0A00"/>
-        <circle cx="23.5" cy="17" r="1.8" fill="#1A0A00"/>
-        <circle cx="17" cy="16.4" r="0.6" fill="#fff"/>
-        <circle cx="24" cy="16.4" r="0.6" fill="#fff"/>
-        <path d="M15.5 22 Q20 25.5 24.5 22" stroke="#1A0A00" strokeWidth="1.4" fill="none" strokeLinecap="round"/>
-      </g>
-    </svg>
-  ),
-  // 6 — Lucía C. — green + triangles + curly hair
-  ({ size=40 }) => (
-    <svg width={size} height={size} viewBox="0 0 40 40" style={{ borderRadius:'50%', flexShrink:0 }}>
-      <clipPath id="mp6"><circle cx="20" cy="20" r="20"/></clipPath>
-      <g clipPath="url(#mp6)">
-        <rect width="40" height="40" fill="#1B5E3B"/>
-        <rect x="0" y="0" width="10" height="10" fill="#FFE066" opacity=".6" transform="rotate(30 5 5)"/>
-        <rect x="30" y="2" width="8" height="8" fill="#4ECDC4" opacity=".7" transform="rotate(15 34 6)"/>
-        <rect x="0" y="30" width="8" height="8" fill="#FF6B6B" opacity=".6" transform="rotate(-20 4 34)"/>
-        <rect x="32" y="30" width="9" height="9" fill="#FFE066" opacity=".5" transform="rotate(10 36 34)"/>
-        {/* curly hair */}
-        <ellipse cx="20" cy="12" rx="12" ry="8" fill="#3A1A00" opacity=".95"/>
-        <circle cx="10" cy="16" r="4" fill="#3A1A00" opacity=".95"/>
-        <circle cx="30" cy="16" r="4" fill="#3A1A00" opacity=".95"/>
-        <circle cx="20" cy="19" r="11" fill="#FDDBB4"/>
-        <circle cx="16.5" cy="17.5" r="1.8" fill="#1A0800"/>
-        <circle cx="23.5" cy="17.5" r="1.8" fill="#1A0800"/>
-        <circle cx="17" cy="16.9" r="0.6" fill="#fff"/>
-        <circle cx="24" cy="16.9" r="0.6" fill="#fff"/>
-        <path d="M15.5 22.5 Q20 26 24.5 22.5" stroke="#1A0800" strokeWidth="1.4" fill="none" strokeLinecap="round"/>
-        <circle cx="14.5" cy="21" r="2" fill="#FF9A7B" opacity=".45"/>
-        <circle cx="25.5" cy="21" r="2" fill="#FF9A7B" opacity=".45"/>
-      </g>
-    </svg>
-  ),
-];
-
-function MempAvatar({ idx, size=40 }) {
-  const Comp = MEMPHIS_AVATARS[idx % MEMPHIS_AVATARS.length];
-  return <Comp size={size} />;
-}
-
-function CourseDetailPage({ course, lang, goTo, goToRegister, setCourse, onLogin, addPurchase }) {
-  const ref = useReveal();
-  const [buyModal, setBuyModal] = useState(false);
-  const [buyDone, setBuyDone] = useState(false);
-  const [bundleIsland, setBundleIsland] = useState(false);
-  const [subModal, setSubModal] = useState(false);
-  if (!course) return null;
-  const t = (es, en) => lang === 'es' ? es : en;
-
-  const handleCourseSuccess = () => {
-    if (onLogin) onLogin();
-    if (addPurchase) addPurchase({ id:`course-${course.id}`, name: course.title_es, type:'course', gradient:course.gradient, price:'$17' });
-    setBuyDone(true);
-  };
-
-  const handleSubSuccess = () => {
-    if (onLogin) onLogin();
-    setSubModal(false);
-    goTo('plans');
-  };
-
-  return (
-    <>
-    <div ref={ref}>
-      {/* ── Prev / Next course navigation (top) ── */}
-      {(() => {
-        const currentIdx = COURSES.findIndex(c => c.id === course.id);
-        const prevCourse = currentIdx > 0 ? COURSES[currentIdx - 1] : null;
-        const nextCourse = currentIdx < COURSES.length - 1 ? COURSES[currentIdx + 1] : null;
-        const btnStyle = (dir) => ({
-          flex: dir === 'next' ? 'none' : 1,
-          marginLeft: dir === 'next' ? 'auto' : 0,
-          display:'flex', alignItems:'center',
-          justifyContent: dir === 'next' ? 'flex-end' : 'flex-start',
-          gap:'0.5rem', padding:'0.5rem 1.4rem',
-          background:'none', border:'none', cursor:'pointer',
-          fontFamily:'var(--fh)', transition:'background 0.18s',
-        });
-        const labelStyle = (isSpecial) => ({
-          fontSize:'0.82rem', fontWeight:800, letterSpacing:'0.14em',
-          textTransform:'uppercase', color: isSpecial ? 'var(--clr-orange)' : 'var(--clr-black)',
-        });
-        return (
-          <div style={{ display:'flex', alignItems:'center', borderBottom:'1px solid var(--clr-border)', minHeight:0 }}>
-            {/* LEFT — Prev */}
-            {prevCourse ? (
-              <button style={btnStyle('prev')}
-                onClick={() => { setCourse(prevCourse); window.scrollTo(0,0); }}
-                onMouseEnter={e=>e.currentTarget.style.background='rgba(255,69,0,0.04)'}
-                onMouseLeave={e=>e.currentTarget.style.background='none'}
-              >
-                <IcoArrL />
-                <span style={labelStyle(false)}>{t('CURSO ANTERIOR','PREVIOUS COURSE')}</span>
-              </button>
-            ) : <div style={{ flex:1 }} />}
-
-            {/* RIGHT — Next */}
-            {nextCourse ? (
-              <button style={btnStyle('next')}
-                onClick={() => { setCourse(nextCourse); window.scrollTo(0,0); }}
-                onMouseEnter={e=>e.currentTarget.style.background='rgba(255,69,0,0.04)'}
-                onMouseLeave={e=>e.currentTarget.style.background='none'}
-              >
-                <span style={labelStyle(false)}>{t('SIGUIENTE CURSO','NEXT COURSE')}</span>
-                <IcoArr />
-              </button>
-            ) : (
-              <button style={btnStyle('next')}
-                onClick={() => goTo('vivo')}
-                onMouseEnter={e=>e.currentTarget.style.background='rgba(255,69,0,0.04)'}
-                onMouseLeave={e=>e.currentTarget.style.background='none'}
-              >
-                <span style={labelStyle(true)}>{t('REVISIONES Y ASESORÍA','MENTORSHIP & REVIEWS')}</span>
-                <IcoArr />
-              </button>
-            )}
-          </div>
-        );
-      })()}
-
-      <div className="detail-split" style={{ alignItems:'stretch' }}>
-        {/* Visual col: full-height carousel */}
-        <div className="anim">
-          <div className="detail-carousel-wrap">
-            <DetailMiniCarousel gradient={course.gradient} aspectRatio="1/1" />
-          </div>
-        </div>
-        <div className="anim d1" style={{ display:'flex', flexDirection:'column', gap:'0' }}>
-          <div>
-            <button className="detail-back" onClick={() => goTo('cursos')}>
-              <IcoArrL /> {t('TODOS LOS CURSOS','ALL COURSES')}
-            </button>
-            <div style={{ display:'flex', alignItems:'center', marginBottom:'0.7rem' }}>
-              <p className="course-level" style={{ margin:0 }}>{t(course.level_es, course.level_en)}</p>
-              <div style={{ marginLeft:'auto', display:'flex', alignItems:'center', gap:'0.3rem' }}>
-                <span style={{ color:'var(--clr-orange)', fontSize:'1.17rem', letterSpacing:'2px', lineHeight:1 }}>★★★★★</span>
-                <span style={{ fontFamily:'var(--fh)', fontWeight:900, fontSize:'1.23rem', color:'var(--clr-black)' }}>{course.rating || 4.9}</span>
-                <span style={{ fontFamily:'var(--fb)', fontSize:'1.02rem', color:'var(--clr-muted)' }}>({(course.reviews || 1248).toLocaleString()})</span>
-              </div>
-            </div>
-            <h2 className="detail-title">{t(course.title_es, course.title_en)}</h2>
-            <p className="detail-long">{t(course.long_es, course.long_en)}</p>
-            <div className="feat-chips" style={{ marginTop:'0.8rem' }}>
-              {(t(course.features_es, course.features_en) || []).map((f,i) => (
-                <span key={i} className="feat-chip">{f}</span>
-              ))}
-            </div>
-          </div>
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'1rem', alignItems:'stretch', marginTop:'1.2rem' }}>
-            {/* Col 1 — SUSCRIPCIÓN */}
-            <div style={{ display:'flex', flexDirection:'column', gap:'0.7rem' }}>
-              <div className="dp-block" style={{ flex:1, display:'flex', flexDirection:'column' }}>
-                <div className="dp-label" style={{ fontSize:'0.82rem', letterSpacing:'0.12em', color:'var(--clr-orange)' }}>{t('SUSCRIPCIÓN','SUBSCRIPTION')}</div>
-                <div className="dp-val">$4.99</div>
-                <div className="dp-period">{t('por mes','per month')}</div>
-                <div style={{ fontFamily:'var(--fh)', fontSize:'0.62rem', fontWeight:700, letterSpacing:'0.1em', color:'var(--clr-orange)', marginTop:'3px', textTransform:'uppercase' }}>
-                  ✦ {t('Acceso a TODOS los cursos','Access to ALL courses')}
-                </div>
-              </div>
-              <button className="btn btn-orange" style={{ fontWeight:800 }} onClick={() => setSubModal(true)}>
-                {t('SUSCRIBIRSE','SUBSCRIBE')} <IcoArr />
-              </button>
-            </div>
-            {/* Col 2 — COMPRA PERMANENTE */}
-            <div style={{ display:'flex', flexDirection:'column', gap:'0.7rem' }}>
-              <div className="dp-block" style={{ flex:1, display:'flex', flexDirection:'column' }}>
-                <div className="dp-label" style={{ fontSize:'0.82rem', letterSpacing:'0.12em', color:'var(--clr-black)' }}>{t('COMPRA PERMANENTE','PERMANENT BUY')}</div>
-                <div className="dp-val">$17</div>
-                <div className="dp-period">{t('pago único · solo este curso','one-time · this course only')}</div>
-                {/* spacer aligns button with SUSCRIBIRSE */}
-                <div style={{ fontFamily:'var(--fh)', fontSize:'0.62rem', fontWeight:700, letterSpacing:'0.1em', color:'transparent', marginTop:'3px', textTransform:'uppercase', userSelect:'none' }}>
-                  ✦ &nbsp;
-                </div>
-              </div>
-              <button className="btn btn-outline" onClick={() => setBuyModal(true)}>
-                {t('COMPRAR AHORA','BUY NOW')}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {(() => {
-        const [activeTip, setActiveTip] = React.useState(null);
-        const lessons = t(course.curriculum_es, course.curriculum_en) || [
-          'Fundamentos de Luz','Valores y Contraste','Color y Temperatura','Composición',
-          'Materiales y Texturas','Atmósfera y Niebla','Personaje en Escena','Proyecto Final',
-        ];
-        const tips = activeTip !== null ? ((LESSON_TIPS[course.id] || [])[activeTip] || []) : [];
-        const activeTitle = activeTip !== null ? lessons[activeTip] : '';
-        return (
-          <>
-            <div className="curr-subtitle anim">{t('CURRICULUM','CURRICULUM')}</div>
-            <div className="curriculum-strip anim">
-              {lessons.map((lessonTitle, i) => (
-                <CurrItem
-                  key={i}
-                  lessonNum={i + 1}
-                  lessonTitle={lessonTitle}
-                  centered={course.id === 2}
-                  active={activeTip === i}
-                  onSelect={() => setActiveTip(activeTip === i ? null : i)}
-                  lang={lang}
-                />
-              ))}
-            </div>
-            <div className={`curr-tip-panel${activeTip !== null ? ' ctp-open' : ''}`}>
-              {tips.length > 0 && (
-                <div className="curr-tip-grid">
-                  {tips.map((tip, ti) => (
-                    <div key={ti} className="curr-tip-item">{tip}</div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </>
-        );
-      })()}
-
-      <div className="course-alumnos-resenas" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'0', alignItems:'start', marginTop:'-1px' }}>
-
-        {/* ── LEFT: MIS ALUMNOS gallery ── */}
-        <div style={{ padding:'28px 3vw 42px 4vw', borderRight:'1px solid var(--clr-border)' }}>
-          <div className="anim">
-            <span className="s-tag">{t('RESULTADOS','RESULTS')}</span>
-            <h2 style={{ fontFamily:'var(--fh)', fontWeight:900, fontSize:'clamp(2rem,4vw,4rem)', letterSpacing:'-0.025em', textTransform:'uppercase', color:'var(--clr-black)', lineHeight:0.92, margin:'0.3rem 0 1.2rem' }}>{t('MIS ALUMNOS','MY STUDENTS')}</h2>
-          </div>
-          <div>
-            <AlumnosCarousel courseId={course.id} />
-          </div>
-        </div>
-
-        {/* ── RIGHT: RESEÑAS vertical list ── */}
-        <div style={{ padding:'28px 4vw 42px 3vw' }}>
-          <div className="anim">
-            <span className="s-tag">{t('OPINIONES VERIFICADAS','VERIFIED REVIEWS')}</span>
-            <h2 style={{ fontFamily:'var(--fh)', fontWeight:900, fontSize:'clamp(2rem,4vw,4rem)', letterSpacing:'-0.025em', textTransform:'uppercase', color:'var(--clr-black)', lineHeight:0.92, margin:'0.3rem 0 0' }}>{t('RESEÑAS','REVIEWS')}</h2>
-            <div style={{ display:'flex', alignItems:'center', gap:'0.5rem', marginBottom:'1.4rem', marginTop:'0.6rem', flexWrap:'wrap' }}>
-              <span style={{ color:'var(--clr-orange)', fontSize:'0.85rem', letterSpacing:'2px' }}>★★★★★</span>
-              <span style={{ fontFamily:'var(--fh)', fontWeight:900, fontSize:'0.95rem', color:'var(--clr-black)' }}>{course.rating || 4.9}</span>
-              <span style={{ fontFamily:'var(--fb)', fontSize:'0.72rem', color:'var(--clr-muted)' }}>· {(course.reviews || 1248).toLocaleString()} {t('reseñas verificadas','verified reviews')}</span>
-            </div>
-          </div>
-          <div className="anim d1" style={{ display:'flex', flexDirection:'column', gap:'0', borderTop:'1px solid var(--clr-border)' }}>
-            {TESTIMONIALS.map((tm, i) => (
-              <div key={tm.id} style={{
-                display:'flex', alignItems:'flex-start', gap:'0.9rem',
-                padding:'1.1rem 0', borderBottom:'1px solid var(--clr-border)',
-              }}>
-                <MempAvatar idx={i} size={38} />
-                <div style={{ flex:1, minWidth:0 }}>
-                  <div style={{ display:'flex', alignItems:'center', gap:'0.5rem', marginBottom:'0.2rem', flexWrap:'wrap' }}>
-                    <span style={{ fontFamily:'var(--fh)', fontWeight:800, fontSize:'0.78rem', letterSpacing:'0.06em', textTransform:'uppercase', color:'var(--clr-black)' }}>{tm.name}</span>
-                    <span style={{ fontSize:'0.82rem' }}>{tm.flag}</span>
-                    <span style={{ color:'var(--clr-orange)', fontSize:'0.68rem', letterSpacing:'1.5px' }}>{'★'.repeat(tm.stars)}</span>
-                  </div>
-                  <p style={{ fontFamily:'var(--fb)', fontSize:'0.82rem', lineHeight:1.6, color:'var(--clr-muted)', margin:0, fontStyle:'italic' }}>
-                    "{t(tm.es, tm.en)}"
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-      </div>
-
-      <div className="line" />
-
-      <div className="upsell-dark anim" style={{ cursor:'pointer' }} onClick={() => goTo('vivo')}>
-        <div style={{ padding:'60px 4vw 80px', marginLeft:'5%' }}>
-          <div style={{ fontFamily:'var(--fh)', fontWeight:900, fontSize:'clamp(1.6rem,4vw,4rem)', letterSpacing:'-0.02em', textTransform:'uppercase', color:'var(--clr-orange)', lineHeight:1, marginBottom:'0.3em' }}>
-            {t('ACELERA TU APRENDIZAJE','ACCELERATE YOUR LEARNING')}
-          </div>
-          <h2 className="upsell-title">{t('CLASES\nEN VIVO','LIVE\nCLASSES')}</h2>
-          <p className="upsell-sub">
-            {t(
-              'La versión en Vivo del Curso incluye asesoramiento, correcciones, proyecto final y preguntas en vivo. Acelera tu aprendizaje ahora.',
-              'The Live version of the Course includes mentoring, corrections, final project and live Q&A. Accelerate your learning now.'
-            )}
-          </p>
-          <p className="upsell-sub upsell-sub-mobile" style={{ display:'none' }}>
-            {t(
-              'La versión en Vivo del Curso incluye asesoramiento, correcciones, proyecto final y preguntas en vivo. Acelera tu aprendizaje ahora.',
-              'The Live version of the Course includes mentoring, corrections, final project and live Q&A. Accelerate your learning now.'
-            )}
-          </p>
-          <button className="btn btn-orange" onClick={e => { e.stopPropagation(); goTo('vivo'); }}>
-            {t('VER MEMBRESÍAS','SEE MEMBERSHIPS')} <IcoArr />
-          </button>
-        </div>
-      </div>
-    </div>
-
-      {buyModal && (
-        <div className="island-backdrop" onClick={() => setBuyModal(false)}>
-          <div className="island-box" onClick={e => e.stopPropagation()}>
-            <button className="island-close" onClick={() => setBuyModal(false)}>✕</button>
-            <div className="island-img" style={{ background: course.gradient }} />
-            <div className="island-body">
-              <div className="island-edition">{t('ACCESO COMPLETO AL CURSO','FULL COURSE ACCESS')}</div>
-              <div className="island-title">{t(course.title_es, course.title_en)}</div>
-              <div className="island-price">$17</div>
-              {buyDone ? (
-                <div style={{ textAlign:'center', padding:'1rem 0' }}>
-                  <div style={{ fontFamily:'var(--fh)', fontWeight:800, fontSize:'1.1rem', color:'var(--clr-orange)', marginBottom:'0.4rem' }}>✓ {t('¡CURSO ACTIVADO!','COURSE ACTIVATED!')}</div>
-                  <p style={{ fontFamily:'var(--fb)', fontSize:'0.8rem', color:'var(--clr-muted)', marginBottom:'1rem' }}>{t('Acceso permanente disponible en Mis Clases.','Permanent access available in My Classes.')}</p>
-                  <button className="btn btn-orange" style={{ width:'100%', justifyContent:'center' }} onClick={() => { setBuyModal(false); goTo('dashboard'); }}>{t('IR A MIS CLASES','GO TO MY CLASSES')} <IcoArr /></button>
-                </div>
-              ) : (
-                <>
-                  <p style={{ fontFamily:'var(--fb)', fontSize:'0.82rem', color:'var(--clr-muted)', marginBottom:'1rem', lineHeight:1.55 }}>
-                    {t('Inicia sesión o crea una cuenta para activar tu acceso permanente al curso.','Log in or create an account to activate your permanent course access.')}
-                  </p>
-                  <MiniLoginForm lang={lang} onSuccess={handleCourseSuccess} />
-                  <div
-                    onClick={() => { setBuyModal(false); setBundleIsland(true); }}
-                    style={{ marginTop:'0.9rem', background:'var(--clr-black)', padding:'1rem 1.2rem', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'space-between', gap:'0.8rem' }}
-                  >
-                    <div>
-                      <div style={{ fontFamily:'var(--fh)', fontWeight:800, fontSize:'0.68rem', letterSpacing:'0.18em', color:'var(--clr-orange)', marginBottom:'4px' }}>★ {t('MEJOR VALOR','BEST VALUE')}</div>
-                      <div style={{ fontFamily:'var(--fh)', fontWeight:900, fontSize:'1.15rem', letterSpacing:'0.02em', color:'#E8E4DC', textTransform:'uppercase', lineHeight:1.1 }}>{t('BUNDLE — TODOS LOS CURSOS','BUNDLE — ALL COURSES')}</div>
-                    </div>
-                    <div style={{ textAlign:'right', flexShrink:0 }}>
-                      <div style={{ fontFamily:'var(--fh)', fontWeight:900, fontSize:'1.8rem', color:'#fff', lineHeight:1 }}>$47</div>
-                      <div style={{ fontFamily:'var(--fb)', fontSize:'0.68rem', color:'#888' }}>{t('pago único','one-time')}</div>
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-      {subModal && (
-        <div className="island-backdrop" onClick={() => setSubModal(false)}>
-          <div className="island-box" onClick={e => e.stopPropagation()}>
-            <button className="island-close" onClick={() => setSubModal(false)}>✕</button>
-            <div className="island-img" style={{ background:'linear-gradient(135deg,#FF4500 0%,#c43800 40%,#7a2200 100%)' }} />
-            <div className="island-body">
-              <div className="island-edition">{t('ACCESO TOTAL · TODOS LOS CURSOS','FULL ACCESS · ALL COURSES')}</div>
-              <div className="island-title">{t('SUSCRIPCIÓN','SUBSCRIPTION')}</div>
-              <div className="island-price">$4.99<span style={{ fontFamily:'var(--fb)', fontWeight:400, fontSize:'1rem', color:'var(--clr-muted)', letterSpacing:0 }}>/mes</span></div>
-              <div style={{ background:'rgba(255,69,0,0.07)', border:'1px solid rgba(255,69,0,0.25)', borderRadius:'2px', padding:'8px 12px', marginBottom:'1rem' }}>
-                <div style={{ fontFamily:'var(--fh)', fontWeight:800, fontSize:'0.72rem', letterSpacing:'0.1em', color:'var(--clr-orange)', textTransform:'uppercase', marginBottom:'2px' }}>
-                  ✦ {t('UNA SUSCRIPCIÓN — TODOS LOS CURSOS','ONE SUBSCRIPTION — ALL COURSES')}
-                </div>
-                <div style={{ fontFamily:'var(--fb)', fontSize:'0.72rem', color:'var(--clr-muted)', lineHeight:1.5 }}>
-                  {t('Accedés a los 4 cursos completos de la academia por $4.99/mes. Sin restricciones.','Get access to all 4 academy courses for $4.99/mo. No restrictions.')}
-                </div>
-              </div>
-              <MiniLoginForm lang={lang} onSuccess={handleSubSuccess} defaultTab="register" />
-            </div>
-          </div>
-        </div>
-      )}
-      {bundleIsland && (
-        <BundleIslandDetail lang={lang} onClose={() => setBundleIsland(false)} goTo={goTo} onLogin={onLogin} addPurchase={addPurchase} />
-      )}
-    </>
-  );
-}
-
-function BundleIslandDetail({ lang, onClose, goTo, onLogin, addPurchase }) {
-  const t = (es, en) => lang === 'es' ? es : en;
-  const [done, setDone] = useState(false);
-
-  const handleSuccess = () => {
-    if (onLogin) onLogin();
-    if (addPurchase) addPurchase({ id:'bundle', name:'Bundle — Todos los Cursos', type:'bundle', gradient:'linear-gradient(135deg,#0f0f1a 0%,#1a1035 30%,#2d1b5e 60%,#FF4500 100%)', price:'$47' });
-    setDone(true);
-  };
-
-  return (
-    <div className="island-backdrop" onClick={onClose}>
-      <div className="island-box" onClick={e => e.stopPropagation()}>
-        <button className="island-close" onClick={onClose}>✕</button>
-        <div className="island-img" style={{ background:'linear-gradient(135deg, #0f0f1a 0%, #1a1035 30%, #2d1b5e 60%, #FF4500 100%)' }} />
-        <div className="island-body">
-          <div className="island-edition">★ {t('MEJOR VALOR · ACCESO PERMANENTE','BEST VALUE · PERMANENT ACCESS')}</div>
-          <div className="island-title">{t('BUNDLE — TODOS LOS CURSOS','BUNDLE — ALL COURSES')}</div>
-          <div className="island-meta">{t('4 cursos · Ahorrás $21','4 courses · Save $21')}</div>
-          <div className="island-price">$47</div>
-          {done ? (
-            <div style={{ textAlign:'center', padding:'1rem 0' }}>
-              <div style={{ fontFamily:'var(--fh)', fontWeight:800, fontSize:'1.1rem', color:'var(--clr-orange)', marginBottom:'0.4rem' }}>✓ {t('¡BUNDLE ACTIVADO!','BUNDLE ACTIVATED!')}</div>
-              <p style={{ fontFamily:'var(--fb)', fontSize:'0.8rem', color:'var(--clr-muted)', marginBottom:'1rem' }}>{t('Acceso a los 4 cursos disponible en Mis Clases.','Access to all 4 courses available in My Classes.')}</p>
-              {goTo && <button className="btn btn-orange" style={{ width:'100%', justifyContent:'center' }} onClick={() => { onClose(); goTo('dashboard'); }}>{t('IR A MIS CLASES','GO TO MY CLASSES')} <IcoArr /></button>}
-            </div>
-          ) : (
-            <>
-              <p style={{ fontFamily:'var(--fb)', fontSize:'0.82rem', color:'var(--clr-muted)', marginBottom:'1rem', lineHeight:1.55 }}>
-                {t('Inicia sesión o crea una cuenta para activar el acceso permanente a los 4 cursos.','Log in or create an account to activate permanent access to all 4 courses.')}
-              </p>
-              <MiniLoginForm lang={lang} onSuccess={handleSuccess} />
-            </>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
-function LivePage({ lang, goTo, setCourse }) {
+function LivePage({ lang, goTo }) {
   const ref = useReveal();
   const inscRef = useRef(null);
   const t = (es, en) => lang === 'es' ? es : en;
@@ -3462,6 +2661,7 @@ function LivePage({ lang, goTo, setCourse }) {
   ];
   const f2 = [
     t('Incluye TODOS los beneficios de Nivel 1 y:','Includes ALL Level 1 benefits and:'),
+    t('Puede subir trabajos previos o portafolio para revisión','Can submit previous work or portfolio for review'),
     t('Prioridad en la Cola de Revisiones, Clase, Discord y Streams','Priority in Review Queue, Class, Discord & Streams'),
     t('Retroalimentación en Vivo a Profundidad (Asegurada)','In-Depth Live Feedback (Guaranteed)'),
     t('Revisiones Aseguradas todas las Sesiones de Clase','Guaranteed Reviews every Class Session'),
@@ -3522,21 +2722,21 @@ function LivePage({ lang, goTo, setCourse }) {
 
       <div className="live-course-banner anim d2"
         style={{ marginBottom:'2.4rem', cursor:'pointer' }}
-        onClick={() => { setCourse(COURSES.find(c => c.id === 4)); goTo('curso'); }}>
+        onClick={() => window.open('https://ruiveran.gumroad.com/l/dibuja-anatomia-en-accion','_blank')}>
         <div className="lcb-top">
           <div className="lcb-left">
             <div style={{ display:'flex', alignItems:'center' }}>
               <div className="lcb-eyebrow">
                 <span style={{ color:'var(--clr-black)' }}>{t('PRÓXIMA CLASE · ','NEXT CLASS · ')}</span>
-                <span style={{ color:'var(--clr-orange)' }}>{t('NIVEL AVANZADO','ADVANCED LEVEL')}</span>
+                <span style={{ color:'var(--clr-orange)' }}>{t('NIVEL INTERMEDIO','INTERMEDIATE LEVEL')}</span>
               </div>
               <div style={{ marginLeft:'auto', display:'flex', alignItems:'center', gap:'0.3rem' }}>
                 <span style={{ color:'var(--clr-orange)', fontSize:'1.1rem', letterSpacing:'1.5px' }}>★★★★★</span>
                 <span style={{ fontFamily:'var(--fh)', fontWeight:900, fontSize:'1.05rem', color:'var(--clr-black)' }}>4.9</span>
-                <span style={{ fontFamily:'var(--fb)', fontSize:'0.88rem', color:'var(--clr-muted)' }}>(884)</span>
+                <span style={{ fontFamily:'var(--fb)', fontSize:'0.88rem', color:'var(--clr-muted)' }}>(1,024)</span>
               </div>
             </div>
-            <div className="lcb-title" style={{ color:'var(--clr-black)' }}>{t('PINTA ESCENAS CON LUZ Y COLOR','PAINT SCENES WITH LIGHT & COLOR')}</div>
+            <div className="lcb-title" style={{ color:'var(--clr-black)' }}>{t('DIBUJA ANATOMÍA EN ACCIÓN','DRAW ANATOMY IN ACTION')}</div>
             <div className="feat-chips" style={{ marginTop:'0.4rem' }}>
               {[
                 t('📅 2 Meses','📅 2 Months'),
@@ -3550,12 +2750,13 @@ function LivePage({ lang, goTo, setCourse }) {
             </div>
           </div>
           <div className="lcb-bottom-row">
-            <div className="lcb-date">{t('Inicio: 10 de Agosto, 2026 · Lunes · 7:00 a 10:30 PM Lima','Starts: August 10, 2026 · Mondays · 7:00 to 10:30 PM Lima')}</div>
+            <div className="lcb-date">{t('Inicio: Por Anunciar · Lunes · 7:00 a 10:30 PM Lima','Start: TBA · Mondays · 7:00 to 10:30 PM Lima')}</div>
             <div style={{ display:'flex', gap:'0.7rem', flexWrap:'wrap' }}>
-              <button className="btn btn-outline" style={{ fontWeight:800 }}
-                onClick={e => { e.stopPropagation(); setCourse(COURSES.find(c => c.id === 4)); goTo('curso'); }}>
+              <a href="https://ruiveran.gumroad.com/l/dibuja-anatomia-en-accion" target="_blank" rel="noopener noreferrer"
+                className="btn btn-outline" style={{ fontWeight:800, textDecoration:'none' }}
+                onClick={e => e.stopPropagation()}>
                 {t('VER CLASE','VIEW CLASS')}
-              </button>
+              </a>
               <button className="btn btn-orange"
                 onClick={e => { e.stopPropagation(); scrollToForm(); }}>
                 {t('RESERVAR LUGAR','RESERVE SPOT')} <IcoArr />
@@ -3566,7 +2767,7 @@ function LivePage({ lang, goTo, setCourse }) {
         <div style={{ margin:'0 -1.8rem' }}>
           <LiveHoverCarousel
             images={SW}
-            onNavigate={() => { setCourse(COURSES.find(c => c.id === 4)); goTo('curso'); }}
+            onNavigate={() => window.open('https://ruiveran.gumroad.com/l/dibuja-anatomia-en-accion','_blank')}
           />
         </div>
       </div>
@@ -3636,13 +2837,11 @@ function LivePage({ lang, goTo, setCourse }) {
               {openFaq === faq.id && (
                 <div className="faq-a">
                   {faq.id === 'precio' && (
-                    <div className="faq-price-callout">
-                      <div className="faq-price-callout-inner">
-                        <span className="faq-price-label">{t('EL PRECIO QUE VES ES','THE PRICE YOU SEE IS')}</span>
-                        <span className="faq-price-big">{t('POR MES DE CLASES','PER MONTH OF CLASSES')}</span>
-                        <span className="faq-price-sub">{t('No es un pago único. Se cobra cada mes mientras estés inscrito/a. Puedes cancelar en cualquier momento.','Not a one-time payment. Charged monthly while enrolled. Cancel any time.')}</span>
-                      </div>
-                    </div>
+                    <p className="faq-a-text">
+                      {t('El precio que ves es ', 'The price you see is ')}
+                      <strong style={{ color:'var(--clr-orange)' }}>{t('Por Mes de Clases', 'Per Month of Classes')}</strong>
+                      {t('. No es un pago único si la clase dura más de un mes. Se paga al principio de cada mes de clase mientras estés inscrito.','. Not a one-time payment if the class runs longer than one month. Payment is made at the start of each month of class while you\'re enrolled.')}
+                    </p>
                   )}
                   {faq.id === 'pagos' && (
                     <div className="faq-payments">
@@ -3899,608 +3098,24 @@ const BRUSHES = [
     size:'35 pinceles', gradient:'linear-gradient(135deg, #0a0015 0%, #1a003a 50%, #2d0060 100%)', price:'$12' },
 ];
 
-function ArtPrintsPage({ lang, goTo, onLogin, addPurchase }) {
-  const ref = useReveal();
-  const t = (es, en) => lang === 'es' ? es : en;
-  const [island, setIsland] = useState(null);
-  const [cat, setCat] = useState('prints');
-
-  const CATS = [
-    { key:'prints',  label: t('ART PRINTS','ART PRINTS') },
-    { key:'brushes', label: t('BRUSHES','BRUSHES') },
-    { key:'gratis',  label: t('GRATIS','FREE') },
-  ];
-
-  const items = cat === 'prints' ? PRINTS : cat === 'gratis' ? GRATIS : BRUSHES;
-
-  return (
-    <div ref={ref} className="section">
-      <div className="s-header">
-        <span className="s-tag anim">{t('MIS PRODUCTOS','MY PRODUCTS')}</span>
-        <h2 className="s-title anim d1">{t('MIS PRODUCTOS','MY PRODUCTS')}</h2>
-        <p className="s-sub anim d2">
-          {t('Impresiones de alta calidad, pinceles digitales y recursos gratuitos.','High-quality prints, digital brushes and free resources.')}
-        </p>
-      </div>
-
-      {/* Category tabs */}
-      <div className="anim d1" style={{ display:'flex', gap:0, borderBottom:'1px solid var(--clr-border)', marginBottom:'2.4rem', alignItems:'center' }}>
-        {CATS.map(c => (
-          <button key={c.key} onClick={() => setCat(c.key)} style={{
-            fontFamily:'var(--fh)', fontWeight:800, fontSize:'0.82rem',
-            letterSpacing:'0.14em', textTransform:'uppercase', cursor:'pointer',
-            background: c.key === 'gratis' ? (cat === 'gratis' ? 'var(--clr-orange)' : 'transparent') : 'none',
-            border: c.key === 'gratis' ? '1.5px solid var(--clr-orange)' : 'none',
-            padding: c.key === 'gratis' ? '0.35rem 1.1rem' : '0.75rem 1.6rem',
-            margin: c.key === 'gratis' ? '0 0.5rem' : '0',
-            color: cat === c.key
-              ? (c.key === 'gratis' ? '#fff' : 'var(--clr-orange)')
-              : (c.key === 'gratis' ? 'var(--clr-orange)' : 'var(--clr-muted)'),
-            borderBottom: c.key !== 'gratis' && cat === c.key ? '2px solid var(--clr-orange)' : c.key !== 'gratis' ? '2px solid transparent' : 'none',
-            marginBottom: c.key !== 'gratis' ? '-1px' : '0',
-            transition: 'color 0.2s, background 0.2s',
-          }}>{c.label}</button>
-        ))}
-      </div>
-
-      <div className="prints-grid anim d2">
-        {items.map(p => (
-          <div key={p.id} className="print-card" style={{ cursor:'pointer' }} onClick={() => setIsland(p)}>
-            <div className="print-img" style={{ background: p.gradient }} />
-            <div className="print-body">
-              <div className="print-edition">{t(p.edition_es, p.edition_en)}</div>
-              <div className="print-name">{t(p.title_es, p.title_en)}</div>
-              <div className="print-meta">
-                <div>
-                  <div className="print-price" style={{ color: p.price === 'GRATIS' ? 'var(--clr-orange)' : undefined }}>{p.price}</div>
-                  <div className="print-size">{p.size}</div>
-                </div>
-                <button className="btn btn-orange" style={{ padding:'0.65rem 1.1rem' }} onClick={e => { e.stopPropagation(); setIsland(p); }}>
-                  {p.price === 'GRATIS' ? '↓' : <IcoCart />}
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {cat === 'prints' && (
-        <div className="guarantee-box anim d3" style={{ marginTop:'3rem' }}>
-          <div className="guarantee-icon" style={{ color:'var(--clr-orange)' }}>📦</div>
-          <div>
-            <div className="guarantee-title">{t('ENVÍO MUNDIAL · PAGO SEGURO','WORLDWIDE SHIPPING · SECURE PAYMENT')}</div>
-            <p className="guarantee-sub">
-              {t(
-                'Impresiones en papel Hahnemühle de 310g. Firmadas y numeradas en ediciones limitadas. Envíos via DHL a toda Latinoamérica, EE.UU. y Europa. Pagos via PayPal o tarjeta.',
-                'Printed on 310g Hahnemühle paper. Signed and numbered on limited editions. DHL shipping to Latin America, USA and Europe. Payment via PayPal or card.'
-              )}
-            </p>
-          </div>
-        </div>
-      )}
-      {island && <ProductIsland product={island} lang={lang} onClose={() => setIsland(null)} goTo={goTo} onLogin={onLogin} addPurchase={addPurchase} />}
-    </div>
-  );
-}
-
-/* ══════════════════════════════════════════
-   LOGIN PAGE
-══════════════════════════════════════════ */
-function LoginPage({ lang, goTo, initialTab = 'login', onLogin }) {
-  const t = (es, en) => lang === 'es' ? es : en;
-  const [tab, setTab] = useState(initialTab);
-  const [form, setForm] = useState({ email:'', pass:'', name:'' });
-  const [err, setErr] = useState('');
-
-  const submit = () => {
-    if (!form.email || !form.pass || (tab === 'register' && !form.name)) {
-      setErr(t('Por favor completa todos los campos.','Please fill in all fields.'));
-      return;
-    }
-    setErr('');
-    if (onLogin) onLogin();
-  };
-
-  return (
-    <div className="login-wrap">
-      <div className="login-box">
-        <div className="login-logo">RUIVERAN<span>.</span></div>
-
-        <div style={{ display:'flex', marginBottom:'2rem', borderBottom:'1px solid var(--clr-border)' }}>
-          {['login','register'].map(k => (
-            <button key={k} onClick={() => { setTab(k); setErr(''); }} style={{
-              flex:1, background:'none', border:'none', cursor:'pointer',
-              fontFamily:'var(--fh)', fontWeight:800, fontSize:'0.9rem',
-              letterSpacing:'0.1em', textTransform:'uppercase',
-              color: tab === k ? 'var(--clr-orange)' : 'var(--clr-muted)',
-              borderBottom: tab === k ? '2px solid var(--clr-orange)' : '2px solid transparent',
-              paddingBottom:'0.8rem', marginBottom:'-1px', transition:'color 0.2s',
-            }}>
-              {k === 'login' ? t('INICIAR SESIÓN','LOG IN') : t('REGISTRARSE','SIGN UP')}
-            </button>
-          ))}
-        </div>
-
-        <div className="login-title">{tab === 'login' ? t('Bienvenido','Welcome back') : t('Crear cuenta','Create account')}</div>
-        <div className="login-sub">{tab === 'login' ? t('Accede a tus cursos y clases.','Access your courses and classes.') : t('Únete a más de 5000 estudiantes.','Join over 5,000 students.')}</div>
-
-        {tab === 'register' && (
-          <div className="fgroup">
-            <label className="flabel">{t('NOMBRE','NAME')}</label>
-            <input className="finput" value={form.name} onChange={e => setForm({...form,name:e.target.value})} placeholder={t('Tu nombre completo','Your full name')} />
-          </div>
-        )}
-        <div className="fgroup">
-          <label className="flabel">EMAIL</label>
-          <input className="finput" type="email" value={form.email} onChange={e => setForm({...form,email:e.target.value})} placeholder="tu@email.com" />
-        </div>
-        <div className="fgroup" style={{ marginBottom:0 }}>
-          <label className="flabel">{t('CONTRASEÑA','PASSWORD')}</label>
-          <input className="finput" type="password" value={form.pass} onChange={e => setForm({...form,pass:e.target.value})} placeholder="••••••••" />
-        </div>
-        {tab === 'login' && <button className="login-forgot">{t('¿Olvidaste tu contraseña?','Forgot your password?')}</button>}
-
-        {err && <p style={{ fontFamily:'var(--fb)', fontSize:'0.78rem', color:'var(--clr-orange)', marginBottom:'1rem', marginTop:tab === 'login' ? 0 : '1rem' }}>{err}</p>}
-
-        <button className="btn btn-orange" style={{ width:'100%', justifyContent:'center', marginTop: tab === 'login' ? 0 : '1.2rem' }} onClick={() => {
-          if (tab === 'register') {
-            if (!form.email || !form.pass || !form.name) { setErr(t('Por favor completa todos los campos.','Please fill in all fields.')); return; }
-            setErr('');
-            goTo('plans');
-          } else { submit(); }
-        }}>
-          {tab === 'login' ? t('ENTRAR','LOG IN') : t('CREAR CUENTA','CREATE ACCOUNT')} <IcoArr />
-        </button>
-
-        <p className="login-footer-text">
-          {tab === 'login'
-            ? <>{t('¿No tienes cuenta? ','No account? ')}<button onClick={() => setTab('register')}>{t('Regístrate','Sign up')}</button></>
-            : <>{t('¿Ya tienes cuenta? ','Already have an account? ')}<button onClick={() => setTab('login')}>{t('Inicia sesión','Log in')}</button></>
-          }
-        </p>
-      </div>
-    </div>
-  );
-}
-
-/* ══════════════════════════════════════════
-   DASHBOARD PAGE
-══════════════════════════════════════════ */
-const VIDEO_GRADIENTS = [
-  'linear-gradient(135deg,#0f0f1a 0%,#1a1035 100%)',
-  'linear-gradient(135deg,#0a1628 0%,#1e3a5f 100%)',
-  'linear-gradient(135deg,#1a0a00 0%,#4a2000 100%)',
-  'linear-gradient(135deg,#001a1a 0%,#003333 100%)',
-  'linear-gradient(135deg,#1a0000 0%,#5a1a00 100%)',
-  'linear-gradient(135deg,#0a0a1a 0%,#1a1a4a 100%)',
-  'linear-gradient(135deg,#1a1a00 0%,#4a3300 100%)',
-  'linear-gradient(135deg,#001a0a 0%,#003322 100%)',
-];
-
-const COURSE_DOWNLOADS = {
-  1: [
-    { label_es: 'Manual — Cómo Dibujar Cualquier Cosa.pdf',  label_en: 'Manual — How to Draw Anything.pdf',       icon: '📄' },
-    { label_es: 'Guía de Ejercicios — Fundamentos.pdf',       label_en: 'Exercise Guide — Fundamentals.pdf',        icon: '📄' },
-    { label_es: 'Advanced Brush Set — Fundamentos.abr',       label_en: 'Advanced Brush Set — Fundamentals.abr',   icon: '🖌️' },
-  ],
-  2: [
-    { label_es: 'Manual — Dibuja la Cabeza Como un Experto.pdf', label_en: 'Manual — Draw the Head Like an Expert.pdf', icon: '📄' },
-    { label_es: 'Guía de Ejercicios — Cabeza.pdf',               label_en: 'Exercise Guide — Head.pdf',                icon: '📄' },
-    { label_es: 'Advanced Brush Set — Cabeza.abr',               label_en: 'Advanced Brush Set — Head.abr',            icon: '🖌️' },
-  ],
-  3: [
-    { label_es: 'Manual — Dibuja Anatomía en Acción.pdf',    label_en: 'Manual — Draw Anatomy in Action.pdf',     icon: '📄' },
-    { label_es: 'Guía de Ejercicios — Anatomía.pdf',          label_en: 'Exercise Guide — Anatomy.pdf',             icon: '📄' },
-    { label_es: 'Advanced Brush Set — Anatomía.abr',          label_en: 'Advanced Brush Set — Anatomy.abr',        icon: '🖌️' },
-  ],
-  4: [
-    { label_es: 'Manual — Pinta Escenas con Luz y Color.pdf', label_en: 'Manual — Paint Scenes with Light & Color.pdf', icon: '📄' },
-    { label_es: 'Guía de Ejercicios — Pintura.pdf',            label_en: 'Exercise Guide — Painting.pdf',               icon: '📄' },
-    { label_es: 'Advanced Brush Set — Pintura.abr',            label_en: 'Advanced Brush Set — Painting.abr',           icon: '🖌️' },
-    { label_es: 'Ilustración Final — Escena.psd',              label_en: 'Final Illustration — Scene.psd',               icon: '🎨' },
-  ],
-};
-
-const DB_COURSES = COURSES.map(c => ({
-  ...c,
-  lessons: c.curriculum_es.map((title_es, li) => ({
-    index: li,
-    title_es,
-    title_en: c.curriculum_en[li],
-    video: {
-      gradient: VIDEO_GRADIENTS[li % VIDEO_GRADIENTS.length],
-      duration: '4:00:00',
-    },
-  })),
-}));
-
-function IcoPlay() {
-  return <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>;
-}
-function IcoPause() {
-  return <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>;
-}
-function IcoDownload() {
-  return <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>;
-}
-
-function DashboardPage({ lang, goTo, onLogout, purchases }) {
-  const t = (es, en) => lang === 'es' ? es : en;
-  const [activeCourse, setActiveCourse] = useState(null); // null = welcome screen
-  const [activeLesson, setActiveLesson] = useState(DB_COURSES[0].lessons[0]);
-  const [playingVideo, setPlayingVideo] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [showPurchases, setShowPurchases] = useState(false);
-
-  const permCourses = (purchases || []).filter(p => p.type === 'course' || p.type === 'bundle');
-  const freebies = (purchases || []).filter(p => p.type === 'freebie' || p.type === 'artprint');
-
-  const selectCourse = (c) => { setActiveCourse(c); setActiveLesson(c.lessons[0]); setPlayingVideo(null); setShowPurchases(false); };
-  const DOTS = ['#6B3FA0','#1e6abf','#c45200','#2e8b57'];
-  const downloads = activeCourse ? (COURSE_DOWNLOADS[activeCourse.id] || []) : [];
-
-  // Welcome screen component
-  const WelcomePanel = () => (
-    <div style={{ maxWidth:680 }}>
-      <div style={{ fontFamily:'var(--fh)', fontWeight:900, fontSize:'clamp(1.8rem,4vw,3rem)', letterSpacing:'-0.02em', textTransform:'uppercase', color:'var(--clr-black)', lineHeight:0.95, marginBottom:'0.6rem' }}>
-        {t('BIENVENIDO/A\nA TU ACADEMIA','WELCOME TO\nYOUR ACADEMY')}
-      </div>
-      <p style={{ fontFamily:'var(--fb)', fontSize:'0.95rem', color:'var(--clr-muted)', lineHeight:1.75, marginBottom:'2rem' }}>
-        {t('Aquí están todos tus cursos. Antes de empezar, lee esto — es lo más importante que puedes hacer para aprovechar al máximo este material.','All your courses are here. Before you start, read this — it\'s the most important thing you can do to get the most out of this material.')}
-      </p>
-
-      {/* Core message box */}
-      <div style={{ border:'2px solid var(--clr-orange)', padding:'1.6rem 1.8rem', marginBottom:'1.8rem', background:'rgba(255,69,0,0.03)' }}>
-        <div style={{ fontFamily:'var(--fh)', fontWeight:900, fontSize:'1.05rem', letterSpacing:'0.06em', textTransform:'uppercase', color:'var(--clr-orange)', marginBottom:'1rem' }}>
-          ⚡ {t('EL SECRETO NO ES VER — ES PRACTICAR','THE SECRET ISN\'T WATCHING — IT\'S PRACTICING')}
-        </div>
-        <p style={{ fontFamily:'var(--fb)', fontSize:'0.92rem', color:'var(--clr-black)', lineHeight:1.8, marginBottom:'1rem' }}>
-          {t(
-            'Ver un video no te enseña a dibujar. Lo que construye técnica es la repetición deliberada de ejercicios. Por cada hora de video que mires, dedica al menos 3 horas a practicar los ejercicios del Manual.',
-            'Watching a video doesn\'t teach you to draw. What builds technique is the deliberate repetition of exercises. For every hour of video you watch, dedicate at least 3 hours to practicing the Manual\'s exercises.'
-          )}
-        </p>
-        <p style={{ fontFamily:'var(--fb)', fontSize:'0.92rem', color:'var(--clr-black)', lineHeight:1.8, margin:0 }}>
-          {t(
-            'El conocimiento pasivo no se convierte en habilidad. Solo la práctica repetida transforma lo que entiendes en lo que puedes hacer.',
-            'Passive knowledge doesn\'t become skill. Only repeated practice transforms what you understand into what you can do.'
-          )}
-        </p>
-      </div>
-
-      {/* Steps */}
-      {[
-        { emoji:'📖', label: t('DESCARGA EL MANUAL DE EJERCICIOS','DOWNLOAD THE EXERCISE MANUAL'), desc: t('Cada curso tiene su Manual y Guía de Ejercicios. Descárgalo primero — es tu hoja de ruta.','Every course has its Exercise Manual & Guide. Download it first — it\'s your roadmap.') },
-        { emoji:'▶️', label: t('MIRA LA LECCIÓN', 'WATCH THE LESSON'), desc: t('Una lección a la vez. Toma notas. No avances hasta entender el concepto central.','One lesson at a time. Take notes. Don\'t move on until you grasp the core concept.') },
-        { emoji:'✏️', label: t('PRACTICA ANTES DE CONTINUAR','PRACTICE BEFORE CONTINUING'), desc: t('Haz los ejercicios del Manual para esa lección. Mínimo 20–50 repeticiones por ejercicio. La cantidad importa.','Do the Manual exercises for that lesson. Minimum 20–50 repetitions per exercise. Quantity matters.') },
-        { emoji:'🔁', label: t('REPITE — MUCHAS VECES','REPEAT — MANY TIMES'), desc: t('Si sientes que algo "no te sale", la respuesta no es ver el video otra vez — es hacer más ejercicios. El cerebro aprende por volumen.','If something feels wrong, the answer isn\'t rewatching the video — it\'s doing more exercises. The brain learns through volume.') },
-        { emoji:'💬', label: t('COMPARTE TU PROGRESO','SHARE YOUR PROGRESS'), desc: t('Sube tus ejercicios al Discord. El feedback acelera el aprendizaje más que cualquier otra cosa.','Post your exercises to Discord. Feedback accelerates learning more than anything else.') },
-      ].map((s, i) => (
-        <div key={i} style={{ display:'flex', gap:'1rem', alignItems:'flex-start', padding:'1rem 0', borderTop:'1px solid var(--clr-border)' }}>
-          <div style={{ fontSize:'1.4rem', lineHeight:1, flexShrink:0, marginTop:'0.1rem' }}>{s.emoji}</div>
-          <div>
-            <div style={{ fontFamily:'var(--fh)', fontWeight:800, fontSize:'0.72rem', letterSpacing:'0.15em', textTransform:'uppercase', color:'var(--clr-black)', marginBottom:'0.25rem' }}>{s.label}</div>
-            <div style={{ fontFamily:'var(--fb)', fontSize:'0.85rem', color:'var(--clr-muted)', lineHeight:1.7 }}>{s.desc}</div>
-          </div>
-        </div>
-      ))}
-
-      <div style={{ marginTop:'1.8rem', padding:'1rem 1.4rem', background:'var(--clr-black)', display:'flex', alignItems:'center', justifyContent:'space-between', gap:'1rem', flexWrap:'wrap' }}>
-        <div style={{ fontFamily:'var(--fh)', fontWeight:800, fontSize:'0.8rem', letterSpacing:'0.08em', textTransform:'uppercase', color:'#fff' }}>
-          {t('¿Listo/a? Elige tu primer curso →','Ready? Pick your first course →')}
-        </div>
-        <button className="btn btn-orange" onClick={() => selectCourse(DB_COURSES[0])}>
-          {t('COMENZAR CURSO 1','START COURSE 1')} <IcoArr />
-        </button>
-      </div>
-    </div>
-  );
-
-  return (
-    <>
-    <div className="db-wrap">
-
-      {/* SIDEBAR */}
-      <aside className="db-sidebar">
-        <p className="db-sidebar-title">{t('MIS CLASES','MY CLASSES')}</p>
-
-        {/* Welcome / How to Use */}
-        <button
-          className={`db-course-btn${!activeCourse && !showPurchases ? ' active' : ''}`}
-          onClick={() => { setActiveCourse(null); setShowPurchases(false); }}
-          style={{ borderBottom:'1px solid var(--clr-border)', marginBottom:'0.4rem' }}
-        >
-          <div className="db-course-dot" style={{ background:'var(--clr-orange)' }} />
-          <div>
-            <div className="db-course-label">🗺️ {t('Cómo Usar Esta Clase','How to Use This Class')}</div>
-            <div className="db-course-sub">{t('Empieza aquí','Start here')}</div>
-          </div>
-        </button>
-
-        {DB_COURSES.map((c, i) => (
-          <button key={c.id} className={`db-course-btn${activeCourse?.id === c.id && !showPurchases ? ' active' : ''}`} onClick={() => selectCourse(c)}>
-            <div className="db-course-dot" style={{ background: DOTS[i] }} />
-            <div>
-              <div className="db-course-label">{t(c.title_es, c.title_en)}</div>
-              <div className="db-course-sub">{c.lessons.length} {t('lecciones · 1 video c/u','lessons · 1 video each')}</div>
-            </div>
-          </button>
-        ))}
-        {(permCourses.length > 0 || freebies.length > 0) && (
-          <>
-            <div style={{ fontFamily:'var(--fh)', fontWeight:800, fontSize:'0.62rem', letterSpacing:'0.18em', color:'var(--clr-orange)', padding:'1.2rem 1.4rem 0.4rem', textTransform:'uppercase' }}>
-              {t('MIS COMPRAS','MY PURCHASES')}
-            </div>
-            {permCourses.map((p, i) => (
-              <button key={p.id} className={`db-course-btn${showPurchases && activeCourse?.purchaseId === p.id ? ' active' : ''}`} onClick={() => { setShowPurchases(true); setActiveCourse({ ...DB_COURSES[0], title_es: p.name, title_en: p.name, purchaseId: p.id, gradient: p.gradient }); }}>
-                <div className="db-course-dot" style={{ background:'#FF4500' }} />
-                <div>
-                  <div className="db-course-label">{p.name}</div>
-                  <div className="db-course-sub" style={{ color:'var(--clr-orange)' }}>{t('PERMANENTE','PERMANENT')} · {p.price}</div>
-                </div>
-              </button>
-            ))}
-            {freebies.length > 0 && (
-              <button className="db-course-btn" onClick={() => setShowPurchases('freebies')}>
-                <div className="db-course-dot" style={{ background:'#2e8b57' }} />
-                <div>
-                  <div className="db-course-label">{t('Mis Descargas','My Downloads')}</div>
-                  <div className="db-course-sub">{freebies.length} {t('ítem(s) gratis','free item(s)')}</div>
-                </div>
-              </button>
-            )}
-          </>
-        )}
-        <div style={{ marginTop:'auto', padding:'1.4rem', borderTop:'1px solid var(--clr-border)' }}>
-          <button className="btn btn-outline" style={{ width:'100%', justifyContent:'center', fontSize:'0.72rem' }} onClick={() => { if (onLogout) onLogout(); goTo('home'); }}>
-            {t('CERRAR SESIÓN','LOG OUT')}
-          </button>
-        </div>
-      </aside>
-
-      {/* MAIN */}
-      <main className="db-main">
-        <div className="db-breadcrumb" style={{ fontWeight:800 }}>
-          {t('ACADEMIA','ACADEMY')} ›{' '}
-          <span style={{ fontWeight:800 }}>{
-            !activeCourse && !showPurchases
-              ? t('Cómo Usar Esta Clase','How to Use This Class')
-              : showPurchases === 'freebies'
-                ? t('Mis Descargas','My Downloads')
-                : t(activeCourse?.title_es, activeCourse?.title_en)
-          }</span>
-          {activeCourse && !showPurchases && activeLesson && <>{' '}›{' '}<span style={{ fontWeight:800 }}>{t(activeLesson.title_es, activeLesson.title_en)}</span></>}
-        </div>
-
-        {!activeCourse && !showPurchases ? (
-          <WelcomePanel />
-        ) : showPurchases === 'freebies' ? (
-          <div>
-            <div className="db-course-title">{t('MIS DESCARGAS','MY DOWNLOADS')}</div>
-            <div className="db-course-meta">{freebies.length} {t('productos gratuitos y brushes','free products and brushes')}</div>
-            <div className="db-section-label" style={{ marginTop:'1.6rem' }}>{t('DESCARGAS DISPONIBLES','AVAILABLE DOWNLOADS')}</div>
-            <div style={{ display:'flex', flexDirection:'column', gap:0, border:'1px solid var(--clr-border)', marginBottom:'2.4rem' }}>
-              {freebies.map((f, fi) => (
-                <div key={fi} style={{ display:'flex', alignItems:'center', gap:'0.8rem', padding:'0.9rem 1.2rem', borderBottom: fi < freebies.length - 1 ? '1px solid var(--clr-border)' : 'none', cursor:'pointer', transition:'background 0.15s' }}
-                  onMouseEnter={e => e.currentTarget.style.background='rgba(255,69,0,0.04)'}
-                  onMouseLeave={e => e.currentTarget.style.background=''}>
-                  <div style={{ width:32, height:32, background: f.gradient || 'var(--clr-border)', flexShrink:0 }} />
-                  <span style={{ fontFamily:'var(--fb)', fontSize:'0.84rem', color:'var(--clr-text)', flex:1 }}>{f.name}</span>
-                  <span style={{ fontFamily:'var(--fh)', fontWeight:700, fontSize:'0.62rem', letterSpacing:'0.1em', color:'var(--clr-orange)', background:'rgba(255,69,0,0.08)', padding:'2px 8px' }}>{t('GRATIS','FREE')}</span>
-                  <span style={{ color:'var(--clr-orange)', display:'flex', alignItems:'center', gap:'0.3rem', fontFamily:'var(--fh)', fontSize:'0.68rem', fontWeight:700, letterSpacing:'0.1em' }}><IcoDownload /> {t('DESCARGAR','DOWNLOAD')}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : (<>
-        <div className="db-course-title">{showPurchases ? activeCourse.title_es : t(activeCourse.title_es, activeCourse.title_en)}</div>
-        <div className="db-course-meta">
-          {t(activeCourse.level_es, activeCourse.level_en)} · {activeCourse.lessons.length} {t('lecciones','lessons')} · {t(activeCourse.meta_es, activeCourse.meta_en)}
-        </div>
-
-        {/* Downloads */}
-        <div className="db-section-label">{t('DESCARGAS DEL CURSO','COURSE DOWNLOADS')}</div>
-        <div style={{ display:'flex', flexDirection:'column', gap:'0', border:'1px solid var(--clr-border)', marginBottom:'2.4rem' }}>
-          {downloads.map((dl, di) => (
-            <div key={di} style={{ display:'flex', alignItems:'center', gap:'0.8rem', padding:'0.85rem 1.2rem', borderBottom: di < downloads.length - 1 ? '1px solid var(--clr-border)' : 'none', cursor:'pointer', transition:'background 0.15s' }}
-              onMouseEnter={e => e.currentTarget.style.background='rgba(255,69,0,0.04)'}
-              onMouseLeave={e => e.currentTarget.style.background=''}
-            >
-              <span style={{ fontSize:'1rem', flexShrink:0 }}>{dl.icon}</span>
-              <span style={{ fontFamily:'var(--fb)', fontSize:'0.82rem', color:'var(--clr-text)', flex:1 }}>{t(dl.label_es, dl.label_en)}</span>
-              <span style={{ color:'var(--clr-orange)', display:'flex', alignItems:'center', gap:'0.3rem', fontFamily:'var(--fh)', fontSize:'0.68rem', fontWeight:700, letterSpacing:'0.1em' }}>
-                <IcoDownload /> {t('DESCARGAR','DOWNLOAD')}
-              </span>
-            </div>
-          ))}
-        </div>
-
-        {/* Lessons list */}
-        <div className="db-section-label">{t('LECCIONES','LESSONS')}</div>
-        <div className="db-lessons-list">
-          {(activeCourse.lessons || []).map((lesson, li) => (
-            <div key={li} className={`db-lesson-row${activeLesson?.index === li ? ' active' : ''}`} onClick={() => { setActiveLesson(lesson); setPlayingVideo(null); }}>
-              <span className="db-lesson-num">{String(li + 1).padStart(2,'0')}</span>
-              <span className="db-lesson-name">{t(lesson.title_es, lesson.title_en)}</span>
-              <span className="db-lesson-count">4h · 1 {t('video','video')}</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-          ))}
-        </div>
-
-        {/* Single video player */}
-        {activeLesson && (
-          <>
-            <div className="db-section-label">
-              {t('LECCIÓN','LESSON')} {activeLesson.index + 1} — {t(activeLesson.title_es, activeLesson.title_en)}
-            </div>
-            <div style={{ border:'1px solid var(--clr-border)', marginBottom:'2rem', cursor:'pointer' }}
-              onClick={() => { setPlayingVideo(activeLesson.video); setIsPlaying(true); }}>
-              <div style={{ width:'100%', aspectRatio:'16/9', background: activeLesson.video.gradient, position:'relative', display:'flex', alignItems:'center', justifyContent:'center' }}>
-                <div className="db-video-play" style={{ width:60, height:60, color:'#111' }}><IcoPlay /></div>
-                <div style={{ position:'absolute', bottom:'0.8rem', right:'1rem', fontFamily:'var(--fb)', fontSize:'0.72rem', color:'rgba(255,255,255,0.75)', background:'rgba(0,0,0,0.55)', padding:'2px 8px', borderRadius:2 }}>4:00:00</div>
-              </div>
-              <div style={{ padding:'0.9rem 1.2rem', display:'flex', alignItems:'center', gap:'0.8rem' }}>
-                <div className="db-video-play" style={{ width:32, height:32, color:'#111', background:'var(--clr-orange)', flexShrink:0 }}><IcoPlay /></div>
-                <div>
-                  <div style={{ fontFamily:'var(--fh)', fontWeight:800, fontSize:'0.72rem', letterSpacing:'0.1em', color:'var(--clr-muted)' }}>{t('CLASE COMPLETA · 4 HORAS','FULL CLASS · 4 HOURS')}</div>
-                  <div style={{ fontFamily:'var(--fh)', fontWeight:700, fontSize:'0.88rem', textTransform:'uppercase', letterSpacing:'0.04em', color:'var(--clr-text)' }}>{t(activeLesson.title_es, activeLesson.title_en)}</div>
-                </div>
-              </div>
-            </div>
-          </>
-        )}
-        </>)}
-      </main>
-    </div>
-
-    {/* VIDEO PLAYER MODAL */}
-    {playingVideo && (
-      <div className="db-player-backdrop" onClick={() => setPlayingVideo(null)}>
-        <div className="db-player-box" onClick={e => e.stopPropagation()}>
-          <button className="db-player-close" onClick={() => setPlayingVideo(null)}>✕ {t('CERRAR','CLOSE')}</button>
-          <div className="db-player-screen" style={{ background: playingVideo.gradient }}>
-            <button onClick={() => setIsPlaying(!isPlaying)} style={{ background:'none', border:'none', cursor:'pointer' }}>
-              <div className="db-video-play" style={{ width:64, height:64, color:'#111', background:'rgba(255,255,255,0.92)' }}>
-                {isPlaying ? <IcoPause /> : <IcoPlay />}
-              </div>
-            </button>
-          </div>
-          <div className="db-player-controls">
-            <button className="db-player-play-btn" onClick={() => setIsPlaying(!isPlaying)}>
-              {isPlaying ? <IcoPause /> : <IcoPlay />}
-            </button>
-            <div className="db-player-bar-wrap">
-              <div className="db-player-bar-fill" />
-            </div>
-            <span className="db-player-time">{isPlaying ? '00:47' : '00:00'} / 4:00:00</span>
-          </div>
-          <div style={{ padding:'0.8rem 1.2rem', background:'#0a0a0a' }}>
-            <div className="db-player-title">{t(activeLesson?.title_es, activeLesson?.title_en)}</div>
-          </div>
-        </div>
-      </div>
-    )}
-    </>
-  );
-}
-
-/* ══════════════════════════════════════════
-   PLANS PAGE
-══════════════════════════════════════════ */
-function PlansPage({ lang, goTo }) {
-  const t = (es, en) => lang === 'es' ? es : en;
-  const ref = useReveal();
-
-  const freeFeats = [
-    t('Acceso a todos los recursos GRATIS', 'Access to all FREE resources'),
-    t('3 Brush Packs gratuitos descargables', '3 downloadable free brush packs'),
-    t('Contenido gratuito en YouTube e Instagram', 'Free content on YouTube & Instagram'),
-    t('Comunidad en Discord (canales públicos)', 'Discord community (public channels)'),
-    t('Actualizaciones y novedades por email', 'Updates and news by email'),
-  ];
-
-  const subFeats = [
-    t('Acceso completo a los 4 cursos de la academia', 'Full access to all 4 academy courses'),
-    t('Nuevo contenido cada mes sin costo adicional', 'New content every month at no extra cost'),
-    t('Canales exclusivos de Discord para suscriptores', 'Exclusive Discord channels for subscribers'),
-    t('15% de descuento en Clases en Vivo', '15% discount on Live Classes'),
-    t('Acceso anticipado a nuevos cursos y materiales', 'Early access to new courses & materials'),
-    t('Advanced Brush Packs incluidos', 'Advanced Brush Packs included'),
-    t('Certificado de Completación por curso', 'Completion certificate per course'),
-    t('Cancela cuando quieras, sin compromisos', 'Cancel anytime, no commitments'),
-  ];
-
-  return (
-    <div ref={ref} className="section" style={{ maxWidth:900, margin:'0 auto', padding:'60px 4vw 80px' }}>
-      <div className="s-header anim" style={{ marginBottom:'3rem' }}>
-        <span className="s-tag">MEMBRESÍA</span>
-        <h2 className="s-title" style={{ fontSize:'clamp(2.2rem,6vw,5rem)' }}>{t('ELIGE TU PLAN','CHOOSE YOUR PLAN')}</h2>
-        <p className="s-sub">{t('Empieza gratis o desbloquea toda la academia por el precio de un café al mes.','Start free or unlock the full academy for the price of a coffee per month.')}</p>
-      </div>
-
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'1.5rem', marginBottom:'3rem' }} className="anim d1">
-
-        {/* FREE PLAN */}
-        <div style={{ background:'#ffffff', border:'1px solid rgba(0,0,0,0.07)', boxShadow:'0 2px 8px rgba(0,0,0,0.06)', padding:'2.4rem 2rem', display:'flex', flexDirection:'column', gap:'0' }}>
-          <p style={{ fontFamily:'var(--fh)', fontWeight:800, fontSize:'0.82rem', letterSpacing:'0.14em', color:'var(--clr-muted)', marginBottom:'0.6rem' }}>{t('PLAN GRATUITO','FREE PLAN')}</p>
-          <div style={{ fontFamily:'var(--fh)', fontWeight:900, fontSize:'clamp(2.4rem,5vw,3.6rem)', letterSpacing:'-0.02em', lineHeight:1, marginBottom:'0.3rem', color:'var(--clr-black)' }}>$0</div>
-          <p style={{ fontFamily:'var(--fb)', fontSize:'0.82rem', color:'var(--clr-muted)', marginBottom:'1.8rem' }}>{t('para siempre','forever')}</p>
-          <ul style={{ listStyle:'none', padding:0, margin:'0 0 2rem', display:'flex', flexDirection:'column', gap:'0.75rem', flex:1 }}>
-            {freeFeats.map((f,i) => (
-              <li key={i} style={{ display:'flex', gap:'0.6rem', alignItems:'flex-start', fontFamily:'var(--fb)', fontSize:'0.85rem', color:'var(--clr-text)' }}>
-                <span style={{ color:'var(--clr-muted)', marginTop:'0.05rem', flexShrink:0 }}>✓</span>{f}
-              </li>
-            ))}
-          </ul>
-          <button className="btn btn-ghost" style={{ width:'100%', justifyContent:'center' }} onClick={() => goTo('cursos')}>
-            {t('CONTINUAR GRATIS','CONTINUE FREE')}
-          </button>
-        </div>
-
-        {/* SUBSCRIPTION PLAN */}
-        <div style={{ background:'var(--clr-black)', boxShadow:'0 4px 6px rgba(0,0,0,0.07), 0 10px 15px rgba(0,0,0,0.1), 0 20px 40px rgba(0,0,0,0.12)', padding:'2.4rem 2rem', display:'flex', flexDirection:'column', gap:'0', position:'relative', overflow:'hidden' }}>
-          <div style={{ position:'absolute', top:'1.1rem', right:'1.2rem', background:'var(--clr-orange)', fontFamily:'var(--fh)', fontWeight:800, fontSize:'0.7rem', letterSpacing:'0.12em', color:'#fff', padding:'3px 10px' }}>{t('MÁS POPULAR','MOST POPULAR')}</div>
-          <p style={{ fontFamily:'var(--fh)', fontWeight:800, fontSize:'0.82rem', letterSpacing:'0.14em', color:'var(--clr-orange)', marginBottom:'0.6rem' }}>{t('SUSCRIPCIÓN','SUBSCRIPTION')}</p>
-          <div style={{ fontFamily:'var(--fh)', fontWeight:900, fontSize:'clamp(2.4rem,5vw,3.6rem)', letterSpacing:'-0.02em', lineHeight:1, marginBottom:'0.3rem', color:'#fff' }}>$4.99</div>
-          <p style={{ fontFamily:'var(--fb)', fontSize:'0.82rem', color:'#aaa', marginBottom:'1.8rem' }}>{t('por mes · cancela cuando quieras','per month · cancel anytime')}</p>
-          <ul style={{ listStyle:'none', padding:0, margin:'0 0 2rem', display:'flex', flexDirection:'column', gap:'0.75rem', flex:1 }}>
-            {subFeats.map((f,i) => (
-              <li key={i} style={{ display:'flex', gap:'0.6rem', alignItems:'flex-start', fontFamily:'var(--fb)', fontSize:'0.85rem', color:'#D4CFC7' }}>
-                <span style={{ color:'var(--clr-orange)', marginTop:'0.05rem', flexShrink:0 }}>✓</span>{f}
-              </li>
-            ))}
-          </ul>
-          <button className="btn btn-orange" style={{ width:'100%', justifyContent:'center' }}>
-            {t('SUSCRIBIRSE — $4.99/MES','SUBSCRIBE — $4.99/MO')} <IcoArr />
-          </button>
-        </div>
-
-      </div>
-    </div>
-  );
-}
-
-/* ══════════════════════════════════════════
-   ROOT APP
-══════════════════════════════════════════ */
 function App() {
-  const [lang, setLang]         = useState('es');
-  const [page, setPage]         = useState('home');
-  const [course, setCourse]     = useState(null);
-  const [loginTab, setLoginTab] = useState('login');
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [purchases, setPurchases] = useState([]);
-
-  const addPurchase = useCallback((item) => setPurchases(prev => [...prev.filter(p => p.id !== item.id), item]), []);
-  const handleLogin = useCallback(() => setLoggedIn(true), []);
+  const [lang, setLang] = useState('es');
+  const [page, setPage] = useState('home');
 
   const goTo = useCallback((p) => {
     setPage(p);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
-  const goToRegister = useCallback(() => {
-    setLoginTab('register');
-    setPage('login');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
-
   return (
     <>
       <div className="g-frame" />
-      <Nav lang={lang} setLang={setLang} page={page} goTo={goTo} loggedIn={loggedIn} />
+      <Nav lang={lang} setLang={setLang} page={page} goTo={goTo} />
       <div className="main-wrap">
-        {page === 'home'      && <HomePage      lang={lang} goTo={goTo} />}
-        {page === 'cursos'    && <CoursesPage   lang={lang} goTo={goTo} setCourse={setCourse} onLogin={handleLogin} addPurchase={addPurchase} />}
-        {page === 'curso'     && <CourseDetailPage course={course} lang={lang} goTo={goTo} goToRegister={goToRegister} setCourse={setCourse} onLogin={handleLogin} addPurchase={addPurchase} />}
-        {page === 'vivo'      && <LivePage      lang={lang} goTo={goTo} setCourse={setCourse} />}
-        {page === 'prints'    && <ArtPrintsPage lang={lang} goTo={goTo} onLogin={handleLogin} addPurchase={addPurchase} />}
-        {page === 'contacto'  && <ContactPage   lang={lang} />}
-        {page === 'login'     && <LoginPage     lang={lang} goTo={goTo} initialTab={loginTab} onLogin={() => { setLoggedIn(true); goTo('dashboard'); }} />}
-        {page === 'plans'     && <PlansPage     lang={lang} goTo={goTo} />}
-        {page === 'dashboard' && <DashboardPage lang={lang} goTo={goTo} onLogout={() => setLoggedIn(false)} purchases={purchases} />}
-        {page !== 'dashboard' && <><div className="line" /><Footer lang={lang} goTo={goTo} /></>}
+        {page === 'home'     && <HomePage   lang={lang} goTo={goTo} />}
+        {page === 'vivo'     && <LivePage   lang={lang} goTo={goTo} />}
+        {page === 'contacto' && <ContactPage lang={lang} />}
+        <div className="line" /><Footer lang={lang} goTo={goTo} />
       </div>
     </>
   );
