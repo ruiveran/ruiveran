@@ -2625,8 +2625,10 @@ function HomePage({ lang, goTo }) {
 function LivePage({ lang, goTo }) {
   const ref = useReveal();
   const inscRef = useRef(null);
+  const tiersRef = useRef(null);
   const t = (es, en) => lang === 'es' ? es : en;
   const [openFaq, setOpenFaq] = useState(null);
+  const [resultadosLightbox, setResultadosLightbox] = useState(false);
   const [form, setForm] = useState({ name:'', email:'', msg:'Hola, ¡Estoy interesado en el Nivel 1 de este mes! ¿Quedan vacantes?' });
   const [sent, setSent] = useState(false);
   const [err, setErr] = useState('');
@@ -2721,8 +2723,7 @@ function LivePage({ lang, goTo }) {
       </div>
 
       <div className="live-course-banner anim d2"
-        style={{ marginBottom:'2.4rem', cursor:'pointer' }}
-        onClick={() => window.open('https://ruiveran.gumroad.com/l/dibuja-anatomia-en-accion','_blank')}>
+        style={{ marginBottom:'2.4rem' }}>
         <div className="lcb-top">
           <div className="lcb-left">
             <div style={{ display:'flex', alignItems:'center' }}>
@@ -2744,33 +2745,69 @@ function LivePage({ lang, goTo }) {
                 t('📚 8 Lecciones','📚 8 Lessons'),
                 t('🎨 Proyecto Final','🎨 Final Project'),
                 t('💬 Correcciones y Preguntas','💬 Corrections & Q&A'),
+                t('✏️ Lápiz y Papel','✏️ Pencil & Paper'),
                 t('✏️ Tablet / Tableta','✏️ Tablet Required'),
                 t('🖥 Cualquier Software','🖥 Any Software'),
               ].map((f, i) => <span key={i} className="feat-chip" style={{ fontSize:'0.884rem', padding:'3px 9px' }}>{f}</span>)}
             </div>
           </div>
           <div className="lcb-bottom-row">
-            <div className="lcb-date">{t('Inicio: Por Anunciar · Lunes · 7:00 a 10:30 PM Lima','Start: TBA · Mondays · 7:00 to 10:30 PM Lima')}</div>
+            <div className="lcb-date" style={{ color:'var(--clr-muted)', fontSize:'0.82rem' }}>
+              {t('Inicio: Por Anunciar · Lunes · ','Start: TBA · Mondays · ')}
+              <span style={{ textDecoration:'line-through', opacity:0.6 }}>{t('7:00 a 10:30 PM Lima','7:00 to 10:30 PM Lima')}</span>
+            </div>
             <div style={{ display:'flex', gap:'0.7rem', flexWrap:'wrap' }}>
               <a href="https://ruiveran.gumroad.com/l/dibuja-anatomia-en-accion" target="_blank" rel="noopener noreferrer"
-                className="btn btn-outline" style={{ fontWeight:800, textDecoration:'none' }}
-                onClick={e => e.stopPropagation()}>
+                className="btn btn-outline" style={{ fontWeight:800, textDecoration:'none' }}>
                 {t('VER CLASE','VIEW CLASS')}
               </a>
               <button className="btn btn-orange"
-                onClick={e => { e.stopPropagation(); scrollToForm(); }}>
-                {t('RESERVAR LUGAR','RESERVE SPOT')} <IcoArr />
+                onClick={() => { if (tiersRef.current) tiersRef.current.scrollIntoView({ behavior:'smooth', block:'start' }); }}>
+                {t('VER PRECIOS','SEE PRICES')} <IcoArr />
               </button>
             </div>
           </div>
         </div>
         <div style={{ margin:'0 -1.8rem' }}>
-          <LiveHoverCarousel
-            images={SW}
-            onNavigate={() => window.open('https://ruiveran.gumroad.com/l/dibuja-anatomia-en-accion','_blank')}
-          />
+          {/* ─── RESULTADOS ─── */}
+          <div style={{ padding:'2.4rem 1.8rem 0' }}>
+            <h3 style={{ fontFamily:'var(--fh)', fontWeight:900, fontSize:'2.4rem', letterSpacing:'-0.02em', textTransform:'uppercase', color:'var(--clr-black)', lineHeight:0.95, marginBottom:'1.2rem' }}>
+              {t('RESULTADOS','RESULTS')}
+            </h3>
+            <div
+              style={{ width:'100%', cursor:'zoom-in', position:'relative', overflow:'hidden' }}
+              onClick={() => setResultadosLightbox(true)}
+            >
+              <img
+                src="/mnt/user-data/uploads/Dibuja_Anatomia.png"
+                alt="Resultados Dibuja Anatomía en Acción"
+                style={{ width:'100%', display:'block', transition:'transform 0.5s ease' }}
+                onMouseEnter={e => e.currentTarget.style.transform='scale(1.02)'}
+                onMouseLeave={e => e.currentTarget.style.transform='scale(1)'}
+              />
+            </div>
+          </div>
         </div>
       </div>
+
+      {/* Resultados lightbox */}
+      {resultadosLightbox && (
+        <div
+          style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.88)', zIndex:2000, display:'flex', alignItems:'center', justifyContent:'center', padding:'2rem', cursor:'zoom-out' }}
+          onClick={() => setResultadosLightbox(false)}
+        >
+          <img
+            src="/mnt/user-data/uploads/Dibuja_Anatomia.png"
+            alt="Resultados"
+            style={{ maxWidth:'100%', maxHeight:'90vh', objectFit:'contain', display:'block' }}
+            onClick={e => e.stopPropagation()}
+          />
+          <button
+            onClick={() => setResultadosLightbox(false)}
+            style={{ position:'fixed', top:'2rem', right:'2rem', background:'none', border:'none', color:'#fff', fontSize:'1.4rem', cursor:'pointer', opacity:0.7, lineHeight:1 }}
+          >✕</button>
+        </div>
+      )}
 
       {/* ─── TESTIMONIALS ─── */}
       <div style={{ marginBottom:'3rem' }} className="anim d1">
@@ -2799,7 +2836,7 @@ function LivePage({ lang, goTo }) {
         </div>
       </div>
 
-      <div className="tier-grid anim d2">
+      <div className="tier-grid anim d2" ref={tiersRef}>
         <div className="tier-card">
           <p className="tier-tag">NIVEL 1 ★ {t('MÁS POPULAR','MOST POPULAR')}</p>
           <h3 className="tier-name">{t('ACCESO\nGRUPAL','GROUP\nACCESS')}</h3>
@@ -2820,7 +2857,10 @@ function LivePage({ lang, goTo }) {
               {f2.map((f,i) => <li key={i} className="feat-item" style={{ color:'#E0DCD4' }}><span className="fi-dot"><IcoPlus /></span>{f}</li>)}
             </ul>
           </div>
-          <button className="btn btn-orange" style={{ width:'100%', justifyContent:'center', marginTop:'1rem' }} onClick={scrollToForm}>{t('INSCRIBIRSE — NIVEL 2','SIGN UP — LEVEL 2')} <IcoArr /></button>
+          <button className="btn btn-orange" style={{ width:'100%', justifyContent:'center', marginTop:'1rem' }} onClick={() => {
+            setForm(f => ({...f, msg: 'Hola, ¡Estoy interesado en el Nivel 2 de este mes! ¿Quedan vacantes?'}));
+            if (tiersRef.current) tiersRef.current.scrollIntoView({ behavior:'smooth', block:'start' });
+          }}>{t('INSCRIBIRSE — NIVEL 2','SIGN UP — LEVEL 2')} <IcoArr /></button>
         </div>
       </div>
 
