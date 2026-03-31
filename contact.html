@@ -1984,7 +1984,11 @@ const COURSES = [
     desc_en: 'Learn the visual fundamentals that let you draw any object, creature or scene from scratch.',
     long_es: 'Este curso te da los cimientos. Forma, perspectiva, valor y composición — los cuatro pilares que hacen posible dibujar cualquier cosa que tu mente imagine. Más de 8 horas de clase estructurada con ejercicios progresivos diseñados para artistas sin experiencia previa que quieren resultados reales.',
     long_en: 'This course gives you the foundation. Shape, perspective, value and composition — the four pillars that make it possible to draw anything your mind imagines. 8+ hours of structured lessons with progressive exercises designed for artists with no prior experience who want real results.',
-    gradient: 'linear-gradient(135deg, #0f0f1a 0%, #1a1035 50%, #2d1b5e 100%)',
+    // 🖼️ THUMBNAIL CURSO 1 — 'Fundamentos del Dibujo'
+  // ✏️  Reemplaza img_placeholder con la URL de la imagen real del curso:
+  //     thumb: 'https://TU-IMAGEN-AQUI.com/curso-fundamentos.jpg',
+  thumb_placeholder: 'https://via.placeholder.com/600x600/1a1035/FF4500?text=CURSO+1+Fundamentos+del+Dibujo',
+  gradient: 'linear-gradient(135deg, #0f0f1a 0%, #1a1035 50%, #2d1b5e 100%)',
     curriculum_es: [
       'Principios de las Formas Básicas',
       'Rotación de las Formas Básicas',
@@ -2022,7 +2026,11 @@ const COURSES = [
     desc_en: 'Master facial construction, angles and expressions with the method used by professionals.',
     long_es: 'La cabeza humana es el elemento más complejo y más observado en cualquier obra. Aprende el método Loomis extendido con planos faciales, expresiones dinámicas y múltiples ángulos. El curso más popular de la academia — y con razón.',
     long_en: 'The human head is the most complex and most observed element in any artwork. Learn the extended Loomis method with facial planes, dynamic expressions and multiple angles. The academy\'s most popular course — for good reason.',
-    gradient: 'linear-gradient(135deg, #0a1628 0%, #1e3a5f 50%, #0d4f3c 100%)',
+    // 🖼️ THUMBNAIL CURSO 2 — 'Dibuja la Cabeza como un Experto'
+  // ✏️  Reemplaza img_placeholder con la URL de la imagen real del curso:
+  //     thumb: 'https://TU-IMAGEN-AQUI.com/curso-cabeza.jpg',
+  thumb_placeholder: 'https://via.placeholder.com/600x600/1e3a5f/FF4500?text=CURSO+2+Dibuja+la+Cabeza',
+  gradient: 'linear-gradient(135deg, #0a1628 0%, #1e3a5f 50%, #0d4f3c 100%)',
     curriculum_es: [
       'Formas Básicas de la Cabeza',
       'Cabeza Avanzada',
@@ -2052,7 +2060,11 @@ const COURSES = [
     desc_en: 'Human figure in motion. Dynamic poses and gestures that convey energy, weight and life.',
     long_es: 'La anatomía no es memorizar músculos — es entender cómo el cuerpo se mueve. Este curso te enseña anatomía constructiva con énfasis en poses de acción, gesture drawing y aplicación directa a personajes de concept art e ilustración editorial.',
     long_en: 'Anatomy isn\'t about memorizing muscles — it\'s about understanding how the body moves. This course teaches constructive anatomy with emphasis on action poses, gesture drawing and direct application to concept art and editorial illustration.',
-    gradient: 'linear-gradient(135deg, #1a0a0a 0%, #4a0e1e 50%, #8b1a2a 100%)',
+    // 🖼️ THUMBNAIL CURSO 3 — 'Dibuja Anatomía en Acción'
+  // ✏️  Reemplaza img_placeholder con la URL de la imagen real del curso:
+  //     thumb: 'https://TU-IMAGEN-AQUI.com/curso-anatomia.jpg',
+  thumb_placeholder: 'https://via.placeholder.com/600x600/4a0e1e/FF4500?text=CURSO+3+Anatomia+en+Accion',
+  gradient: 'linear-gradient(135deg, #1a0a0a 0%, #4a0e1e 50%, #8b1a2a 100%)',
     curriculum_es: [
       'Dibujo Dinámico',
       'Construcción del Maniquí Básico',
@@ -2090,7 +2102,11 @@ const COURSES = [
     desc_en: 'The master digital painting course. Cinematic composition, lighting and color palettes that evoke emotion.',
     long_es: 'Donde todo converge. El curso de pintura más completo de la academia — diseñado para artistas que ya saben dibujar y quieren dominar la pintura digital con luz real, atmósfera y narrativa visual. 16 horas, 32 lecciones, resultados profesionales.',
     long_en: 'Where everything converges. The most complete painting course in the academy — designed for artists who already know how to draw and want to master digital painting with real light, atmosphere and visual narrative. 16 hours, 32 lessons, professional results.',
-    gradient: 'linear-gradient(135deg, #0a0a1f 0%, #1a1a4e 35%, #0f2a4a 70%, #1a3a2a 100%)',
+    // 🖼️ THUMBNAIL CURSO 4 — 'Pinta Escenas con Luz y Color'
+  // ✏️  Reemplaza img_placeholder con la URL de la imagen real del curso:
+  //     thumb: 'https://TU-IMAGEN-AQUI.com/curso-pintura.jpg',
+  thumb_placeholder: 'https://via.placeholder.com/600x600/1a1a4e/FF4500?text=CURSO+4+Pinta+Escenas',
+  gradient: 'linear-gradient(135deg, #0a0a1f 0%, #1a1a4e 35%, #0f2a4a 70%, #1a3a2a 100%)',
     curriculum_es: [
       'Fundamentos de la Imagen 2D',
       'El Volumen y la Forma 3D',
@@ -2115,26 +2131,106 @@ const COURSES = [
 ];
 
 const TESTIMONIALS = [
-  { id:4, name:'Rodrigo Adonay', flag:'🇲🇽', stars:5, avatar:'linear-gradient(135deg,#a07be8 0%,#6040b0 100%)', es:'El hecho de ser nivel 2 me ayudó bastante principalmente por la retroalimentación de las tareas. Con cada tarea sentía una mejora, tanto en la técnica de dibujo como en el análisis de referencias, y lo pude comprobar en el proyecto final — todo fluía de una mejor manera y quedé sorprendido con el resultado.', en:'Being level 2 helped me a lot, mainly because of the feedback on assignments. With each assignment I felt improvement in both drawing technique and reference analysis — I confirmed it in the final project where everything flowed better and I was surprised by the result.' },
-  { id:3, name:'Vin Nito', flag:'🇲🇽', stars:5, avatar:'linear-gradient(135deg,#e84a4a 0%,#a01a1a 100%)', es:'El curso vale completamente la pena, es uno de los más completos que vi. Los PDFs eran buenos, la explicación era clara y aparte de que eran bonitos. El método es muy efectivo. Tu explicación era buena y explicabas con paciencia cada aspecto, eres buena onda respondiendo las dudas. 〜⁠(⁠꒪⁠꒳⁠꒪⁠)⁠〜', en:'The course is completely worth it, one of the most complete I\'ve seen. The PDFs were good, the explanation was clear and they were beautiful too. The method is very effective. You explained patiently every aspect, you\'re cool answering questions. 〜⁠(⁠꒪⁠꒳⁠꒪⁠)⁠〜' },
-  { id:2, name:'Kurt Laumann', flag:'🇵🇪', stars:5, avatar:'linear-gradient(135deg,#4a9be8 0%,#1a5fa0 100%)', es:'Excelente profesor, siempre atento con tus necesidades y metas artísticas. Sobre todo para alguien como yo que está escogiendo arte digital como segunda carrera. Sabe a qué temas darle prioridad para avanzar de manera más eficiente y generar una base artística sólida y confiable.', en:'Excellent teacher, always attentive to your needs and artistic goals. Especially for someone like me choosing digital art as a second career. He knows which topics to prioritize to advance efficiently and build a solid, reliable artistic foundation.' },
-  { id:5, name:'Bruno Cerda', flag:'🇨🇱', stars:5, avatar:'linear-gradient(135deg,#FF7A00 0%,#c43800 100%)', es:'Maestro!! Qué puedo decir? Maravillosas clases. No solo es un viaje por los músculos de cada zona del cuerpo, sino también un vistazo a la lógica y entendimiento de su funcionamiento para aplicarlos en una ilustración. Clases recomendadísimas 🔥🔥🔥', en:'Teacher!! What can I say? Wonderful classes. Not just a journey through the muscles of each body area, but also a look at the logic and understanding of how they work to apply them in an illustration. Highly recommended classes 🔥🔥🔥' },
-  { id:1, name:'Danilo López', flag:'🇲🇽', stars:5, avatar:'linear-gradient(135deg,#F2A07B 0%,#E87040 100%)', es:'Es un curso bastante completo y muy entendible, un plus son los PDFs de apoyo para la realización de los trabajos.', en:'It\'s a very complete and understandable course, a plus are the support PDFs for completing the assignments.' },
+  { id:4, name:'Rodrigo Adonay', flag:'🇲🇽', stars:5, // 🖼️ FOTO TESTIMONIO 1 — nombre: 'Rodrigo Adonay'
+  // ✏️  Reemplaza img_placeholder con la URL de la foto real:
+  //     avatar_img: 'https://TU-IMAGEN-AQUI.com/rodrigo-adonay.jpg',
+  avatar_img_placeholder: 'https://via.placeholder.com/60x60/6040b0/ffffff?text=RA',
+  avatar:'linear-gradient(135deg,#a07be8 0%,#6040b0 100%)', es:'El hecho de ser nivel 2 me ayudó bastante principalmente por la retroalimentación de las tareas. Con cada tarea sentía una mejora, tanto en la técnica de dibujo como en el análisis de referencias, y lo pude comprobar en el proyecto final — todo fluía de una mejor manera y quedé sorprendido con el resultado.', en:'Being level 2 helped me a lot, mainly because of the feedback on assignments. With each assignment I felt improvement in both drawing technique and reference analysis — I confirmed it in the final project where everything flowed better and I was surprised by the result.' },
+  { id:3, name:'Vin Nito', flag:'🇲🇽', stars:5, // 🖼️ FOTO TESTIMONIO 2 — nombre: 'Vin Nito'
+  // ✏️  Reemplaza img_placeholder con la URL de la foto real:
+  //     avatar_img: 'https://TU-IMAGEN-AQUI.com/vin-nito.jpg',
+  avatar_img_placeholder: 'https://via.placeholder.com/60x60/a01a1a/ffffff?text=VN',
+  avatar:'linear-gradient(135deg,#e84a4a 0%,#a01a1a 100%)', es:'El curso vale completamente la pena, es uno de los más completos que vi. Los PDFs eran buenos, la explicación era clara y aparte de que eran bonitos. El método es muy efectivo. Tu explicación era buena y explicabas con paciencia cada aspecto, eres buena onda respondiendo las dudas. 〜⁠(⁠꒪⁠꒳⁠꒪⁠)⁠〜', en:'The course is completely worth it, one of the most complete I\'ve seen. The PDFs were good, the explanation was clear and they were beautiful too. The method is very effective. You explained patiently every aspect, you\'re cool answering questions. 〜⁠(⁠꒪⁠꒳⁠꒪⁠)⁠〜' },
+  { id:2, name:'Kurt Laumann', flag:'🇵🇪', stars:5, // 🖼️ FOTO TESTIMONIO 3 — nombre: 'Kurt Laumann'
+  // ✏️  Reemplaza img_placeholder con la URL de la foto real:
+  //     avatar_img: 'https://TU-IMAGEN-AQUI.com/kurt-laumann.jpg',
+  avatar_img_placeholder: 'https://via.placeholder.com/60x60/1a5fa0/ffffff?text=KL',
+  avatar:'linear-gradient(135deg,#4a9be8 0%,#1a5fa0 100%)', es:'Excelente profesor, siempre atento con tus necesidades y metas artísticas. Sobre todo para alguien como yo que está escogiendo arte digital como segunda carrera. Sabe a qué temas darle prioridad para avanzar de manera más eficiente y generar una base artística sólida y confiable.', en:'Excellent teacher, always attentive to your needs and artistic goals. Especially for someone like me choosing digital art as a second career. He knows which topics to prioritize to advance efficiently and build a solid, reliable artistic foundation.' },
+  { id:5, name:'Bruno Cerda', flag:'🇨🇱', stars:5, // 🖼️ FOTO TESTIMONIO 4 — nombre: 'Bruno Cerda'
+  // ✏️  Reemplaza img_placeholder con la URL de la foto real:
+  //     avatar_img: 'https://TU-IMAGEN-AQUI.com/bruno-cerda.jpg',
+  avatar_img_placeholder: 'https://via.placeholder.com/60x60/c43800/ffffff?text=BC',
+  avatar:'linear-gradient(135deg,#FF7A00 0%,#c43800 100%)', es:'Maestro!! Qué puedo decir? Maravillosas clases. No solo es un viaje por los músculos de cada zona del cuerpo, sino también un vistazo a la lógica y entendimiento de su funcionamiento para aplicarlos en una ilustración. Clases recomendadísimas 🔥🔥🔥', en:'Teacher!! What can I say? Wonderful classes. Not just a journey through the muscles of each body area, but also a look at the logic and understanding of how they work to apply them in an illustration. Highly recommended classes 🔥🔥🔥' },
+  { id:1, name:'Danilo López', flag:'🇲🇽', stars:5, // 🖼️ FOTO TESTIMONIO 5 — nombre: 'Danilo López'
+  // ✏️  Reemplaza img_placeholder con la URL de la foto real:
+  //     avatar_img: 'https://TU-IMAGEN-AQUI.com/danilo-lopez.jpg',
+  avatar_img_placeholder: 'https://via.placeholder.com/60x60/E87040/ffffff?text=DL',
+  avatar:'linear-gradient(135deg,#F2A07B 0%,#E87040 100%)', es:'Es un curso bastante completo y muy entendible, un plus son los PDFs de apoyo para la realización de los trabajos.', en:'It\'s a very complete and understandable course, a plus are the support PDFs for completing the assignments.' },
 ];
 
 const GALLERY = [
-  { g:'linear-gradient(135deg, #0d0d1a 0%, #1a0d33 40%, #33001a 100%)', h:340, title:'Umbra I' },
-  { g:'linear-gradient(160deg, #0a1a0a 0%, #1a3a1a 50%, #2d5a1a 100%)', h:240, title:'Terra Nova' },
-  { g:'linear-gradient(120deg, #1a0a00 0%, #4a2000 60%, #7a3310 100%)', h:400, title:'Solaris' },
-  { g:'linear-gradient(150deg, #000a1a 0%, #001a4a 60%, #003380 100%)', h:280, title:'Deep Signal' },
-  { g:'linear-gradient(135deg, #1a1a00 0%, #4a4a00 50%, #6a5500 100%)', h:360, title:'Desierto III' },
-  { g:'linear-gradient(140deg, #1a000a 0%, #4a0020 50%, #8b0030 100%)', h:300, title:'Kraken' },
-  { g:'linear-gradient(125deg, #0a0a1a 0%, #1a1a4a 40%, #2a2a8a 100%)', h:420, title:'Void Atlas' },
-  { g:'linear-gradient(155deg, #0a1a1a 0%, #1a4a4a 50%, #2a7a7a 100%)', h:260, title:'Fauna I' },
-  { g:'linear-gradient(130deg, #1a0a1a 0%, #3a1a3a 50%, #6a2a6a 100%)', h:320, title:'Eclipse' },
-  { g:'linear-gradient(145deg, #0c0c0c 0%, #2a1a00 50%, #FF4500 100%)', h:370, title:'Ember' },
-  { g:'linear-gradient(135deg, #0a1a00 0%, #1a3a00 60%, #3a6a00 100%)', h:290, title:'Forest Lore' },
-  { g:'linear-gradient(150deg, #0f0a1a 0%, #2a1a3a 50%, #1a0a4a 100%)', h:350, title:'Nocturno' },
+  {
+  // 🖼️ IMAGEN 1 DE PORTAFOLIO — título: 'Umbra I'
+  // ✏️  Reemplaza esta URL con la dirección de tu imagen real:
+  //     src: 'https://TU-IMAGEN-AQUI.com/umbra-i.jpg',
+  img_placeholder: 'https://via.placeholder.com/300x340/1a0d33/FF4500?text=PORTAFOLIO+1+Umbra+I',
+  g:'linear-gradient(135deg, #0d0d1a 0%, #1a0d33 40%, #33001a 100%)', h:340, title:'Umbra I' },
+  {
+  // 🖼️ IMAGEN 2 DE PORTAFOLIO — título: 'Terra Nova'
+  // ✏️  Reemplaza esta URL con la dirección de tu imagen real:
+  //     src: 'https://TU-IMAGEN-AQUI.com/terra-nova.jpg',
+  img_placeholder: 'https://via.placeholder.com/300x240/1a3a1a/FF4500?text=PORTAFOLIO+2+Terra+Nova',
+  g:'linear-gradient(160deg, #0a1a0a 0%, #1a3a1a 50%, #2d5a1a 100%)', h:240, title:'Terra Nova' },
+  {
+  // 🖼️ IMAGEN 3 DE PORTAFOLIO — título: 'Solaris'
+  // ✏️  Reemplaza esta URL con la dirección de tu imagen real:
+  //     src: 'https://TU-IMAGEN-AQUI.com/solaris.jpg',
+  img_placeholder: 'https://via.placeholder.com/300x400/4a2000/FF4500?text=PORTAFOLIO+3+Solaris',
+  g:'linear-gradient(120deg, #1a0a00 0%, #4a2000 60%, #7a3310 100%)', h:400, title:'Solaris' },
+  {
+  // 🖼️ IMAGEN 4 DE PORTAFOLIO — título: 'Deep Signal'
+  // ✏️  Reemplaza esta URL con la dirección de tu imagen real:
+  //     src: 'https://TU-IMAGEN-AQUI.com/deep-signal.jpg',
+  img_placeholder: 'https://via.placeholder.com/300x280/001a4a/FF4500?text=PORTAFOLIO+4+Deep+Signal',
+  g:'linear-gradient(150deg, #000a1a 0%, #001a4a 60%, #003380 100%)', h:280, title:'Deep Signal' },
+  {
+  // 🖼️ IMAGEN 5 DE PORTAFOLIO — título: 'Desierto III'
+  // ✏️  Reemplaza esta URL con la dirección de tu imagen real:
+  //     src: 'https://TU-IMAGEN-AQUI.com/desierto-iii.jpg',
+  img_placeholder: 'https://via.placeholder.com/300x360/4a4a00/FF4500?text=PORTAFOLIO+5+Desierto+III',
+  g:'linear-gradient(135deg, #1a1a00 0%, #4a4a00 50%, #6a5500 100%)', h:360, title:'Desierto III' },
+  {
+  // 🖼️ IMAGEN 6 DE PORTAFOLIO — título: 'Kraken'
+  // ✏️  Reemplaza esta URL con la dirección de tu imagen real:
+  //     src: 'https://TU-IMAGEN-AQUI.com/kraken.jpg',
+  img_placeholder: 'https://via.placeholder.com/300x300/4a0020/FF4500?text=PORTAFOLIO+6+Kraken',
+  g:'linear-gradient(140deg, #1a000a 0%, #4a0020 50%, #8b0030 100%)', h:300, title:'Kraken' },
+  {
+  // 🖼️ IMAGEN 7 DE PORTAFOLIO — título: 'Void Atlas'
+  // ✏️  Reemplaza esta URL con la dirección de tu imagen real:
+  //     src: 'https://TU-IMAGEN-AQUI.com/void-atlas.jpg',
+  img_placeholder: 'https://via.placeholder.com/300x420/1a1a4a/FF4500?text=PORTAFOLIO+7+Void+Atlas',
+  g:'linear-gradient(125deg, #0a0a1a 0%, #1a1a4a 40%, #2a2a8a 100%)', h:420, title:'Void Atlas' },
+  {
+  // 🖼️ IMAGEN 8 DE PORTAFOLIO — título: 'Fauna I'
+  // ✏️  Reemplaza esta URL con la dirección de tu imagen real:
+  //     src: 'https://TU-IMAGEN-AQUI.com/fauna-i.jpg',
+  img_placeholder: 'https://via.placeholder.com/300x260/1a4a4a/FF4500?text=PORTAFOLIO+8+Fauna+I',
+  g:'linear-gradient(155deg, #0a1a1a 0%, #1a4a4a 50%, #2a7a7a 100%)', h:260, title:'Fauna I' },
+  {
+  // 🖼️ IMAGEN 9 DE PORTAFOLIO — título: 'Eclipse'
+  // ✏️  Reemplaza esta URL con la dirección de tu imagen real:
+  //     src: 'https://TU-IMAGEN-AQUI.com/eclipse.jpg',
+  img_placeholder: 'https://via.placeholder.com/300x320/3a1a3a/FF4500?text=PORTAFOLIO+9+Eclipse',
+  g:'linear-gradient(130deg, #1a0a1a 0%, #3a1a3a 50%, #6a2a6a 100%)', h:320, title:'Eclipse' },
+  {
+  // 🖼️ IMAGEN 10 DE PORTAFOLIO — título: 'Ember'
+  // ✏️  Reemplaza esta URL con la dirección de tu imagen real:
+  //     src: 'https://TU-IMAGEN-AQUI.com/ember.jpg',
+  img_placeholder: 'https://via.placeholder.com/300x370/2a1a00/FF4500?text=PORTAFOLIO+10+Ember',
+  g:'linear-gradient(145deg, #0c0c0c 0%, #2a1a00 50%, #FF4500 100%)', h:370, title:'Ember' },
+  {
+  // 🖼️ IMAGEN 11 DE PORTAFOLIO — título: 'Forest Lore'
+  // ✏️  Reemplaza esta URL con la dirección de tu imagen real:
+  //     src: 'https://TU-IMAGEN-AQUI.com/forest-lore.jpg',
+  img_placeholder: 'https://via.placeholder.com/300x290/1a3a00/FF4500?text=PORTAFOLIO+11+Forest+Lore',
+  g:'linear-gradient(135deg, #0a1a00 0%, #1a3a00 60%, #3a6a00 100%)', h:290, title:'Forest Lore' },
+  {
+  // 🖼️ IMAGEN 12 DE PORTAFOLIO — título: 'Nocturno'
+  // ✏️  Reemplaza esta URL con la dirección de tu imagen real:
+  //     src: 'https://TU-IMAGEN-AQUI.com/nocturno.jpg',
+  img_placeholder: 'https://via.placeholder.com/300x350/2a1a3a/FF4500?text=PORTAFOLIO+12+Nocturno',
+  g:'linear-gradient(150deg, #0f0a1a 0%, #2a1a3a 50%, #1a0a4a 100%)', h:350, title:'Nocturno' },
 ];
 
 /* lesson image placeholders — muted photo-style gradients */
@@ -2192,18 +2288,78 @@ const LESSON_TIPS = {
 
 
 const SW = [
-  { g:'linear-gradient(135deg,#1a0d33 0%,#4a1a66 50%,#7a2a99 100%)', orient:'portrait', name:'Valentina R.' },
-  { g:'linear-gradient(135deg,#001a1a 0%,#004a4a 50%,#008888 100%)', orient:'landscape', name:'Camilo S.' },
-  { g:'linear-gradient(135deg,#1a0000 0%,#6a1a00 50%,#cc3300 100%)', orient:'portrait', name:'Diego M.' },
-  { g:'linear-gradient(135deg,#0a0a2a 0%,#1a2a6a 50%,#3a4aaa 100%)', orient:'landscape', name:'Sofía L.' },
-  { g:'linear-gradient(135deg,#1a1500 0%,#5a4a00 50%,#aa8800 100%)', orient:'portrait', name:'Matías P.' },
-  { g:'linear-gradient(135deg,#001a0a 0%,#005a22 50%,#009944 100%)', orient:'landscape', name:'Lucía C.' },
-  { g:'linear-gradient(135deg,#1a0a00 0%,#6a2200 50%,#cc5500 100%)', orient:'portrait', name:'Andrés V.' },
-  { g:'linear-gradient(135deg,#0a001a 0%,#2a0066 50%,#6600cc 100%)', orient:'landscape', name:'Daniela F.' },
-  { g:'linear-gradient(135deg,#001018 0%,#003355 50%,#006699 100%)', orient:'portrait', name:'Isabela M.' },
-  { g:'linear-gradient(135deg,#180a00 0%,#4a1800 50%,#882200 100%)', orient:'landscape', name:'Rodrigo T.' },
-  { g:'linear-gradient(135deg,#0a1800 0%,#2a4a00 50%,#558800 100%)', orient:'portrait', name:'Camila V.' },
-  { g:'linear-gradient(135deg,#1a0a1a 0%,#5a1a5a 50%,#aa33aa 100%)', orient:'portrait', name:'Paula G.' },
+  {
+  // 🖼️ TRABAJO DE ALUMNO 1 — nombre: 'Valentina R.' (retrato vertical)
+  // ✏️  Reemplaza esta URL con la imagen real del alumno:
+  //     img_placeholder: 'https://TU-IMAGEN-AQUI.com/valentina-r.jpg',
+  img_placeholder: 'https://via.placeholder.com/300x400/4a1a66/FF4500?text=ALUMNO+1+Valentina+R.',
+  g:'linear-gradient(135deg,#1a0d33 0%,#4a1a66 50%,#7a2a99 100%)', orient:'portrait', name:'Valentina R.' },
+  {
+  // 🖼️ TRABAJO DE ALUMNO 2 — nombre: 'Camilo S.' (horizontal)
+  // ✏️  Reemplaza esta URL con la imagen real del alumno:
+  //     img_placeholder: 'https://TU-IMAGEN-AQUI.com/camilo-s.jpg',
+  img_placeholder: 'https://via.placeholder.com/400x300/004a4a/FF4500?text=ALUMNO+2+Camilo+S.',
+  g:'linear-gradient(135deg,#001a1a 0%,#004a4a 50%,#008888 100%)', orient:'landscape', name:'Camilo S.' },
+  {
+  // 🖼️ TRABAJO DE ALUMNO 3 — nombre: 'Diego M.' (retrato vertical)
+  // ✏️  Reemplaza esta URL con la imagen real del alumno:
+  //     img_placeholder: 'https://TU-IMAGEN-AQUI.com/diego-m.jpg',
+  img_placeholder: 'https://via.placeholder.com/300x400/6a1a00/FF4500?text=ALUMNO+3+Diego+M.',
+  g:'linear-gradient(135deg,#1a0000 0%,#6a1a00 50%,#cc3300 100%)', orient:'portrait', name:'Diego M.' },
+  {
+  // 🖼️ TRABAJO DE ALUMNO 4 — nombre: 'Sofía L.' (horizontal)
+  // ✏️  Reemplaza esta URL con la imagen real del alumno:
+  //     img_placeholder: 'https://TU-IMAGEN-AQUI.com/sofia-l.jpg',
+  img_placeholder: 'https://via.placeholder.com/400x300/1a2a6a/FF4500?text=ALUMNO+4+Sofia+L.',
+  g:'linear-gradient(135deg,#0a0a2a 0%,#1a2a6a 50%,#3a4aaa 100%)', orient:'landscape', name:'Sofía L.' },
+  {
+  // 🖼️ TRABAJO DE ALUMNO 5 — nombre: 'Matías P.' (retrato vertical)
+  // ✏️  Reemplaza esta URL con la imagen real del alumno:
+  //     img_placeholder: 'https://TU-IMAGEN-AQUI.com/matias-p.jpg',
+  img_placeholder: 'https://via.placeholder.com/300x400/5a4a00/FF4500?text=ALUMNO+5+Matias+P.',
+  g:'linear-gradient(135deg,#1a1500 0%,#5a4a00 50%,#aa8800 100%)', orient:'portrait', name:'Matías P.' },
+  {
+  // 🖼️ TRABAJO DE ALUMNO 6 — nombre: 'Lucía C.' (horizontal)
+  // ✏️  Reemplaza esta URL con la imagen real del alumno:
+  //     img_placeholder: 'https://TU-IMAGEN-AQUI.com/lucia-c.jpg',
+  img_placeholder: 'https://via.placeholder.com/400x300/005a22/FF4500?text=ALUMNO+6+Lucia+C.',
+  g:'linear-gradient(135deg,#001a0a 0%,#005a22 50%,#009944 100%)', orient:'landscape', name:'Lucía C.' },
+  {
+  // 🖼️ TRABAJO DE ALUMNO 7 — nombre: 'Andrés V.' (retrato vertical)
+  // ✏️  Reemplaza esta URL con la imagen real del alumno:
+  //     img_placeholder: 'https://TU-IMAGEN-AQUI.com/andres-v.jpg',
+  img_placeholder: 'https://via.placeholder.com/300x400/6a2200/FF4500?text=ALUMNO+7+Andres+V.',
+  g:'linear-gradient(135deg,#1a0a00 0%,#6a2200 50%,#cc5500 100%)', orient:'portrait', name:'Andrés V.' },
+  {
+  // 🖼️ TRABAJO DE ALUMNO 8 — nombre: 'Daniela F.' (horizontal)
+  // ✏️  Reemplaza esta URL con la imagen real del alumno:
+  //     img_placeholder: 'https://TU-IMAGEN-AQUI.com/daniela-f.jpg',
+  img_placeholder: 'https://via.placeholder.com/400x300/2a0066/FF4500?text=ALUMNO+8+Daniela+F.',
+  g:'linear-gradient(135deg,#0a001a 0%,#2a0066 50%,#6600cc 100%)', orient:'landscape', name:'Daniela F.' },
+  {
+  // 🖼️ TRABAJO DE ALUMNO 9 — nombre: 'Isabela M.' (retrato vertical)
+  // ✏️  Reemplaza esta URL con la imagen real del alumno:
+  //     img_placeholder: 'https://TU-IMAGEN-AQUI.com/isabela-m.jpg',
+  img_placeholder: 'https://via.placeholder.com/300x400/003355/FF4500?text=ALUMNO+9+Isabela+M.',
+  g:'linear-gradient(135deg,#001018 0%,#003355 50%,#006699 100%)', orient:'portrait', name:'Isabela M.' },
+  {
+  // 🖼️ TRABAJO DE ALUMNO 10 — nombre: 'Rodrigo T.' (horizontal)
+  // ✏️  Reemplaza esta URL con la imagen real del alumno:
+  //     img_placeholder: 'https://TU-IMAGEN-AQUI.com/rodrigo-t.jpg',
+  img_placeholder: 'https://via.placeholder.com/400x300/4a1800/FF4500?text=ALUMNO+10+Rodrigo+T.',
+  g:'linear-gradient(135deg,#180a00 0%,#4a1800 50%,#882200 100%)', orient:'landscape', name:'Rodrigo T.' },
+  {
+  // 🖼️ TRABAJO DE ALUMNO 11 — nombre: 'Camila V.' (retrato vertical)
+  // ✏️  Reemplaza esta URL con la imagen real del alumno:
+  //     img_placeholder: 'https://TU-IMAGEN-AQUI.com/camila-v.jpg',
+  img_placeholder: 'https://via.placeholder.com/300x400/2a4a00/FF4500?text=ALUMNO+11+Camila+V.',
+  g:'linear-gradient(135deg,#0a1800 0%,#2a4a00 50%,#558800 100%)', orient:'portrait', name:'Camila V.' },
+  {
+  // 🖼️ TRABAJO DE ALUMNO 12 — nombre: 'Paula G.' (retrato vertical)
+  // ✏️  Reemplaza esta URL con la imagen real del alumno:
+  //     img_placeholder: 'https://TU-IMAGEN-AQUI.com/paula-g.jpg',
+  img_placeholder: 'https://via.placeholder.com/300x400/5a1a5a/FF4500?text=ALUMNO+12+Paula+G.',
+  g:'linear-gradient(135deg,#1a0a1a 0%,#5a1a5a 50%,#aa33aa 100%)', orient:'portrait', name:'Paula G.' },
 ];
 
 /* 12-image hover-scroll carousel for live banner — 3 squares visible, hover sides to scroll */
@@ -2319,10 +2475,10 @@ function Nav({ lang, setLang, page, goTo }) {
   };
 
   const socials = [
+    { href:'https://discord.gg',    icon:<IcoDC />,    title:'Discord'   },
+    { href:'https://youtube.com',   icon:<IcoYT />,    title:'YouTube'   },
     { href:'https://instagram.com', icon:<IcoInsta />, title:'Instagram' },
     { href:'https://tiktok.com',    icon:<IcoTT />,    title:'TikTok'    },
-    { href:'https://youtube.com',   icon:<IcoYT />,    title:'YouTube'   },
-    { href:'https://discord.gg',    icon:<IcoDC />,    title:'Discord'   },
   ];
 
   return (
@@ -2367,7 +2523,7 @@ function Nav({ lang, setLang, page, goTo }) {
         {/* Desktop right */}
         <div className="nav-right">
           {socials.map(s => (
-            <a key={s.title} href={s.href} className="nav-icon-btn" title={s.title}>{s.icon}</a>
+            <a key={s.title} href={s.href} target="_blank" rel="noopener noreferrer" className="nav-icon-btn" title={s.title}>{s.icon}</a>
           ))}
           <button className="nav-lang" onClick={() => setLang(lang === 'es' ? 'en' : 'es')}>
             {lang === 'es' ? 'EN' : 'ES'}
@@ -2418,7 +2574,7 @@ function Nav({ lang, setLang, page, goTo }) {
 
         <div className="nav-drawer-socials">
           {socials.map(s => (
-            <a key={s.title} href={s.href} className="nav-icon-btn" title={s.title}>{s.icon}</a>
+            <a key={s.title} href={s.href} target="_blank" rel="noopener noreferrer" className="nav-icon-btn" title={s.title}>{s.icon}</a>
           ))}
           <button className="nav-drawer-lang" onClick={() => setLang(lang === 'es' ? 'en' : 'es')}>
             {lang === 'es' ? 'EN' : 'ES'}
@@ -2778,7 +2934,11 @@ function LivePage({ lang, goTo }) {
               onClick={() => setResultadosLightbox(true)}
             >
               <div
-                style={{ width:'100%', aspectRatio:'16/9', display:'block', background:'linear-gradient(135deg, #1a0a0a 0%, #4a0e1e 30%, #8b1a2a 60%, #3a0a4a 100%)', transition:'transform 0.5s ease' }}
+                /* 🖼️ IMAGEN RESULTADOS — sección 'Clases en Vivo'
+                ✏️  Reemplaza el valor de background con tu imagen real así:
+                    background: "url('https://TU-IMAGEN-AQUI.com/resultados-anatomia.jpg') center/cover",
+                    O mejor aún: cambia este <div> por un <img src='TU-URL-AQUI' ...> */
+              style={{ width:'100%', aspectRatio:'16/9', display:'block', background:'url(https://via.placeholder.com/1200x675/1a0a0a/FF4500?text=IMAGEN+RESULTADOS+Anatomia+en+Accion+1200x675) center/cover', transition:'transform 0.5s ease' }}
                 onMouseEnter={e => e.currentTarget.style.transform='scale(1.02)'}
                 onMouseLeave={e => e.currentTarget.style.transform='scale(1)'}
               />
@@ -2794,7 +2954,8 @@ function LivePage({ lang, goTo }) {
           onClick={() => setResultadosLightbox(false)}
         >
           <div
-            style={{ width:'min(900px,90vw)', aspectRatio:'16/9', background:'linear-gradient(135deg, #1a0a0a 0%, #4a0e1e 30%, #8b1a2a 60%, #3a0a4a 100%)', display:'block', cursor:'default' }}
+            /* 🖼️ IMAGEN RESULTADOS ampliada (lightbox) — misma imagen de arriba */
+            style={{ width:'min(900px,90vw)', aspectRatio:'16/9', background:'url(https://via.placeholder.com/1200x675/1a0a0a/FF4500?text=IMAGEN+RESULTADOS+Anatomia+en+Accion+1200x675) center/cover', display:'block', cursor:'default' }}
             onClick={e => e.stopPropagation()}
           />
           <button
@@ -3008,9 +3169,9 @@ function ContactPage({ lang }) {
             )}
           </p>
           <div className="socials-row" style={{ marginBottom:'0.4rem' }}>
-            <a href="#" className="social-pill"><IcoInsta /> Instagram</a>
-            <a href="#" className="social-pill"><IcoTT /> TikTok</a>
-            <a href="#" className="social-pill"><IcoYT /> YouTube</a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="social-pill"><IcoInsta /> Instagram</a>
+            <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className="social-pill"><IcoTT /> TikTok</a>
+            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="social-pill"><IcoYT /> YouTube</a>
           </div>
 
           <div style={{ marginTop:'2.4rem' }}>
@@ -3020,7 +3181,7 @@ function ContactPage({ lang }) {
             <p style={{ fontFamily:'var(--fb)', fontSize:'0.92rem', color:'var(--clr-muted)', lineHeight:1.7, marginBottom:'1.1rem', maxWidth:'340px' }}>
               {t('Estudia, comparte, y compite por premios en mi servidor de Discord.','Study, share, and compete for prizes on my Discord server.')}
             </p>
-            <a href="https://discord.gg" className="social-pill"><IcoDC /> Discord</a>
+            <a href="https://discord.gg" target="_blank" rel="noopener noreferrer" className="social-pill"><IcoDC /> Discord</a>
           </div>
         </div>
 
