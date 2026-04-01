@@ -379,8 +379,8 @@
     /* ═══════════════════════════════════════════
        HERO MANUAL CAROUSEL
     ═══════════════════════════════════════════ */
-    @keyframes hc-fadein  { from { opacity: 0;    } to { opacity: 0.22; } }
-    @keyframes hc-fadeout { from { opacity: 0.22; } to { opacity: 0;    } }
+    @keyframes hc-fadein  { from { opacity: 0;    } to { opacity: 1; } }
+    @keyframes hc-fadeout { from { opacity: 1; } to { opacity: 0;    } }
 
     .hc-wrap {
       position: absolute;
@@ -2192,7 +2192,7 @@ const GALLERY = [
   // 🖼️ IMAGEN 7 DE PORTAFOLIO — título: 'Void Atlas'
   // ✏️  Reemplaza esta URL con la dirección de tu imagen real:
   //     src: 'https://TU-IMAGEN-AQUI.com/void-atlas.jpg',
-  src: 'https://ik.imagekit.io/ruiveran/ruiveran-thai.jpg', h:420, title:'Danzante Thai'},
+  src: 'https://ik.imagekit.io/ruiveran/ruiveran-thai.jpg?tr=f-auto,q-80', h:420, title:'Danzante Thai', g:'linear-gradient(135deg,#1a0a1a 0%,#5a1a3a 50%,#8b2a5a 100%)'},
   {
   // 🖼️ IMAGEN 8 DE PORTAFOLIO — título: 'Fauna I'
   // ✏️  Reemplaza esta URL con la dirección de tu imagen real:
@@ -2616,13 +2616,13 @@ function HeroCarousel() {
       {prev !== null && (
         <div key={`out-${prev}`} className="hc-slide hc-slide-out" style={{
           background: items[prev].src
-            ? `url('${items[prev].src}') center/cover no-repeat`
+            ? `url('${items[prev].src}') center 70% / cover no-repeat`
             : items[prev].g
         }} />
       )}
       <div key={`in-${idx}`} className="hc-slide hc-slide-in" style={{
         background: items[idx].src
-          ? `url('${items[idx].src}') center/cover no-repeat`
+          ? `url('${items[idx].src}') center 70% / cover no-repeat`
           : items[idx].g
       }} />
 
@@ -2694,10 +2694,13 @@ function GalleryItem({ item, onOpen }) {
           alt={item.title}
           style={{ width: '100%', display: 'block', height: 'auto' }}
           loading="lazy"
+          onError={e => {
+            e.currentTarget.style.display = 'none';
+            e.currentTarget.nextSibling && (e.currentTarget.nextSibling.style.display = 'block');
+          }}
         />
-      ) : (
-        <div className="gallery-thumb" style={{ aspectRatio: `300/${item.h}`, background: item.g }} />
-      )}
+      ) : null}
+      <div className="gallery-thumb" style={{ aspectRatio: `300/${item.h}`, background: item.g || '#1a1a1a', display: item.src ? 'none' : 'block' }} />
       <div className="gallery-over">
         <div className="gallery-over-content">
           <span className="gallery-over-title">{item.title}</span>
