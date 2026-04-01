@@ -2624,9 +2624,17 @@ function HeroCarousel() {
       onMouseLeave={() => setHovered(false)}
     >
       {prev !== null && (
-        <div key={`out-${prev}`} className="hc-slide hc-slide-out" style={{ background: items[prev].g }} />
+        <div key={`out-${prev}`} className="hc-slide hc-slide-out" style={{
+          background: items[prev].src
+            ? `url('${items[prev].src}') center/cover no-repeat`
+            : items[prev].g
+        }} />
       )}
-      <div key={`in-${idx}`} className="hc-slide hc-slide-in" style={{ background: items[idx].g }} />
+      <div key={`in-${idx}`} className="hc-slide hc-slide-in" style={{
+        background: items[idx].src
+          ? `url('${items[idx].src}') center/cover no-repeat`
+          : items[idx].g
+      }} />
 
       <button className={`hc-arrow hc-arrow-l${hovered ? ' hc-arrow-vis' : ''}`} onClick={goPrev} aria-label="prev">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>
@@ -2659,7 +2667,15 @@ function Lightbox({ item, onClose }) {
     <div className="lightbox-backdrop" onClick={onClose}>
       <div className="lightbox-inner" onClick={e => e.stopPropagation()}>
         <button className="lightbox-close" onClick={onClose}>✕</button>
-        <div className="lightbox-img" style={{ background: item.g }} />
+        {item.src ? (
+          <img
+            src={item.src}
+            alt={item.title}
+            style={{ width: '100%', height: 'auto', display: 'block' }}
+          />
+        ) : (
+          <div className="lightbox-img" style={{ background: item.g }} />
+        )}
         <div className="lightbox-caption">{item.title}</div>
       </div>
     </div>
@@ -2681,7 +2697,17 @@ function GalleryItem({ item, onOpen }) {
   }, []);
   return (
     <div ref={ref} className={`gallery-item pin-item${vis ? ' pin-in' : ''}`} onClick={() => onOpen(item)}>
-      <div className="gallery-thumb" style={{ aspectRatio: `300/${item.h}`, background: item.g }} />
+      {item.src ? (
+        <img
+          className="gallery-thumb"
+          src={item.src}
+          alt={item.title}
+          style={{ width: '100%', display: 'block', height: 'auto' }}
+          loading="lazy"
+        />
+      ) : (
+        <div className="gallery-thumb" style={{ aspectRatio: `300/${item.h}`, background: item.g }} />
+      )}
       <div className="gallery-over">
         <div className="gallery-over-content">
           <span className="gallery-over-title">{item.title}</span>
