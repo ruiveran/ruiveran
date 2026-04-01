@@ -249,6 +249,7 @@
       padding-bottom: 5.6vh;
       position: relative;
       overflow: hidden;
+      background: #000;
     }
     .hero-deco {
       position: absolute;
@@ -290,12 +291,12 @@
       line-height: 0.83;
       letter-spacing: -0.03em;
       text-transform: uppercase;
-      color: var(--clr-black);
+      color: #fff;
       position: relative;
       z-index: 1;
     }
     .hero-title .outline {
-      -webkit-text-stroke: 2.5px var(--clr-black);
+      -webkit-text-stroke: 2.5px rgba(255,255,255,0.85);
       color: transparent;
       transition: -webkit-text-stroke-color 0.35s;
     }
@@ -314,7 +315,7 @@
       font-family: var(--fb);
       font-size: clamp(0.88rem, 1.1vw, 1.05rem);
       font-weight: 300;
-      color: var(--clr-muted);
+      color: rgba(255,255,255,0.72);
       max-width: 300px;
       line-height: 1.7;
       white-space: pre-line;
@@ -329,13 +330,13 @@
       font-family: var(--fh);
       font-weight: 900;
       font-size: 1.5rem;
-      color: var(--clr-black);
+      color: #fff;
       line-height: 1;
     }
     .hero-stat-lbl {
       font-family: var(--fb);
       font-size: 0.72rem;
-      color: var(--clr-muted);
+      color: rgba(255,255,255,0.58);
       margin-top: 0.15rem;
     }
 
@@ -350,7 +351,7 @@
     .hero-collab-lbl {
       font-family: var(--fb);
       font-size: 0.72rem;
-      color: var(--clr-muted);
+      color: rgba(255,255,255,0.55);
       margin-right: 0.2rem;
     }
     .hero-collab-badge {
@@ -358,8 +359,8 @@
       font-size: 0.66rem;
       font-weight: 700;
       letter-spacing: 0.1em;
-      color: var(--clr-black);
-      border: 1px solid var(--clr-border);
+      color: rgba(255,255,255,0.82);
+      border: 1px solid rgba(255,255,255,0.28);
       padding: 3px 10px;
       text-transform: uppercase;
       transition: border-color 0.2s, color 0.2s;
@@ -379,8 +380,8 @@
     /* ═══════════════════════════════════════════
        HERO MANUAL CAROUSEL
     ═══════════════════════════════════════════ */
-    @keyframes hc-fadein  { from { opacity: 0;    } to { opacity: 0.22; } }
-    @keyframes hc-fadeout { from { opacity: 0.22; } to { opacity: 0;    } }
+    @keyframes hc-fadein  { from { opacity: 0;    } to { opacity: 0.42; } }
+    @keyframes hc-fadeout { from { opacity: 0.42; } to { opacity: 0;    } }
 
     .hc-wrap {
       position: absolute;
@@ -404,7 +405,7 @@
     .hc-fade {
       position: absolute;
       inset: 0;
-      background: transparent;
+      background: linear-gradient(to top, #000 0%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.18) 70%, rgba(0,0,0,0.08) 100%);
       z-index: 3;
       pointer-events: none;
     }
@@ -2162,7 +2163,7 @@ const GALLERY = [
   {
 // 🖼️ IMAGEN 1 — Xp-Pen Future Me
     // Optimized: Width 1000px, Quality 80%, Auto-format (AVIF/WebP)
-    src: 'https://ik.imagekit.io/ruiveran/ruiveran-Future-me.png?tr=w-1000,q-80,f-auto', h:340 , title: 'Xp-Pen Future Me'},
+    src: 'https://ik.imagekit.io/ruiveran/ruiveran-Future-me.png?tr=w-1000,q-80,f-auto', h:340 , title: 'Xp-Pen Future Me' },
   {
   // 🖼️ IMAGEN 2 DE PORTAFOLIO — título: 'Terra Nova'
   // ✏️  Reemplaza esta URL con la dirección de tu imagen real:
@@ -2172,52 +2173,62 @@ const GALLERY = [
   // 🖼️ IMAGEN 3 DE PORTAFOLIO — título: 'Solaris'
   // ✏️  Reemplaza esta URL con la dirección de tu imagen real:
   //     src: 'https://TU-IMAGEN-AQUI.com/solaris.jpg',
-  src: 'https://ik.imagekit.io/ruiveran/ruiveran-moche.jpg', h:400, title:'Princesa Moche' },
+  img_placeholder: 'https://via.placeholder.com/300x400/4a2000/FF4500?text=PORTAFOLIO+3+Solaris',
+  g:'linear-gradient(120deg, #1a0a00 0%, #4a2000 60%, #7a3310 100%)', h:400, title:'Solaris' },
   {
   // 🖼️ IMAGEN 4 DE PORTAFOLIO — título: 'Deep Signal'
   // ✏️  Reemplaza esta URL con la dirección de tu imagen real:
   //     src: 'https://TU-IMAGEN-AQUI.com/deep-signal.jpg',
-  src: 'https://ik.imagekit.io/ruiveran/ruiveran-18.jpg', h:280, title:'Androide 18' },
+  img_placeholder: 'https://via.placeholder.com/300x280/001a4a/FF4500?text=PORTAFOLIO+4+Deep+Signal',
+  g:'linear-gradient(150deg, #000a1a 0%, #001a4a 60%, #003380 100%)', h:280, title:'Deep Signal' },
   {
   // 🖼️ IMAGEN 5 DE PORTAFOLIO — título: 'Desierto III'
   // ✏️  Reemplaza esta URL con la dirección de tu imagen real:
   //     src: 'https://TU-IMAGEN-AQUI.com/desierto-iii.jpg',
-  src: 'https://ik.imagekit.io/ruiveran/ruiveran-demonio.jpg', h:360, title:'Guardián de la Puerta' },
+  img_placeholder: 'https://via.placeholder.com/300x360/4a4a00/FF4500?text=PORTAFOLIO+5+Desierto+III',
+  g:'linear-gradient(135deg, #1a1a00 0%, #4a4a00 50%, #6a5500 100%)', h:360, title:'Desierto III' },
   {
   // 🖼️ IMAGEN 6 DE PORTAFOLIO — título: 'Kraken'
   // ✏️  Reemplaza esta URL con la dirección de tu imagen real:
   //     src: 'https://TU-IMAGEN-AQUI.com/kraken.jpg',
-  src: 'https://ik.imagekit.io/ruiveran/ruiveran_zorro.jpg', h:300, title:'El Zorro de Fuego' },
+  img_placeholder: 'https://via.placeholder.com/300x300/4a0020/FF4500?text=PORTAFOLIO+6+Kraken',
+  g:'linear-gradient(140deg, #1a000a 0%, #4a0020 50%, #8b0030 100%)', h:300, title:'Kraken' },
   {
   // 🖼️ IMAGEN 7 DE PORTAFOLIO — título: 'Void Atlas'
   // ✏️  Reemplaza esta URL con la dirección de tu imagen real:
   //     src: 'https://TU-IMAGEN-AQUI.com/void-atlas.jpg',
-  src: 'https://ik.imagekit.io/ruiveran/ruiveran-thai.jpg', h:420, title:'Danzante Thai'},
+  img_placeholder: 'https://via.placeholder.com/300x420/1a1a4a/FF4500?text=PORTAFOLIO+7+Void+Atlas',
+  g:'linear-gradient(125deg, #0a0a1a 0%, #1a1a4a 40%, #2a2a8a 100%)', h:420, title:'Void Atlas' },
   {
   // 🖼️ IMAGEN 8 DE PORTAFOLIO — título: 'Fauna I'
   // ✏️  Reemplaza esta URL con la dirección de tu imagen real:
   //     src: 'https://TU-IMAGEN-AQUI.com/fauna-i.jpg',
-  src: 'https://ik.imagekit.io/ruiveran/ruiveran-vivi.jpg', h:260, title:'Vivi' },
+  img_placeholder: 'https://via.placeholder.com/300x260/1a4a4a/FF4500?text=PORTAFOLIO+8+Fauna+I',
+  g:'linear-gradient(155deg, #0a1a1a 0%, #1a4a4a 50%, #2a7a7a 100%)', h:260, title:'Fauna I' },
   {
   // 🖼️ IMAGEN 9 DE PORTAFOLIO — título: 'Eclipse'
   // ✏️  Reemplaza esta URL con la dirección de tu imagen real:
   //     src: 'https://TU-IMAGEN-AQUI.com/eclipse.jpg',
-  src: 'https://ik.imagekit.io/ruiveran/ruiveran.taiga.jpg', h:320, title:'Pink' },
+  img_placeholder: 'https://via.placeholder.com/300x320/3a1a3a/FF4500?text=PORTAFOLIO+9+Eclipse',
+  g:'linear-gradient(130deg, #1a0a1a 0%, #3a1a3a 50%, #6a2a6a 100%)', h:320, title:'Eclipse' },
   {
   // 🖼️ IMAGEN 10 DE PORTAFOLIO — título: 'Ember'
   // ✏️  Reemplaza esta URL con la dirección de tu imagen real:
   //     src: 'https://TU-IMAGEN-AQUI.com/ember.jpg',
-  src: 'https://ik.imagekit.io/ruiveran/ruiveran-spawn.jpg', h:370, title:'Spawn' },
+  img_placeholder: 'https://via.placeholder.com/300x370/2a1a00/FF4500?text=PORTAFOLIO+10+Ember',
+  g:'linear-gradient(145deg, #0c0c0c 0%, #2a1a00 50%, #FF4500 100%)', h:370, title:'Ember' },
   {
   // 🖼️ IMAGEN 11 DE PORTAFOLIO — título: 'Forest Lore'
   // ✏️  Reemplaza esta URL con la dirección de tu imagen real:
   //     src: 'https://TU-IMAGEN-AQUI.com/forest-lore.jpg',
-  src: 'https://ik.imagekit.io/ruiveran/ruiveran-azteca.png', h:290, title:'Guerrera Azteca' },
+  img_placeholder: 'https://via.placeholder.com/300x290/1a3a00/FF4500?text=PORTAFOLIO+11+Forest+Lore',
+  g:'linear-gradient(135deg, #0a1a00 0%, #1a3a00 60%, #3a6a00 100%)', h:290, title:'Forest Lore' },
   {
   // 🖼️ IMAGEN 12 DE PORTAFOLIO — título: 'Nocturno'
   // ✏️  Reemplaza esta URL con la dirección de tu imagen real:
   //     src: 'https://TU-IMAGEN-AQUI.com/nocturno.jpg',
-  src: 'https://ik.imagekit.io/ruiveran/ruiveran-makima.jpg', h:350, title:'Makima' },
+  img_placeholder: 'https://via.placeholder.com/300x350/2a1a3a/FF4500?text=PORTAFOLIO+12+Nocturno',
+  g:'linear-gradient(150deg, #0f0a1a 0%, #2a1a3a 50%, #1a0a4a 100%)', h:350, title:'Nocturno' },
 ];
 
 /* lesson image placeholders — muted photo-style gradients */
@@ -2614,17 +2625,9 @@ function HeroCarousel() {
       onMouseLeave={() => setHovered(false)}
     >
       {prev !== null && (
-        <div key={`out-${prev}`} className="hc-slide hc-slide-out" style={{
-          background: items[prev].src
-            ? `url('${items[prev].src}') center/cover no-repeat`
-            : items[prev].g
-        }} />
+        <div key={`out-${prev}`} className="hc-slide hc-slide-out" style={{ background: items[prev].g }} />
       )}
-      <div key={`in-${idx}`} className="hc-slide hc-slide-in" style={{
-        background: items[idx].src
-          ? `url('${items[idx].src}') center/cover no-repeat`
-          : items[idx].g
-      }} />
+      <div key={`in-${idx}`} className="hc-slide hc-slide-in" style={{ background: items[idx].g }} />
 
       <button className={`hc-arrow hc-arrow-l${hovered ? ' hc-arrow-vis' : ''}`} onClick={goPrev} aria-label="prev">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>
@@ -2657,15 +2660,7 @@ function Lightbox({ item, onClose }) {
     <div className="lightbox-backdrop" onClick={onClose}>
       <div className="lightbox-inner" onClick={e => e.stopPropagation()}>
         <button className="lightbox-close" onClick={onClose}>✕</button>
-        {item.src ? (
-          <img
-            src={item.src}
-            alt={item.title}
-            style={{ width: '100%', height: 'auto', display: 'block' }}
-          />
-        ) : (
-          <div className="lightbox-img" style={{ background: item.g }} />
-        )}
+        <div className="lightbox-img" style={{ background: item.g }} />
         <div className="lightbox-caption">{item.title}</div>
       </div>
     </div>
@@ -2687,17 +2682,7 @@ function GalleryItem({ item, onOpen }) {
   }, []);
   return (
     <div ref={ref} className={`gallery-item pin-item${vis ? ' pin-in' : ''}`} onClick={() => onOpen(item)}>
-      {item.src ? (
-        <img
-          className="gallery-thumb"
-          src={item.src}
-          alt={item.title}
-          style={{ width: '100%', display: 'block', height: 'auto' }}
-          loading="lazy"
-        />
-      ) : (
-        <div className="gallery-thumb" style={{ aspectRatio: `300/${item.h}`, background: item.g }} />
-      )}
+      <div className="gallery-thumb" style={{ aspectRatio: `300/${item.h}`, background: item.g }} />
       <div className="gallery-over">
         <div className="gallery-over-content">
           <span className="gallery-over-title">{item.title}</span>
