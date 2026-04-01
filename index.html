@@ -2769,7 +2769,7 @@ function HomePage({ lang, goTo }) {
       <section className="hero">
         <HeroCarousel />
         <div style={{ position:'relative', zIndex:10 }}>
-          <p className="hero-label hero-anim-1">
+          <p className="hero-label hero-anim-1" style={{ color:'#fff' }}>
             {lang === 'es' ? 'ARTISTA VISUAL E INSTRUCTOR DE ARTE · LIMA, PERÚ' : 'VISUAL ARTIST & ART INSTRUCTOR · LIMA, PERU'}
           </p>
           <h1 className="hero-title hero-anim-2">
@@ -2805,7 +2805,7 @@ function HomePage({ lang, goTo }) {
               <a href="https://ruiveran.gumroad.com/" className="btn btn-orange" style={{ textDecoration:'none' }}>
                 {lang === 'es' ? 'EXPLORAR CURSOS' : 'EXPLORE COURSES'} <IcoArr />
               </a>
-              <button className="btn btn-outline" onClick={() => goTo('vivo')}>
+              <button className="btn btn-outline" onClick={() => goTo('vivo')} style={{ background:'#0C0C0C' }}>
                 {lang === 'es' ? 'CLASES EN VIVO' : 'LIVE CLASSES'}
               </button>
             </div>
