@@ -1539,19 +1539,30 @@
     .lcb-bg {
       position: absolute;
       inset: 0;
-      background:
-        linear-gradient(to right, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.2) 100%),
-        linear-gradient(to top,   rgba(0,0,0,0.9)  0%, rgba(0,0,0,0.15) 60%, transparent 100%),
-        linear-gradient(135deg, #0a0a0a 0%, #1a0f08 20%, #2d1a0a 40%, #1a0808 60%, #0a0a14 80%, #0f0a1a 100%);
+      /* ══════════════════════════════════════════════════════════
+         🖼️  IMAGEN DE FONDO — Bloque "Próxima Clase"
+         ✏️  Reemplaza la URL de abajo con tu imagen real:
+             background-image: url('https://TU-IMAGEN-AQUI.com/clase-banner.jpg');
+         ══════════════════════════════════════════════════════════ */
+      background-image: url('https://ik.imagekit.io/ruiveran/ruiveran-moche.jpg');
       background-size: cover;
       background-position: center;
+    }
+    .lcb-bg::before {
+      /* Capa negra semi-sólida al 70% encima de la imagen */
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.70);
+      z-index: 1;
     }
     .lcb-bg::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at 70% 40%, rgba(80,30,10,0.35) 0%, transparent 65%),
-                  radial-gradient(ellipse at 30% 60%, rgba(20,10,30,0.4) 0%, transparent 60%);
+      z-index: 2;
+      background: radial-gradient(ellipse at 70% 40%, rgba(80,30,10,0.2) 0%, transparent 65%),
+                  radial-gradient(ellipse at 30% 60%, rgba(20,10,30,0.2) 0%, transparent 60%);
     }
     .lcb-top {
       position: relative;
@@ -1598,7 +1609,7 @@
       flex-wrap: wrap;
       margin-top: 0.9rem;
       position: relative;
-      z-index: 1;
+      z-index: 3;
     }
     .lcb-date {
       font-family: var(--fh);
@@ -1615,7 +1626,7 @@
     .lcb-resultados-label {
       font-family: var(--fh);
       font-weight: 800;
-      font-size: 1.08rem;
+      font-size: 1.4rem;
       letter-spacing: 0.112em;
       text-transform: uppercase;
       color: var(--clr-black);
@@ -1957,9 +1968,18 @@
       color: var(--clr-muted);
       padding: 3px 10px;
     }
+    /* ── Mobile social icons row (between logo and burger) ── */
+    .nav-mobile-socials {
+      display: none;
+      flex: 1;
+      align-items: center;
+      justify-content: space-evenly;
+      padding: 0 0.8rem;
+    }
     @media (max-width: 960px) {
       .nav-burger { display: flex; }
       .nav-right { display: none; }
+      .nav-mobile-socials { display: flex; }
     }
     @media (max-width: 600px) {
       :root { --frame: 8px; }
@@ -2551,6 +2571,13 @@ function Nav({ lang, setLang, page, goTo }) {
           </button>
         </div>
 
+        {/* Mobile social icons — visible only on small screens */}
+        <div className="nav-mobile-socials">
+          {socials.map(s => (
+            <a key={s.title} href={s.href} target="_blank" rel="noopener noreferrer" className="nav-icon-btn" title={s.title}>{s.icon}</a>
+          ))}
+        </div>
+
         {/* Hamburger */}
         <button className={`nav-burger${open ? ' open' : ''}`} onClick={() => setOpen(o => !o)} aria-label="Menu">
           <span /><span /><span />
@@ -2901,7 +2928,7 @@ function LivePage({ lang, goTo }) {
         style={{ marginBottom:'2.4rem' }}>
         <div className="lcb-top">
           <div className="lcb-bg" />
-          <div className="lcb-left" style={{ position:'relative', zIndex:1 }}>
+          <div className="lcb-left" style={{ position:'relative', zIndex:3 }}>
             <div style={{ display:'flex', alignItems:'center' }}>
               <div className="lcb-eyebrow">
                 <span style={{ color:'rgba(255,255,255,0.7)' }}>{t('PRÓXIMA CLASE · ','NEXT CLASS · ')}</span>
@@ -3004,9 +3031,16 @@ function LivePage({ lang, goTo }) {
                 "{t(tm.es, tm.en)}"
               </p>
               <div style={{ display:'flex', alignItems:'center', gap:'0.55rem' }}>
+                {tm.avatar_img ? (
+                  <img src={tm.avatar_img} alt={tm.name}
+                    style={{ width:28, height:28, borderRadius:'50%', flexShrink:0, objectFit:'cover', border:'1.5px solid var(--clr-border)' }}
+                    onError={e => { e.currentTarget.style.display='none'; e.currentTarget.nextSibling.style.display='block'; }}
+                  />
+                ) : null}
                 <div style={{
                   width:28, height:28, borderRadius:'50%', flexShrink:0,
                   background: tm.avatar, border:'1.5px solid var(--clr-border)',
+                  display: tm.avatar_img ? 'none' : 'block',
                 }} />
                 <span style={{ fontFamily:'var(--fh)', fontSize:'0.68rem', fontWeight:700, letterSpacing:'0.1em', color:'var(--clr-muted)', textTransform:'uppercase' }}>
                   {tm.name} {tm.flag}

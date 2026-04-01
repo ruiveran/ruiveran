@@ -1931,9 +1931,18 @@
       color: var(--clr-muted);
       padding: 3px 10px;
     }
+    /* ── Mobile social icons row (between logo and burger) ── */
+    .nav-mobile-socials {
+      display: none;
+      flex: 1;
+      align-items: center;
+      justify-content: space-evenly;
+      padding: 0 0.8rem;
+    }
     @media (max-width: 960px) {
       .nav-burger { display: flex; }
       .nav-right { display: none; }
+      .nav-mobile-socials { display: flex; }
     }
     @media (max-width: 600px) {
       :root { --frame: 8px; }
@@ -2517,6 +2526,13 @@ function Nav({ lang, setLang, page, goTo }) {
           </button>
         </div>
 
+        {/* Mobile social icons — visible only on small screens */}
+        <div className="nav-mobile-socials">
+          {socials.map(s => (
+            <a key={s.title} href={s.href} target="_blank" rel="noopener noreferrer" className="nav-icon-btn" title={s.title}>{s.icon}</a>
+          ))}
+        </div>
+
         {/* Hamburger */}
         <button className={`nav-burger${open ? ' open' : ''}`} onClick={() => setOpen(o => !o)} aria-label="Menu">
           <span /><span /><span />
@@ -2773,7 +2789,7 @@ function HomePage({ lang, goTo }) {
             {lang === 'es' ? 'ARTISTA VISUAL E INSTRUCTOR DE ARTE · LIMA, PERÚ' : 'VISUAL ARTIST & ART INSTRUCTOR · LIMA, PERU'}
           </p>
           <h1 className="hero-title hero-anim-2">
-            <span className="outline" style={{ WebkitTextStroke:'2.5px rgba(255,255,255,0.9)', color:'transparent' }}>RUI</span><span style={{ color:'#fff' }}>VER</span><span className="outline" style={{ WebkitTextStroke:'2.5px rgba(255,255,255,0.9)', color:'transparent' }}>AN</span>
+            <span style={{ WebkitTextStroke:'2.5px rgba(255,255,255,0.9)', color:'transparent' }}>RUIVERAN</span>
           </h1>
           <div className="hero-bottom hero-anim-3">
             <div>
@@ -2805,7 +2821,7 @@ function HomePage({ lang, goTo }) {
               <a href="https://ruiveran.gumroad.com/" className="btn btn-orange" style={{ textDecoration:'none' }}>
                 {lang === 'es' ? 'EXPLORAR CURSOS' : 'EXPLORE COURSES'} <IcoArr />
               </a>
-              <button className="btn btn-outline" onClick={() => goTo('vivo')} style={{ background:'#0C0C0C' }}>
+              <button className="btn btn-outline" onClick={() => goTo('vivo')} style={{ background:'rgba(12,12,12,0.8)' }}>
                 {lang === 'es' ? 'CLASES EN VIVO' : 'LIVE CLASSES'}
               </button>
             </div>

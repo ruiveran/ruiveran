@@ -1931,9 +1931,18 @@
       color: var(--clr-muted);
       padding: 3px 10px;
     }
+    /* ── Mobile social icons row (between logo and burger) ── */
+    .nav-mobile-socials {
+      display: none;
+      flex: 1;
+      align-items: center;
+      justify-content: space-evenly;
+      padding: 0 0.8rem;
+    }
     @media (max-width: 960px) {
       .nav-burger { display: flex; }
       .nav-right { display: none; }
+      .nav-mobile-socials { display: flex; }
     }
     @media (max-width: 600px) {
       :root { --frame: 8px; }
@@ -2528,6 +2537,13 @@ function Nav({ lang, setLang, page, goTo }) {
           <button className="nav-lang" onClick={() => setLang(lang === 'es' ? 'en' : 'es')}>
             {lang === 'es' ? 'EN' : 'ES'}
           </button>
+        </div>
+
+        {/* Mobile social icons — visible only on small screens */}
+        <div className="nav-mobile-socials">
+          {socials.map(s => (
+            <a key={s.title} href={s.href} target="_blank" rel="noopener noreferrer" className="nav-icon-btn" title={s.title}>{s.icon}</a>
+          ))}
         </div>
 
         {/* Hamburger */}
