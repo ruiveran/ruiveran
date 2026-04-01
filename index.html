@@ -2592,11 +2592,25 @@ function Marquee({ lang }) {
 /* ══════════════════════════════════════════
    MANUAL HERO CAROUSEL
 ══════════════════════════════════════════ */
+
+/* Dedicated horizontal banner images — wide cinematic crops */
+const HERO_SLIDES = [
+  { src: 'https://ik.imagekit.io/ruiveran/ruiveran-Future-me.png?tr=w-1800,h-700,fo-custom,cm-extract,x-0,y-0,q-80,f-auto',   title: 'Xp-Pen Future Me' },
+  { src: 'https://ik.imagekit.io/ruiveran/ruiveran-azteca.png?tr=w-1800,h-700,fo-auto,cm-pad_resize,bg-1a1a1a,q-80,f-auto',   title: 'Guerrera Azteca' },
+  { src: 'https://ik.imagekit.io/ruiveran/ruiveran-zelda.jpg?tr=w-1800,h-700,fo-auto,cm-pad_resize,bg-0c0c14,q-80,f-auto',    title: 'Zelda' },
+  { src: 'https://ik.imagekit.io/ruiveran/ruiveran-spawn.jpg?tr=w-1800,h-700,fo-auto,cm-pad_resize,bg-100808,q-80,f-auto',    title: 'Spawn' },
+  { src: 'https://ik.imagekit.io/ruiveran/ruiveran-moche.jpg?tr=w-1800,h-700,fo-auto,cm-pad_resize,bg-0e0a04,q-80,f-auto',    title: 'Princesa Moche' },
+  { src: 'https://ik.imagekit.io/ruiveran/ruiveran_thai.png?tr=w-1800,h-700,fo-auto,cm-pad_resize,bg-080814,q-80,f-auto',     title: 'Danzante Thai' },
+  { src: 'https://ik.imagekit.io/ruiveran/ruiveran_zorro.jpg?tr=w-1800,h-700,fo-auto,cm-pad_resize,bg-120800,q-80,f-auto',    title: 'El Zorro de Fuego' },
+  { src: 'https://ik.imagekit.io/ruiveran/ruiveran-makima.jpg?tr=w-1800,h-700,fo-auto,cm-pad_resize,bg-08060e,q-80,f-auto',   title: 'Makima' },
+];
+
 function HeroCarousel() {
   const [idx, setIdx] = useState(0);
   const [prev, setPrev] = useState(null);
   const [hovered, setHovered] = useState(false);
-  const items = GALLERY;
+  const items = HERO_SLIDES;
+  const timerRef = useRef(null);
 
   const go = (next) => {
     if (next === idx) return;
@@ -2604,8 +2618,22 @@ function HeroCarousel() {
     setIdx(next);
     setTimeout(() => setPrev(null), 900);
   };
-  const goNext = () => go((idx + 1) % items.length);
+  const goNext = useCallback(() => go((idx + 1) % items.length), [idx, items.length]);
   const goPrev = () => go((idx - 1 + items.length) % items.length);
+
+  /* Auto-play every 12 seconds; pause on hover */
+  useEffect(() => {
+    if (hovered) { clearInterval(timerRef.current); return; }
+    timerRef.current = setInterval(() => {
+      setIdx(i => {
+        const next = (i + 1) % items.length;
+        setPrev(i);
+        setTimeout(() => setPrev(null), 900);
+        return next;
+      });
+    }, 12000);
+    return () => clearInterval(timerRef.current);
+  }, [hovered, items.length]);
 
   return (
     <div
@@ -2615,15 +2643,24 @@ function HeroCarousel() {
     >
       {prev !== null && (
         <div key={`out-${prev}`} className="hc-slide hc-slide-out" style={{
-          background: items[prev].src
-            ? `url('${items[prev].src}') center 70% / cover no-repeat`
-            : items[prev].g
+          backgroundImage: `url('${items[prev].src}')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 40%',
         }} />
       )}
       <div key={`in-${idx}`} className="hc-slide hc-slide-in" style={{
-        background: items[idx].src
-          ? `url('${items[idx].src}') center 70% / cover no-repeat`
-          : items[idx].g
+        backgroundImage: `url('${items[idx].src}')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center 40%',
+      }} />
+
+      {/* Soft dark gradient rising from the bottom */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        background: 'linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.52) 35%, rgba(0,0,0,0.18) 65%, rgba(0,0,0,0) 100%)',
+        zIndex: 3,
+        pointerEvents: 'none',
       }} />
 
       <button className={`hc-arrow hc-arrow-l${hovered ? ' hc-arrow-vis' : ''}`} onClick={goPrev} aria-label="prev">
@@ -2742,15 +2779,15 @@ function HomePage({ lang, goTo }) {
           </h1>
           <div className="hero-bottom hero-anim-3">
             <div>
-              <p className="hero-sub">
+              <p className="hero-sub" style={{ color:'rgba(255,255,255,0.82)' }}>
                 {lang === 'es'
                   ? 'Rodrigo Rivas · Ilustrador y Concept Artist · Animación Publicitaria, Ilustración Editorial y Videojuegos.'
                   : 'Rodrigo Rivas · Illustrator & Concept Artist · Advertising Animation, Editorial Illustration & Video Games.'}
               </p>
               <div className="hero-collab-row">
-                <span className="hero-collab-lbl">{lang === 'es' ? 'Trabajé con:' : 'Worked with:'}</span>
+                <span className="hero-collab-lbl" style={{ color:'rgba(255,255,255,0.55)' }}>{lang === 'es' ? 'Trabajé con:' : 'Worked with:'}</span>
                 {['Disney Channel','Nickelodeon','XP-Pen','Domestika'].map(b => (
-                  <span key={b} className="hero-collab-badge">{b}</span>
+                  <span key={b} className="hero-collab-badge" style={{ color:'rgba(255,255,255,0.88)', borderColor:'rgba(255,255,255,0.28)', background:'rgba(255,255,255,0.07)' }}>{b}</span>
                 ))}
               </div>
               <div className="hero-stat-row">
@@ -2760,8 +2797,8 @@ function HomePage({ lang, goTo }) {
                   ['10',    lang==='es'?'Años de Experiencia':'Years of Experience'],
                 ].map(([v,l]) => (
                   <div key={l}>
-                    <div className="hero-stat-val">{v}</div>
-                    <div className="hero-stat-lbl">{l}</div>
+                    <div className="hero-stat-val" style={{ color:'#fff' }}>{v}</div>
+                    <div className="hero-stat-lbl" style={{ color:'rgba(255,255,255,0.55)' }}>{l}</div>
                   </div>
                 ))}
               </div>
