@@ -945,7 +945,7 @@
       gap: 2px;
       margin-top: 3rem;
     }
-    .tier-card { padding: 3.36rem; border: 1px solid var(--clr-border); background: var(--clr-white); box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04); transition: box-shadow 0.3s var(--ease), transform 0.3s var(--ease); }
+    .tier-card { padding: 3.36rem; border: 1px solid var(--clr-border); background: var(--clr-white); box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04); transition: box-shadow 0.3s var(--ease), transform 0.3s var(--ease); display: flex; flex-direction: column; justify-content: space-between; }
     .tier-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.09), 0 12px 32px rgba(0,0,0,0.06); transform: scale(1.025); z-index: 2; position: relative; }
     .tier-card.featured { background: var(--clr-black); border-color: var(--clr-black); box-shadow: 0 4px 16px rgba(0,0,0,0.18), 0 8px 32px rgba(0,0,0,0.12); }
     .tier-card.featured:hover { box-shadow: 0 5px 18px rgba(0,0,0,0.2), 0 10px 36px rgba(0,0,0,0.14); transform: scale(1.025); }
@@ -2889,7 +2889,7 @@ function LivePage({ lang, goTo }) {
   const t = (es, en) => lang === 'es' ? es : en;
   const [openFaq, setOpenFaq] = useState(null);
   const [resultadosLightbox, setResultadosLightbox] = useState(false);
-  const [form, setForm] = useState({ name:'', email:'', msg:'Hola, ¡Estoy interesado en el Nivel 1 de este mes! ¿Quedan vacantes?' });
+  const [form, setForm] = useState({ name:'', email:'', pais:'', nivel:'', msg:'¡Hola! Estoy interesado en el Nivel 1 de la próxima clase. ¿Quedan vacantes?' });
   const [sent, setSent] = useState(false);
   const [err, setErr] = useState('');
   const [selectedLesson, setSelectedLesson] = useState(0);
@@ -2899,29 +2899,32 @@ function LivePage({ lang, goTo }) {
   };
 
   // ═══════════════════════════════════════════════════════════════
-  // 📧 ENVÍO DE CORREO — FORMSPREE (GRATIS)
-  // 1. Crea cuenta en https://formspree.io
-  // 2. Crea un Form → copia tu endpoint (ej: https://formspree.io/f/XXXXXXXX)
-  // 3. Reemplaza 'TU_ENDPOINT_AQUI' abajo con tu endpoint real
-  // 4. ¡Listo! Los mensajes llegarán a ruiveran@gmail.com automáticamente
+  // 📧 ENVÍO DE CORREO — FORMSPREE
+  // Endpoint: https://formspree.io/f/mbdpawvw
   // ═══════════════════════════════════════════════════════════════
   const submitForm = async () => {
-    if (!form.name || !form.email || !form.msg) {
+    if (!form.name || !form.email || !form.pais || !form.msg) {
       setErr(t('Por favor completa todos los campos.','Please fill in all fields.'));
       return;
     }
     setErr('');
-    // ─── DESCOMENTAR Y COMPLETAR CUANDO TENGAS EL ENDPOINT DE FORMSPREE ───
-    // try {
-    //   const res = await fetch('TU_ENDPOINT_AQUI', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-    //     body: JSON.stringify({ name: form.name, email: form.email, message: form.msg }),
-    //   });
-    //   if (!res.ok) { setErr('Error al enviar. Intenta de nuevo.'); return; }
-    // } catch(e) { setErr('Error de conexión.'); return; }
-    // ─── FIN FORMSPREE ────────────────────────────────────────────────────
-    setSent(true);
+    try {
+      const res = await fetch('https://formspree.io/f/mbdpawvw', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          name:    form.name,
+          email:   form.email,
+          pais:    form.pais,
+          nivel:   form.nivel || '—',
+          message: form.msg,
+        }),
+      });
+      if (!res.ok) { setErr(t('Error al enviar. Intenta de nuevo.','Error sending. Please try again.')); return; }
+      setSent(true);
+    } catch(e) {
+      setErr(t('Error de conexión. Intenta de nuevo.','Connection error. Please try again.'));
+    }
   };
 
   const f1 = [
@@ -3200,13 +3203,15 @@ function LivePage({ lang, goTo }) {
       <div id="precios" style={{ scrollMarginTop:'calc(var(--nav-h) + var(--frame) + 2rem)' }} />
       <div className="tier-grid anim d2" ref={tiersRef}>
         <div className="tier-card">
-          <p className="tier-tag">NIVEL 1 ★ {t('MÁS POPULAR','MOST POPULAR')}</p>
-          <h3 className="tier-name">{t('ACCESO\nGRUPAL','GROUP\nACCESS')}</h3>
-          <div className="tier-price">$65</div>
-          <p className="tier-period">{t('por mes · facturación mensual','per month · monthly billing')}</p>
-          <ul className="feat-list">
-            {f1.map((f,i) => <li key={i} className="feat-item"><span className="fi-dot"><IcoCheck /></span>{f}</li>)}
-          </ul>
+          <div>
+            <p className="tier-tag">NIVEL 1 ★ {t('MÁS POPULAR','MOST POPULAR')}</p>
+            <h3 className="tier-name">{t('ACCESO\nGRUPAL','GROUP\nACCESS')}</h3>
+            <div className="tier-price">$65</div>
+            <p className="tier-period">{t('por mes · facturación mensual','per month · monthly billing')}</p>
+            <ul className="feat-list">
+              {f1.map((f,i) => <li key={i} className="feat-item"><span className="fi-dot"><IcoCheck /></span>{f}</li>)}
+            </ul>
+          </div>
           <button className="btn btn-outline" style={{ width:'100%', justifyContent:'center' }} onClick={scrollToForm}>{t('INSCRIBIRSE — NIVEL 1','SIGN UP — LEVEL 1')}</button>
         </div>
         <div className="tier-card featured" style={{ color:'#fff' }}>
@@ -3226,7 +3231,7 @@ function LivePage({ lang, goTo }) {
             </ul>
           </div>
           <button className="btn btn-orange" style={{ width:'100%', justifyContent:'center', marginTop:'1rem' }} onClick={() => {
-            setForm(f => ({...f, msg: 'Hola, ¡Estoy interesado en el Nivel 2 de este mes! ¿Quedan vacantes?'}));
+            setForm(f => ({...f, nivel: '2', msg: t('¡Hola! Estoy interesado en el Nivel 2 de la próxima clase. ¿Quedan vacantes?', 'Hi! I\'m interested in Level 2 for the next class. Are there any spots available?')}));
             setTimeout(() => { if (inscRef.current) inscRef.current.scrollIntoView({ behavior:'smooth', block:'start' }); }, 50);
           }}>{t('INSCRIBIRSE — NIVEL 2','SIGN UP — LEVEL 2')} <IcoArr /></button>
         </div>
@@ -3294,8 +3299,8 @@ function LivePage({ lang, goTo }) {
             </h3>
             <p className="contact-sub">
               {t(
-                'Indícame tu nombre, nivel, método de pago y clase escogida. Te confirmaré si quedan vacantes.',
-                'Tell me your name, level, payment method and chosen class. I\'ll confirm if spots are available.'
+                'Indícame tu nombre, nivel escogido y país, te confirmaré si quedan vacantes.',
+                'Tell me your name, chosen level and country, I\'ll confirm if spots are available.'
               )}
             </p>
             <div style={{ marginBottom:'1.2rem' }}>
@@ -3314,20 +3319,20 @@ function LivePage({ lang, goTo }) {
                   label: 'NIVEL 1', tier: 1, price: '$65/mes',
                   desc: t('Acceso Grupal','Group Access'),
                   msg: t(
-                    'Hola, ¡Estoy interesado en el Nivel 1 de este mes! ¿Quedan vacantes?\n\nNombre: \nPaís: \nClase: Dibuja Anatomía en Acción',
-                    'Hi, I\'m interested in Level 1 this month! Are there any spots available?\n\nName: \nCountry: \nClass: Draw Anatomy in Action'
+                    '¡Hola! Estoy interesado en el Nivel 1 de la próxima clase. ¿Quedan vacantes?',
+                    'Hi! I\'m interested in Level 1 for the next class. Are there any spots available?'
                   ),
                 },
                 {
                   label: 'NIVEL 2', tier: 2, price: '$150/mes',
                   desc: t('Mentoría Prioritaria','Priority Mentorship'),
                   msg: t(
-                    'Hola, ¡Estoy interesado en el Nivel 2 de este mes! ¿Quedan vacantes?\n\nNombre: \nPaís: \nClase: Dibuja Anatomía en Acción',
-                    'Hi, I\'m interested in Level 2 this month! Are there any spots available?\n\nName: \nCountry: \nClass: Draw Anatomy in Action'
+                    '¡Hola! Estoy interesado en el Nivel 2 de la próxima clase. ¿Quedan vacantes?',
+                    'Hi! I\'m interested in Level 2 for the next class. Are there any spots available?'
                   ),
                 },
               ].map(n => (
-                <div key={n.label} className={`insc-level-pill${selectedTier === n.tier ? ' selected' : ''}`} onClick={() => { setSelectedTier(n.tier); setForm(f => ({...f, msg: n.msg})); }}>
+                <div key={n.label} className={`insc-level-pill${selectedTier === n.tier ? ' selected' : ''}`} onClick={() => { setSelectedTier(n.tier); setForm(f => ({...f, nivel: String(n.tier), msg: n.msg})); }}>
                   <div>
                     <span className="insc-level-tag">{n.label}</span>
                     <span className="insc-level-desc">{n.desc}</span>
@@ -3356,58 +3361,17 @@ function LivePage({ lang, goTo }) {
                   <input className="finput" type="email" value={form.email} onChange={e => setForm({...form,email:e.target.value})} placeholder="tu@email.com" />
                 </div>
                 <div className="fgroup">
+                  <label className="flabel">{t('PAÍS','COUNTRY')}</label>
+                  <input className="finput" value={form.pais} onChange={e => setForm({...form,pais:e.target.value})} placeholder={t('Tu país','Your country')} />
+                </div>
+                <div className="fgroup">
                   <label className="flabel">{t('MENSAJE','MESSAGE')}</label>
                   <textarea className="ftextarea" value={form.msg} onChange={e => setForm({...form,msg:e.target.value})} style={{ minHeight:'120px' }} />
                 </div>
                 {err && <p style={{ fontFamily:'var(--fb)', fontSize:'0.8rem', color:'var(--clr-orange)', marginBottom:'1rem' }}>{err}</p>}
-
-                {/* ══════════════════════════════════════════════════════════
-                    📧  ENVÍO DE FORMULARIO — DOS OPCIONES:
-
-                    OPCIÓN A (activa ahora) — mailto:
-                      Al hacer clic abre el cliente de correo del usuario con el
-                      mensaje ya escrito. No requiere servidor ni cuenta externa.
-                      Desventaja: el usuario necesita tener un cliente de correo
-                      configurado (Gmail app, Outlook, Apple Mail, etc.).
-
-                    OPCIÓN B (recomendada para producción) — Formspree:
-                      1. Crea cuenta gratis en https://formspree.io
-                      2. Crea un Form → copia tu endpoint
-                         (ej: https://formspree.io/f/XXXXXXXX)
-                      3. Descomenta el bloque FORMSPREE abajo y comenta el
-                         bloque MAILTO.
-                      4. Los mensajes llegan a ruiveran@gmail.com sin que el
-                         usuario tenga que abrir su correo.
-                    ══════════════════════════════════════════════════════════ */}
-
-                {/* ── OPCIÓN A: MAILTO (activo) ─────────────────────────── */}
-                <a
-                  href={`mailto:ruiveran@gmail.com?subject=${encodeURIComponent(
-                    t('Inscripción Clases en Vivo — ' + (selectedTier === 2 ? 'Nivel 2' : 'Nivel 1'),
-                      'Live Classes Sign Up — ' + (selectedTier === 2 ? 'Level 2' : 'Level 1'))
-                  )}&body=${encodeURIComponent(
-                    (form.name ? t('Nombre: ','Name: ') + form.name + '\n' : '') +
-                    (form.email ? 'Email: ' + form.email + '\n\n' : '') +
-                    form.msg
-                  )}`}
-                  className="btn btn-orange"
-                  style={{ width:'100%', justifyContent:'center', textDecoration:'none', display:'flex', alignItems:'center', gap:'0.55rem' }}
-                  onClick={() => {
-                    if (!form.name || !form.email || !form.msg) {
-                      setErr(t('Por favor completa todos los campos.','Please fill in all fields.'));
-                      return;
-                    }
-                    setSent(true);
-                  }}
-                >
-                  {t('ENVIAR SOLICITUD','SEND REQUEST')} <IcoArr />
-                </a>
-
-                {/* ── OPCIÓN B: FORMSPREE (descomentar cuando tengas el endpoint) ──
                 <button className="btn btn-orange" style={{ width:'100%', justifyContent:'center' }} onClick={submitForm}>
                   {t('ENVIAR SOLICITUD','SEND REQUEST')} <IcoArr />
                 </button>
-                ── FIN OPCIÓN B ────────────────────────────────────────── */}
               </>
             )}
           </div>
