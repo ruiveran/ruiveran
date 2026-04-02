@@ -3369,8 +3369,12 @@ function LivePage({ lang, goTo }) {
                   <textarea className="ftextarea" value={form.msg} onChange={e => setForm({...form,msg:e.target.value})} style={{ minHeight:'120px' }} />
                 </div>
                 {err && <p style={{ fontFamily:'var(--fb)', fontSize:'0.8rem', color:'var(--clr-orange)', marginBottom:'1rem' }}>{err}</p>}
-                <button className="btn btn-orange" style={{ width:'100%', justifyContent:'center' }} onClick={submitForm}>
-                  {t('ENVIAR SOLICITUD','SEND REQUEST')} <IcoArr />
+                <button
+                  disabled
+                  className="btn"
+                  style={{ width:'100%', justifyContent:'center', background:'var(--clr-border)', color:'var(--clr-muted)', cursor:'not-allowed', opacity:1 }}
+                >
+                  {t('ENVIAR SOLICITUD (PRÓXIMAMENTE)','SEND REQUEST (COMING SOON)')}
                 </button>
               </>
             )}
