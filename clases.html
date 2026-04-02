@@ -2354,14 +2354,14 @@ const LESSON_TIPS = {
     ['😄 Expresiones y músculos','💇 Pelo: flujo y agrupación','🎨 Estilo: del realismo a la caricatura','🌍 Rasgos étnicos y variedad','✏️ Síntesis para ilustración'],
   ],
   3: [
-    ['⚡ Gesture como energía','➰ Línea de acción','🎵 Ritmo del cuerpo','🏃 Poses dinámicas en 30s','🧘 Dibujo sin pensar'],
-    ['📦 Torso simplificado','🫁 Caja pectoral y pelvis','🔗 Conexión columna-pelvis','↩️ Flexión y torsión','🗂️ Planos del torso'],
-    ['🦴 Columna vertebral y caja','💪 Abdominales y oblicuos','🔙 Espalda y escápulas','🧱 Músculo vs masa','🏃 Torso en movimiento'],
-    ['📏 Canon de proporciones','⚧️ Diferencias género y edad','👤 Cabeza como unidad','📐 Extremidades y tamaño','🎨 Ajuste por estilo'],
-    ['🦵 Fémur y tibia','🦿 Rodilla y tobillo','💪 Musculatura de la pierna','🏃 Piernas en acción','📐 Perspectiva en extremidades'],
-    ['💪 Bíceps, tríceps, antebrazo','🦴 Codo y muñeca','↔️ Brazo extendido vs flexionado','⚡ Fuerza y tensión','🤸 Brazos cruzados y escorzo'],
-    ['✋ Palma y arco de la mano','🤚 Dedos: nudillos y falanges','🦶 Pie: bóveda y dedos','🤲 Manos en acción','👣 Pies en perspectiva'],
-    ['🔗 Combinar sistemas','🧠 Inventar poses','🔧 Ajustar y corregir','💬 Narrativa con el cuerpo','🏆 Presentación de proyecto'],
+    ['⚡ Línea gestual y sistema de fuerzas en la pose','🔄 Asimetría, exageración y dinamismo','⚖️ Balance, peso y gravedad','🎨 Diseño y función en la figura'],
+    ['📐 Perspectiva y sistema constructivo','📏 Proporciones e hitos anatómicos','🧱 Construcción volumétrica del torso y extremidades','🗺️ El maniquí dentro de una escena'],
+    ['💪 Análisis completo de músculos del tronco, hombro y cuello','🔙 Músculos de espalda, cintura y glúteos','🎨 Planos del torso para pintura y render'],
+    ['📐 Diseño de proporciones y extremidades','⚧️ Torso femenino vs. masculino','🧬 Contextura, edad y tejidos adiposos','🎭 Aplicación directa al diseño de personajes y estilos artísticos'],
+    ['🦵 Músculos de muslos, rodilla y pierna posterior','🦿 Estructura de la Rodilla','🏃 Movimiento y Función de la Pierna','📦 Planos y volúmenes de la pierna'],
+    ['💪 Músculos del brazo y antebrazo','🔄 Pronación y supinación del brazo','🤸 Movimiento y Función del brazo','📦 Planos y volúmenes del brazo'],
+    ['✋ Construcción y proporciones de la mano','🤲 Acciones de las manos y dedos','🦶 Construcción y proporciones del pie','👟 Accesorios y Calzado'],
+    ['🏃 Anatomía en movimiento y perspectiva','✂️ Diseño y simplificación anatómica para estilo','👘 Vestuario simple y utilería','🏆 Rutina de ejercicios de anatomía para seguir practicando'],
   ],
   4: [
     ['📷 Formato y encuadre','🌀 Proporción áurea','⚖️ Contraste de masas','👁️ Lectura de composición','⚖️ Peso visual y balance'],
@@ -3021,11 +3021,11 @@ function LivePage({ lang, goTo }) {
             <div style={{ display:'flex', gap:'0.7rem', flexWrap:'wrap' }}>
               <a href="https://ruiveran.gumroad.com/l/dibuja-anatomia-en-accion"
                 className="btn btn-outline" style={{ fontWeight:800, textDecoration:'none', background:'rgba(255,255,255,0.15)', borderColor:'rgba(255,255,255,0.55)', color:'#fff' }}>
-                {t('VER CLASE','VIEW CLASS')}
+                {t('VER CLASES','VIEW CLASSES')}
               </a>
               <button className="btn btn-orange"
                 onClick={() => { if (tiersRef.current) tiersRef.current.scrollIntoView({ behavior:'smooth', block:'start' }); }}>
-                {t('VER PRECIOS','SEE PRICES')} <IcoArr />
+                {t('INSCRIPCIONES','SIGN UP')} <IcoArr />
               </button>
             </div>
           </div>
@@ -3100,12 +3100,12 @@ function LivePage({ lang, goTo }) {
           style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.92)', zIndex:8000, display:'flex', alignItems:'center', justifyContent:'center', padding:'3rem 2rem 2rem', cursor:'zoom-out', animation:'fadeIn 0.22s ease' }}
           onClick={() => setResultadosLightbox(false)}
         >
-          <div style={{ position:'relative', maxWidth:'min(880px,90vw)', maxHeight:'85vh', width:'100%', display:'flex', flexDirection:'column' }} onClick={e => e.stopPropagation()}>
+          <div style={{ position:'relative', maxWidth:'min(1400px,96vw)', width:'100%', display:'flex', flexDirection:'column', alignItems:'center' }} onClick={e => e.stopPropagation()}>
             {/* 🖼️ IMAGEN RESULTADOS ampliada — reemplaza el src con tu URL real */}
             <img
               src="https://ik.imagekit.io/ruiveran/Alumnos/Dibuja_anatomia.png"
               alt="Resultados"
-              style={{ width:'100%', maxHeight:'80vh', objectFit:'contain', display:'block' }}
+              style={{ maxWidth:'100%', maxHeight:'88vh', width:'auto', height:'auto', objectFit:'contain', display:'block' }}
             />
             <div style={{ fontFamily:'var(--fh)', fontSize:'0.65rem', fontWeight:700, letterSpacing:'0.2em', color:'rgba(255,255,255,0.5)', textTransform:'uppercase', marginTop:'0.8rem', textAlign:'center' }}>
               {t('RESULTADOS · DIBUJA ANATOMÍA EN ACCIÓN','RESULTS · DRAW ANATOMY IN ACTION')}
@@ -3176,10 +3176,7 @@ function LivePage({ lang, goTo }) {
             <p className="tier-period" style={{ color:'#ccc' }}>{t('por mes · plazas limitadas','per month · limited spots')}</p>
             <ul className="feat-list">
               {f2.map((f,i) => i === 0 ? (
-                <li key={i} className="feat-item" style={{ color:'#fff', fontWeight:700 }}>
-                  <span className="fi-dot" style={{ background:'#fff', display:'flex', alignItems:'center', justifyContent:'center' }}>
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--clr-orange)" strokeWidth="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                  </span>
+                <li key={i} style={{ listStyle:'none', color:'#fff', fontWeight:700, fontFamily:'var(--fb)', fontSize:'0.88rem', lineHeight:1.5, marginBottom:'1.1rem', display:'block' }}>
                   {f}
                 </li>
               ) : (
