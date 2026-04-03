@@ -84,10 +84,15 @@
   }
   </script>
 
-  <!-- FAVICON -->
+  <!-- FAVICON + PWA -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230C0C0C'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Arial Black%2Csans-serif' font-weight='900' font-size='28' letter-spacing='-1' fill='%23FFFFFF'%3ERV%3C/text%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#0C0C0C">
+  <!-- FONTS — preload critical weights to reduce FOUT -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400&display=swap">
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
   <script src="https://gumroad.com/js/gumroad.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js" crossorigin></script>
@@ -2079,6 +2084,8 @@
 
   <!-- Vercel Web Analytics -->
   <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
+  <!-- Vercel Speed Insights (Core Web Vitals: LCP, CLS, FID) -->
+  <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
 <body>
 <div id="root"></div>
@@ -3463,6 +3470,11 @@ const INITIAL_PAGE = 'contacto';
 
 function App() {
   const [lang, setLang] = useState('es');
+
+  // Sync lang to <html> element for accessibility + SEO
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
 
   // Determine current page from INITIAL_PAGE set per-file
   const currentPage = typeof INITIAL_PAGE !== 'undefined' ? INITIAL_PAGE : 'home';

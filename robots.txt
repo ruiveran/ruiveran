@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# AI crawlers — allowed
+User-agent: GPTBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: https://www.ruiveran.com/sitemap.xml

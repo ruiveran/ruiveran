@@ -1,0 +1,16 @@
+{
+  "name": "Ruiveran — Ilustrador y Concept Artist",
+  "short_name": "Ruiveran",
+  "description": "Portafolio, cursos y clases en vivo de ilustración y pintura digital.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F8F5EF",
+  "theme_color": "#0C0C0C",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
