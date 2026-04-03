@@ -2570,7 +2570,7 @@ function Nav({ lang, setLang, page, goTo }) {
 
         {/* Mobile social icons — Discord, Instagram, TikTok only; 7% bigger */}
         <div className="nav-mobile-socials">
-          {[socials[0], socials[2], socials[3]].map(s => (
+          {socials.map(s => (
             <a key={s.title} href={s.href} target="_blank" rel="noopener noreferrer"
               className="nav-icon-btn" title={s.title}
               style={{ padding:'6px', fontSize:0, lineHeight:0 }}>
