@@ -97,7 +97,6 @@
   <script src="https://gumroad.com/js/gumroad.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js" crossorigin></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js" crossorigin></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
 
   <style>
     /* ═══════════════════════════════════════════
@@ -2078,6 +2077,20 @@
     /* ═══════════════════════════════════════════
        SELECTION COLOR
     ═══════════════════════════════════════════ */
+
+    /* ═══════════════════════════════════════════
+       ACCESSIBILITY — respect reduced motion preference
+    ═══════════════════════════════════════════ */
+    @media (prefers-reduced-motion: reduce) {
+      .anim, .anim.d1, .anim.d2, .anim.d3, .anim.d4 {
+        transition: none !important;
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+      html { scroll-behavior: auto; }
+    }
+
     ::selection { background: var(--clr-orange); color: #fff; }
 
   </style>
@@ -2086,11 +2099,31 @@
   <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
   <!-- Vercel Speed Insights (Core Web Vitals: LCP, CLS, FID) -->
   <script defer src="/_vercel/speed-insights/script.js"></script>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       META PIXEL — Facebook / Instagram Ads
+       Accumulates visitor data for lookalike audiences before running ads
+  ═══════════════════════════════════════════════════════════════ -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', 'TU_PIXEL_ID_AQUI');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=TU_PIXEL_ID_AQUI&ev=PageView&noscript=1"
+  /></noscript>
 </head>
 <body>
 <div id="root"></div>
 
-<script type="text/babel">
+<script>
 const { useState, useEffect, useRef, useCallback } = React;
 
 /* ══════════════════════════════════════════
@@ -2501,9 +2534,9 @@ function LiveHoverCarousel({ images, onNavigate }) {
   const duration = images.length * 15; // 15s per image = 180s for 12 (300% slower)
 
   return (
-    <div style={{ position:'relative', width:'100%', overflow:'hidden', cursor:'pointer' }}
-      onClick={onNavigate}>
-      <style>{`
+    React.createElement('div', { style: { position:'relative', width:'100%', overflow:'hidden', cursor:'pointer' },
+      onClick: onNavigate,}
+      , React.createElement('style', null, `
         @keyframes liveScroll {
           from { transform: translateX(0); }
           to   { transform: translateX(-50%); }
@@ -2514,17 +2547,17 @@ function LiveHoverCarousel({ images, onNavigate }) {
           animation: liveScroll ${duration}s linear infinite;
         }
         .live-scroll-inner:hover { animation-play-state: paused; }
-      `}</style>
-      <div className="live-scroll-inner">
-        {doubled.map((img, i) => (
-          <div key={i} style={{
+      `)
+      , React.createElement('div', { className: "live-scroll-inner",}
+        , doubled.map((img, i) => (
+          React.createElement('div', { key: i, style: {
             flex: `0 0 ${100 / doubled.length}%`,
             aspectRatio: '1/1',
             background: img.g,
-          }} />
-        ))}
-      </div>
-    </div>
+          },} )
+        ))
+      )
+    )
   );
 }
 
@@ -2534,21 +2567,21 @@ function LiveHoverCarousel({ images, onNavigate }) {
 /* ══════════════════════════════════════════
    SVG ICONS
 ══════════════════════════════════════════ */
-const IcoInsta = () => <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>;
-const IcoTT = () => <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.88a8.27 8.27 0 0 0 4.83 1.54V7.01a4.85 4.85 0 0 1-1.06-.32z"/></svg>;
-const IcoYT = () => <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2A3 3 0 0 0 21.4 4C19.6 3.5 12 3.5 12 3.5s-7.6 0-9.4.5A3 3 0 0 0 .5 6.2a31 31 0 0 0-.5 5.8 31 31 0 0 0 .5 5.8A3 3 0 0 0 2.6 20c1.8.5 9.4.5 9.4.5s7.6 0 9.4-.5a3 3 0 0 0 2.1-2.2A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>;
-const IcoDC = () => <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.08.08 0 0 0 .031.055 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>;
-const IcoMail = () => <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>;
-const IcoMoon = () => <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>;
-const IcoSun = () => <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>;
-const IcoArr = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>;
-const IcoArrL = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>;
-const IcoCheck = () => <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3"><polyline points="20 6 9 17 4 12"/></svg>;
-const IcoPlus = () => <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>;
-const IcoShield = () => <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>;
-const IcoTwitch = () => <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>;
-const IcoAS = () => <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M0 17.723l2.027-3.505h.001a1.79 1.79 0 0 1 1.823-.736 2.028 2.028 0 0 1 .848.33l1.464-2.533a2.03 2.03 0 0 1-.22-1.855L9.34 4.51c.303-.524.87-.847 1.478-.847s1.175.323 1.478.847l3.897 6.745c.302.524.302 1.171 0 1.694l-1.454 2.517.003.001a2.025 2.025 0 0 1 .846-.33 1.79 1.79 0 0 1 1.823.736h.001L19.44 19.19l.001.003c.301.524.301 1.169-.001 1.693a1.787 1.787 0 0 1-1.548.895H2.107a1.787 1.787 0 0 1-1.548-.895 1.793 1.793 0 0 1-.001-1.693zM9.964 6.457L7.382 11.02h5.156L9.964 6.457z"/></svg>;
-const IcoCart = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>;
+const IcoInsta = () => React.createElement('svg', { width: "17", height: "17", viewBox: "0 0 24 24"   , fill: "none", stroke: "currentColor", strokeWidth: "1.8", strokeLinecap: "round", strokeLinejoin: "round",}, React.createElement('rect', { x: "2", y: "2", width: "20", height: "20", rx: "5",}), React.createElement('path', { d: "M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"              ,}), React.createElement('line', { x1: "17.5", y1: "6.5", x2: "17.51", y2: "6.5",}));
+const IcoTT = () => React.createElement('svg', { width: "17", height: "17", viewBox: "0 0 24 24"   , fill: "currentColor",}, React.createElement('path', { d: "M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.88a8.27 8.27 0 0 0 4.83 1.54V7.01a4.85 4.85 0 0 1-1.06-.32z"                                                        ,}));
+const IcoYT = () => React.createElement('svg', { width: "17", height: "17", viewBox: "0 0 24 24"   , fill: "currentColor",}, React.createElement('path', { d: "M23.5 6.2A3 3 0 0 0 21.4 4C19.6 3.5 12 3.5 12 3.5s-7.6 0-9.4.5A3 3 0 0 0 .5 6.2a31 31 0 0 0-.5 5.8 31 31 0 0 0 .5 5.8A3 3 0 0 0 2.6 20c1.8.5 9.4.5 9.4.5s7.6 0 9.4-.5a3 3 0 0 0 2.1-2.2A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"                                                           ,}));
+const IcoDC = () => React.createElement('svg', { width: "17", height: "17", viewBox: "0 0 24 24"   , fill: "currentColor",}, React.createElement('path', { d: "M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.08.08 0 0 0 .031.055 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"                                                                                                                                           ,}));
+const IcoMail = () => React.createElement('svg', { width: "17", height: "17", viewBox: "0 0 24 24"   , fill: "none", stroke: "currentColor", strokeWidth: "1.8",}, React.createElement('path', { d: "M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"           ,}), React.createElement('polyline', { points: "22,6 12,13 2,6"  ,}));
+const IcoMoon = () => React.createElement('svg', { width: "17", height: "17", viewBox: "0 0 24 24"   , fill: "none", stroke: "currentColor", strokeWidth: "1.8",}, React.createElement('path', { d: "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"              ,}));
+const IcoSun = () => React.createElement('svg', { width: "17", height: "17", viewBox: "0 0 24 24"   , fill: "none", stroke: "currentColor", strokeWidth: "1.8",}, React.createElement('circle', { cx: "12", cy: "12", r: "5",}), React.createElement('line', { x1: "12", y1: "1", x2: "12", y2: "3",}), React.createElement('line', { x1: "12", y1: "21", x2: "12", y2: "23",}), React.createElement('line', { x1: "4.22", y1: "4.22", x2: "5.64", y2: "5.64",}), React.createElement('line', { x1: "18.36", y1: "18.36", x2: "19.78", y2: "19.78",}), React.createElement('line', { x1: "1", y1: "12", x2: "3", y2: "12",}), React.createElement('line', { x1: "21", y1: "12", x2: "23", y2: "12",}), React.createElement('line', { x1: "4.22", y1: "19.78", x2: "5.64", y2: "18.36",}), React.createElement('line', { x1: "18.36", y1: "5.64", x2: "19.78", y2: "4.22",}));
+const IcoArr = () => React.createElement('svg', { width: "14", height: "14", viewBox: "0 0 24 24"   , fill: "none", stroke: "currentColor", strokeWidth: "2.2",}, React.createElement('line', { x1: "5", y1: "12", x2: "19", y2: "12",}), React.createElement('polyline', { points: "12 5 19 12 12 19"     ,}));
+const IcoArrL = () => React.createElement('svg', { width: "14", height: "14", viewBox: "0 0 24 24"   , fill: "none", stroke: "currentColor", strokeWidth: "2.2",}, React.createElement('line', { x1: "19", y1: "12", x2: "5", y2: "12",}), React.createElement('polyline', { points: "12 19 5 12 12 5"     ,}));
+const IcoCheck = () => React.createElement('svg', { width: "10", height: "10", viewBox: "0 0 24 24"   , fill: "none", stroke: "#fff", strokeWidth: "3",}, React.createElement('polyline', { points: "20 6 9 17 4 12"     ,}));
+const IcoPlus = () => React.createElement('svg', { width: "10", height: "10", viewBox: "0 0 24 24"   , fill: "none", stroke: "#fff", strokeWidth: "3",}, React.createElement('line', { x1: "12", y1: "5", x2: "12", y2: "19",}), React.createElement('line', { x1: "5", y1: "12", x2: "19", y2: "12",}));
+const IcoShield = () => React.createElement('svg', { width: "28", height: "28", viewBox: "0 0 24 24"   , fill: "none", stroke: "currentColor", strokeWidth: "1.8",}, React.createElement('path', { d: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"        ,}), React.createElement('polyline', { points: "9 12 11 14 15 10"     ,}));
+const IcoTwitch = () => React.createElement('svg', { width: "17", height: "17", viewBox: "0 0 24 24"   , fill: "currentColor",}, React.createElement('path', { d: "M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"        ,}));
+const IcoAS = () => React.createElement('svg', { width: "17", height: "17", viewBox: "0 0 24 24"   , fill: "currentColor",}, React.createElement('path', { d: "M0 17.723l2.027-3.505h.001a1.79 1.79 0 0 1 1.823-.736 2.028 2.028 0 0 1 .848.33l1.464-2.533a2.03 2.03 0 0 1-.22-1.855L9.34 4.51c.303-.524.87-.847 1.478-.847s1.175.323 1.478.847l3.897 6.745c.302.524.302 1.171 0 1.694l-1.454 2.517.003.001a2.025 2.025 0 0 1 .846-.33 1.79 1.79 0 0 1 1.823.736h.001L19.44 19.19l.001.003c.301.524.301 1.169-.001 1.693a1.787 1.787 0 0 1-1.548.895H2.107a1.787 1.787 0 0 1-1.548-.895 1.793 1.793 0 0 1-.001-1.693zM9.964 6.457L7.382 11.02h5.156L9.964 6.457z"                                                      ,}));
+const IcoCart = () => React.createElement('svg', { width: "16", height: "16", viewBox: "0 0 24 24"   , fill: "none", stroke: "currentColor", strokeWidth: "1.8",}, React.createElement('circle', { cx: "9", cy: "21", r: "1",}), React.createElement('circle', { cx: "20", cy: "21", r: "1",}), React.createElement('path', { d: "M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"              ,}));
 
 /* ══════════════════════════════════════════
    HOOK: SCROLL REVEAL
@@ -2604,126 +2637,126 @@ function Nav({ lang, setLang, page, goTo }) {
   };
 
   const socials = [
-    { href:'https://discord.gg/yaUuCj7k2V',      icon:<IcoDC />,    title:'Discord'   },
-    { href:'https://www.youtube.com/@ruiveran',   icon:<IcoYT />,    title:'YouTube'   },
-    { href:'https://www.instagram.com/ruiveran/', icon:<IcoInsta />, title:'Instagram' },
-    { href:'https://www.tiktok.com/@ruiveran',    icon:<IcoTT />,    title:'TikTok'    },
+    { href:'https://discord.gg/yaUuCj7k2V',      icon:React.createElement(IcoDC, null ),    title:'Discord'   },
+    { href:'https://www.youtube.com/@ruiveran',   icon:React.createElement(IcoYT, null ),    title:'YouTube'   },
+    { href:'https://www.instagram.com/ruiveran/', icon:React.createElement(IcoInsta, null ), title:'Instagram' },
+    { href:'https://www.tiktok.com/@ruiveran',    icon:React.createElement(IcoTT, null ),    title:'TikTok'    },
   ];
 
   return (
-    <>
-      <nav className={`nav${scrolled ? ' scrolled' : ''}`}>
-        <span className="nav-logo" onClick={() => goTo('home')}>
-          RUIVERAN<span className="dot">.</span>
-        </span>
+    React.createElement(React.Fragment, null
+      , React.createElement('nav', { className: `nav${scrolled ? ' scrolled' : ''}`,}
+        , React.createElement('span', { className: "nav-logo", onClick: () => goTo('home'),}, "RUIVERAN"
+          , React.createElement('span', { className: "dot",}, ".")
+        )
 
-        {/* Desktop menu */}
-        <ul className="nav-menu">
-          {navItems.map(i => (
-            <li key={i.key}>
-              {i.href ? (
-                <a href={i.href} {...(!i.sameTab && { target:'_blank', rel:'noopener noreferrer' })}
-                  style={{ textDecoration:'none', color:'inherit' }}>
-                  {lang === 'es' ? i.es : i.en}
-                </a>
+        /* Desktop menu */
+        , React.createElement('ul', { className: "nav-menu",}
+          , navItems.map(i => (
+            React.createElement('li', { key: i.key,}
+              , i.href ? (
+                React.createElement('a', { href: i.href, ...(!i.sameTab && { target:'_blank', rel:'noopener noreferrer' }),
+                  style: { textDecoration:'none', color:'inherit' },}
+                  , lang === 'es' ? i.es : i.en
+                )
               ) : i.key === 'vivo' ? (
-                <button
-                  className={page === 'vivo' ? 'active' : ''}
-                  onClick={() => goTo('vivo')}
-                  style={{
+                React.createElement('button', {
+                  className: page === 'vivo' ? 'active' : '',
+                  onClick: () => goTo('vivo'),
+                  style: {
                     border: '1.5px solid var(--clr-orange)',
                     color: page === 'vivo' ? '#fff' : 'var(--clr-orange)',
                     background: page === 'vivo' ? 'var(--clr-orange)' : 'transparent',
                     padding: '4px 14px',
                     transition: 'all 0.2s',
-                  }}
-                >
-                  {lang === 'es' ? i.es : i.en}
-                </button>
+                  },}
+
+                  , lang === 'es' ? i.es : i.en
+                )
               ) : (
-                <button className={page === i.key ? 'active' : ''} onClick={() => goTo(i.key)}>
-                  {lang === 'es' ? i.es : i.en}
-                </button>
-              )}
-            </li>
-          ))}
-        </ul>
-
-        {/* Desktop right */}
-        <div className="nav-right">
-          {socials.map(s => (
-            <a key={s.title} href={s.href} target="_blank" rel="noopener noreferrer" className="nav-icon-btn" title={s.title}>{s.icon}</a>
-          ))}
-          <button className="nav-lang" onClick={() => setLang(lang === 'es' ? 'en' : 'es')}>
-            {lang === 'es' ? 'EN' : 'ES'}
-          </button>
-        </div>
-
-        {/* Mobile social icons — Discord, Instagram, TikTok only; 7% bigger */}
-        <div className="nav-mobile-socials">
-          {socials.map(s => (
-            <a key={s.title} href={s.href} target="_blank" rel="noopener noreferrer"
-              className="nav-icon-btn" title={s.title}
-              style={{ padding:'6px', fontSize:0, lineHeight:0 }}>
-              <span style={{ display:'flex', alignItems:'center', transform:'scale(1.07)', transformOrigin:'center' }}>
-                {s.icon}
-              </span>
-            </a>
-          ))}
-        </div>
-
-        {/* Hamburger */}
-        <button className={`nav-burger${open ? ' open' : ''}`} onClick={() => setOpen(o => !o)} aria-label="Menu">
-          <span /><span /><span />
-        </button>
-      </nav>
-
-      {/* Backdrop */}
-      <div
-        className={`nav-drawer-backdrop${open ? ' open' : ''}`}
-        style={{ display: open ? 'block' : 'none', position:'fixed', inset:0, background:'rgba(0,0,0,0.38)', zIndex:1100 }}
-        onClick={() => setOpen(false)}
-      />
-
-      {/* Drawer */}
-      <div className={`nav-drawer${open ? ' open' : ''}`}>
-        <div className="nav-drawer-header">
-          <span className="nav-drawer-logo">RUIVERAN<span style={{ color:'var(--clr-orange)' }}>.</span></span>
-          <button className="nav-drawer-close" onClick={() => setOpen(false)}>✕</button>
-        </div>
-
-        <div className="nav-drawer-items">
-          {navItems.map(i => (
-            i.href ? (
-              <a key={i.key}
-                href={i.href}
-                {...(!i.sameTab && { target:'_blank', rel:'noopener noreferrer' })}
-                className="nav-drawer-item"
-                onClick={() => setOpen(false)}
-              >
-                {lang === 'es' ? i.es : i.en}
-              </a>
-            ) : (
-              <button key={i.key}
-                className={`nav-drawer-item${i.key === 'vivo' ? ' vivo' : ''}${page === i.key ? ' active' : ''}`}
-                onClick={() => handleItem(i)}
-              >
-                {lang === 'es' ? i.es : i.en}
-              </button>
+                React.createElement('button', { className: page === i.key ? 'active' : '', onClick: () => goTo(i.key),}
+                  , lang === 'es' ? i.es : i.en
+                )
+              )
             )
-          ))}
-        </div>
+          ))
+        )
 
-        <div className="nav-drawer-socials">
-          {socials.map(s => (
-            <a key={s.title} href={s.href} target="_blank" rel="noopener noreferrer" className="nav-icon-btn" title={s.title}>{s.icon}</a>
-          ))}
-          <button className="nav-drawer-lang" onClick={() => setLang(lang === 'es' ? 'en' : 'es')}>
-            {lang === 'es' ? 'EN' : 'ES'}
-          </button>
-        </div>
-      </div>
-    </>
+        /* Desktop right */
+        , React.createElement('div', { className: "nav-right",}
+          , socials.map(s => (
+            React.createElement('a', { key: s.title, href: s.href, target: "_blank", rel: "noopener noreferrer" , className: "nav-icon-btn", title: s.title,}, s.icon)
+          ))
+          , React.createElement('button', { className: "nav-lang", onClick: () => setLang(lang === 'es' ? 'en' : 'es'),}
+            , lang === 'es' ? 'EN' : 'ES'
+          )
+        )
+
+        /* Mobile social icons — Discord, Instagram, TikTok only; 7% bigger */
+        , React.createElement('div', { className: "nav-mobile-socials",}
+          , socials.map(s => (
+            React.createElement('a', { key: s.title, href: s.href, target: "_blank", rel: "noopener noreferrer" ,
+              className: "nav-icon-btn", title: s.title,
+              style: { padding:'6px', fontSize:0, lineHeight:0 },}
+              , React.createElement('span', { style: { display:'flex', alignItems:'center', transform:'scale(1.07)', transformOrigin:'center' },}
+                , s.icon
+              )
+            )
+          ))
+        )
+
+        /* Hamburger */
+        , React.createElement('button', { className: `nav-burger${open ? ' open' : ''}`, onClick: () => setOpen(o => !o), 'aria-label': "Menu",}
+          , React.createElement('span', null ), React.createElement('span', null ), React.createElement('span', null )
+        )
+      )
+
+      /* Backdrop */
+      , React.createElement('div', {
+        className: `nav-drawer-backdrop${open ? ' open' : ''}`,
+        style: { display: open ? 'block' : 'none', position:'fixed', inset:0, background:'rgba(0,0,0,0.38)', zIndex:1100 },
+        onClick: () => setOpen(false),}
+      )
+
+      /* Drawer */
+      , React.createElement('div', { className: `nav-drawer${open ? ' open' : ''}`,}
+        , React.createElement('div', { className: "nav-drawer-header",}
+          , React.createElement('span', { className: "nav-drawer-logo",}, "RUIVERAN", React.createElement('span', { style: { color:'var(--clr-orange)' },}, "."))
+          , React.createElement('button', { className: "nav-drawer-close", onClick: () => setOpen(false),}, "✕")
+        )
+
+        , React.createElement('div', { className: "nav-drawer-items",}
+          , navItems.map(i => (
+            i.href ? (
+              React.createElement('a', { key: i.key,
+                href: i.href,
+                ...(!i.sameTab && { target:'_blank', rel:'noopener noreferrer' }),
+                className: "nav-drawer-item",
+                onClick: () => setOpen(false),}
+
+                , lang === 'es' ? i.es : i.en
+              )
+            ) : (
+              React.createElement('button', { key: i.key,
+                className: `nav-drawer-item${i.key === 'vivo' ? ' vivo' : ''}${page === i.key ? ' active' : ''}`,
+                onClick: () => handleItem(i),}
+
+                , lang === 'es' ? i.es : i.en
+              )
+            )
+          ))
+        )
+
+        , React.createElement('div', { className: "nav-drawer-socials",}
+          , socials.map(s => (
+            React.createElement('a', { key: s.title, href: s.href, target: "_blank", rel: "noopener noreferrer" , className: "nav-icon-btn", title: s.title,}, s.icon)
+          ))
+          , React.createElement('button', { className: "nav-drawer-lang", onClick: () => setLang(lang === 'es' ? 'en' : 'es'),}
+            , lang === 'es' ? 'EN' : 'ES'
+          )
+        )
+      )
+    )
   );
 }
 
@@ -2736,11 +2769,11 @@ function Marquee({ lang }) {
     : ['DIGITAL ILLUSTRATION','CONCEPT ART','ARTISTIC ANATOMY','DIGITAL PAINTING','CHARACTER DESIGN','COMPOSITION & COLOR','500K+ STUDENTS'];
   const all = [...tags, ...tags, ...tags];
   return (
-    <div className="marquee-wrap">
-      <div className="marquee-track">
-        {all.map((t,i) => <span key={i} className="marquee-item">{t}<span className="marquee-dot" /></span>)}
-      </div>
-    </div>
+    React.createElement('div', { className: "marquee-wrap",}
+      , React.createElement('div', { className: "marquee-track",}
+        , all.map((t,i) => React.createElement('span', { key: i, className: "marquee-item",}, t, React.createElement('span', { className: "marquee-dot",} )))
+      )
+    )
   );
 }
 
@@ -2763,31 +2796,31 @@ function HeroCarousel() {
   const goPrev = () => go((idx - 1 + items.length) % items.length);
 
   return (
-    <div
-      className="hc-wrap"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      {prev !== null && (
-        <div key={`out-${prev}`} className="hc-slide hc-slide-out" style={{ background: items[prev].g }} />
-      )}
-      <div key={`in-${idx}`} className="hc-slide hc-slide-in" style={{ background: items[idx].g }} />
+    React.createElement('div', {
+      className: "hc-wrap",
+      onMouseEnter: () => setHovered(true),
+      onMouseLeave: () => setHovered(false),}
 
-      <button className={`hc-arrow hc-arrow-l${hovered ? ' hc-arrow-vis' : ''}`} onClick={goPrev} aria-label="prev">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
-      <button className={`hc-arrow hc-arrow-r${hovered ? ' hc-arrow-vis' : ''}`} onClick={goNext} aria-label="next">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6"/></svg>
-      </button>
+      , prev !== null && (
+        React.createElement('div', { key: `out-${prev}`, className: "hc-slide hc-slide-out" , style: { background: items[prev].g },} )
+      )
+      , React.createElement('div', { key: `in-${idx}`, className: "hc-slide hc-slide-in" , style: { background: items[idx].g },} )
 
-      <div className={`hc-dots${hovered ? ' hc-dots-vis' : ''}`}>
-        {items.map((_, i) => (
-          <button key={i} className={`hc-dot${i === idx ? ' active' : ''}`} onClick={() => go(i)} />
-        ))}
-      </div>
+      , React.createElement('button', { className: `hc-arrow hc-arrow-l${hovered ? ' hc-arrow-vis' : ''}`, onClick: goPrev, 'aria-label': "prev",}
+        , React.createElement('svg', { width: "22", height: "22", viewBox: "0 0 24 24"   , fill: "none", stroke: "currentColor", strokeWidth: "2",}, React.createElement('polyline', { points: "15 18 9 12 15 6"     ,}))
+      )
+      , React.createElement('button', { className: `hc-arrow hc-arrow-r${hovered ? ' hc-arrow-vis' : ''}`, onClick: goNext, 'aria-label': "next",}
+        , React.createElement('svg', { width: "22", height: "22", viewBox: "0 0 24 24"   , fill: "none", stroke: "currentColor", strokeWidth: "2",}, React.createElement('polyline', { points: "9 18 15 12 9 6"     ,}))
+      )
 
-      <div className="hc-fade" />
-    </div>
+      , React.createElement('div', { className: `hc-dots${hovered ? ' hc-dots-vis' : ''}`,}
+        , items.map((_, i) => (
+          React.createElement('button', { key: i, className: `hc-dot${i === idx ? ' active' : ''}`, onClick: () => go(i),} )
+        ))
+      )
+
+      , React.createElement('div', { className: "hc-fade",} )
+    )
   );
 }
 
@@ -2801,15 +2834,15 @@ function Lightbox({ item, onClose }) {
     return () => window.removeEventListener('keydown', fn);
   }, []);
   return (
-    <div className="lightbox-backdrop" onClick={onClose}>
-      <div className="lightbox-inner" onClick={e => e.stopPropagation()}>
-        <button className="lightbox-close" onClick={onClose}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-        <div className="lightbox-img" style={{ background: item.g }} />
-        <div className="lightbox-caption">{item.title}</div>
-      </div>
-    </div>
+    React.createElement('div', { className: "lightbox-backdrop", onClick: onClose,}
+      , React.createElement('div', { className: "lightbox-inner", onClick: e => e.stopPropagation(),}
+        , React.createElement('button', { className: "lightbox-close", onClick: onClose,}
+          , React.createElement('svg', { width: "16", height: "16", viewBox: "0 0 24 24"   , fill: "none", stroke: "currentColor", strokeWidth: "2.5",}, React.createElement('line', { x1: "18", y1: "6", x2: "6", y2: "18",}), React.createElement('line', { x1: "6", y1: "6", x2: "18", y2: "18",}))
+        )
+        , React.createElement('div', { className: "lightbox-img", style: { background: item.g },} )
+        , React.createElement('div', { className: "lightbox-caption",}, item.title)
+      )
+    )
   );
 }
 
@@ -2827,28 +2860,28 @@ function GalleryItem({ item, onOpen }) {
     return () => obs.disconnect();
   }, []);
   return (
-    <div ref={ref} className={`gallery-item pin-item${vis ? ' pin-in' : ''}`} onClick={() => onOpen(item)}>
-      <div className="gallery-thumb" style={{ aspectRatio: `300/${item.h}`, background: item.g }} />
-      <div className="gallery-over">
-        <div className="gallery-over-content">
-          <span className="gallery-over-title">{item.title}</span>
-        </div>
-      </div>
-    </div>
+    React.createElement('div', { ref: ref, className: `gallery-item pin-item${vis ? ' pin-in' : ''}`, onClick: () => onOpen(item),}
+      , React.createElement('div', { className: "gallery-thumb", style: { aspectRatio: `300/${item.h}`, background: item.g },} )
+      , React.createElement('div', { className: "gallery-over",}
+        , React.createElement('div', { className: "gallery-over-content",}
+          , React.createElement('span', { className: "gallery-over-title",}, item.title)
+        )
+      )
+    )
   );
 }
 
 function PinterestGallery({ lang }) {
   const [lightbox, setLightbox] = useState(null);
   return (
-    <>
-      <div className="gallery-grid">
-        {GALLERY.map((p, i) => (
-          <GalleryItem key={i} item={p} onOpen={(item) => setLightbox(item)} />
-        ))}
-      </div>
-      {lightbox && <Lightbox item={lightbox} onClose={() => setLightbox(null)} />}
-    </>
+    React.createElement(React.Fragment, null
+      , React.createElement('div', { className: "gallery-grid",}
+        , GALLERY.map((p, i) => (
+          React.createElement(GalleryItem, { key: i, item: p, onOpen: (item) => setLightbox(item),} )
+        ))
+      )
+      , lightbox && React.createElement(Lightbox, { item: lightbox, onClose: () => setLightbox(null),} )
+    )
   );
 }
 
@@ -2858,66 +2891,66 @@ function PinterestGallery({ lang }) {
 function HomePage({ lang, goTo }) {
   const gallRef = useReveal();
   return (
-    <>
-      <section className="hero">
-        <HeroCarousel />
-        <div style={{ position:'relative', zIndex:10 }}>
-          <p className="hero-label hero-anim-1">
-            {lang === 'es' ? 'ARTISTA VISUAL E INSTRUCTOR DE ARTE · LIMA, PERÚ' : 'VISUAL ARTIST & ART INSTRUCTOR · LIMA, PERU'}
-          </p>
-          <h1 className="hero-title hero-anim-2">
-            <span className="outline" style={{ WebkitTextStroke:'2.5px rgba(255,255,255,0.9)', color:'transparent' }}>RUI</span><span style={{ color:'#fff' }}>VER</span><span className="outline" style={{ WebkitTextStroke:'2.5px rgba(255,255,255,0.9)', color:'transparent' }}>AN</span>
-          </h1>
-          <div className="hero-bottom hero-anim-3">
-            <div>
-              <p className="hero-sub">
-                {lang === 'es'
+    React.createElement(React.Fragment, null
+      , React.createElement('section', { className: "hero",}
+        , React.createElement(HeroCarousel, null )
+        , React.createElement('div', { style: { position:'relative', zIndex:10 },}
+          , React.createElement('p', { className: "hero-label hero-anim-1" ,}
+            , lang === 'es' ? 'ARTISTA VISUAL E INSTRUCTOR DE ARTE · LIMA, PERÚ' : 'VISUAL ARTIST & ART INSTRUCTOR · LIMA, PERU'
+          )
+          , React.createElement('h1', { className: "hero-title hero-anim-2" ,}
+            , React.createElement('span', { className: "outline", style: { WebkitTextStroke:'2.5px rgba(255,255,255,0.9)', color:'transparent' },}, "RUI"), React.createElement('span', { style: { color:'#fff' },}, "VER"), React.createElement('span', { className: "outline", style: { WebkitTextStroke:'2.5px rgba(255,255,255,0.9)', color:'transparent' },}, "AN")
+          )
+          , React.createElement('div', { className: "hero-bottom hero-anim-3" ,}
+            , React.createElement('div', null
+              , React.createElement('p', { className: "hero-sub",}
+                , lang === 'es'
                   ? 'Rodrigo Rivas · Ilustrador y Concept Artist · Animación Publicitaria, Ilustración Editorial y Videojuegos.'
-                  : 'Rodrigo Rivas · Illustrator & Concept Artist · Advertising Animation, Editorial Illustration & Video Games.'}
-              </p>
-              <div className="hero-collab-row">
-                <span className="hero-collab-lbl">{lang === 'es' ? 'Trabajé con:' : 'Worked with:'}</span>
-                {['Disney Channel','Nickelodeon','XP-Pen','Domestika'].map(b => (
-                  <span key={b} className="hero-collab-badge">{b}</span>
-                ))}
-              </div>
-              <div className="hero-stat-row">
-                {[
+                  : 'Rodrigo Rivas · Illustrator & Concept Artist · Advertising Animation, Editorial Illustration & Video Games.'
+              )
+              , React.createElement('div', { className: "hero-collab-row",}
+                , React.createElement('span', { className: "hero-collab-lbl",}, lang === 'es' ? 'Trabajé con:' : 'Worked with:')
+                , ['Disney Channel','Nickelodeon','XP-Pen','Domestika'].map(b => (
+                  React.createElement('span', { key: b, className: "hero-collab-badge",}, b)
+                ))
+              )
+              , React.createElement('div', { className: "hero-stat-row",}
+                , [
                   ['5000+', lang==='es'?'Estudiantes':'Students'],
                   ['120+',  lang==='es'?'Aprendices':'Learners'],
                   ['10',    lang==='es'?'Años de Experiencia':'Years of Experience'],
                 ].map(([v,l]) => (
-                  <div key={l}>
-                    <div className="hero-stat-val">{v}</div>
-                    <div className="hero-stat-lbl">{l}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="hero-ctas">
-              <a href="https://ruiveran.gumroad.com/" className="btn btn-orange" style={{ textDecoration:'none' }}>
-                {lang === 'es' ? 'EXPLORAR CURSOS' : 'EXPLORE COURSES'} <IcoArr />
-              </a>
-              <button className="btn btn-outline" onClick={() => goTo('vivo')}>
-                {lang === 'es' ? 'CLASES EN VIVO' : 'LIVE CLASSES'}
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+                  React.createElement('div', { key: l,}
+                    , React.createElement('div', { className: "hero-stat-val",}, v)
+                    , React.createElement('div', { className: "hero-stat-lbl",}, l)
+                  )
+                ))
+              )
+            )
+            , React.createElement('div', { className: "hero-ctas",}
+              , React.createElement('a', { href: "https://ruiveran.gumroad.com/", className: "btn btn-orange" , style: { textDecoration:'none' },}
+                , lang === 'es' ? 'EXPLORAR CURSOS' : 'EXPLORE COURSES', " " , React.createElement(IcoArr, null )
+              )
+              , React.createElement('button', { className: "btn btn-outline" , onClick: () => goTo('vivo'),}
+                , lang === 'es' ? 'CLASES EN VIVO' : 'LIVE CLASSES'
+              )
+            )
+          )
+        )
+      )
 
-      <Marquee lang={lang} />
+      , React.createElement(Marquee, { lang: lang,} )
 
-      <div style={{ borderTop:'1px solid var(--clr-border)', paddingTop:'40px' }}>
-        <div style={{ padding:'0 4vw 24px' }}>
-          <span style={{ fontFamily:'var(--fh)', fontWeight:700, fontSize:'0.68rem', letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--clr-orange)' }}>MIS TRABAJOS</span>
-          <h2 style={{ fontFamily:'var(--fh)', fontWeight:900, fontSize:'clamp(2rem,4vw,4rem)', letterSpacing:'-0.02em', textTransform:'uppercase', color:'var(--clr-black)', lineHeight:1, margin:'0.4rem 0 0' }}>PORTAFOLIO</h2>
-        </div>
-        <div style={{ padding:'0 4vw 80px' }}>
-          <PinterestGallery lang={lang} />
-        </div>
-      </div>
-    </>
+      , React.createElement('div', { style: { borderTop:'1px solid var(--clr-border)', paddingTop:'40px' },}
+        , React.createElement('div', { style: { padding:'0 4vw 24px' },}
+          , React.createElement('span', { style: { fontFamily:'var(--fh)', fontWeight:700, fontSize:'0.68rem', letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--clr-orange)' },}, "MIS TRABAJOS" )
+          , React.createElement('h2', { style: { fontFamily:'var(--fh)', fontWeight:900, fontSize:'clamp(2rem,4vw,4rem)', letterSpacing:'-0.02em', textTransform:'uppercase', color:'var(--clr-black)', lineHeight:1, margin:'0.4rem 0 0' },}, "PORTAFOLIO")
+        )
+        , React.createElement('div', { style: { padding:'0 4vw 80px' },}
+          , React.createElement(PinterestGallery, { lang: lang,} )
+        )
+      )
+    )
   );
 }
 
@@ -3029,33 +3062,33 @@ function LivePage({ lang, goTo }) {
   ];
 
   return (
-    <div ref={ref} className="section">
-      <div className="s-header">
-        <span className="s-tag anim">{t('MEMBRESÍA','MEMBERSHIP')}</span>
-        <h2 className="s-title anim d1">{t('CLASES\nEN VIVO','LIVE\nCLASSES')}</h2>
-        <p className="s-sub anim d2">
-          {t('Dos niveles de acceso. Un objetivo: que tu arte mejore en tiempo real con feedback directo.','Two tiers of access. One goal: your art improves in real time with direct feedback.')}
-        </p>
-      </div>
+    React.createElement('div', { ref: ref, className: "section",}
+      , React.createElement('div', { className: "s-header",}
+        , React.createElement('span', { className: "s-tag anim" ,}, t('MEMBRESÍA','MEMBERSHIP'))
+        , React.createElement('h2', { className: "s-title anim d1"  ,}, t('CLASES\nEN VIVO','LIVE\nCLASSES'))
+        , React.createElement('p', { className: "s-sub anim d2"  ,}
+          , t('Dos niveles de acceso. Un objetivo: que tu arte mejore en tiempo real con feedback directo.','Two tiers of access. One goal: your art improves in real time with direct feedback.')
+        )
+      )
 
-      <div className="live-course-banner anim d2"
-        style={{ marginBottom:'2.4rem' }}>
-        <div className="lcb-top">
-          <div className="lcb-left">
-            <div style={{ display:'flex', alignItems:'center' }}>
-              <div className="lcb-eyebrow">
-                <span style={{ color:'var(--clr-black)' }}>{t('PRÓXIMA CLASE · ','NEXT CLASS · ')}</span>
-                <span style={{ color:'var(--clr-orange)' }}>{t('NIVEL INTERMEDIO','INTERMEDIATE LEVEL')}</span>
-              </div>
-              <div style={{ marginLeft:'auto', display:'flex', alignItems:'center', gap:'0.3rem' }}>
-                <span style={{ color:'var(--clr-orange)', fontSize:'1.1rem', letterSpacing:'1.5px' }}>★★★★★</span>
-                <span style={{ fontFamily:'var(--fh)', fontWeight:900, fontSize:'1.05rem', color:'var(--clr-black)' }}>4.9</span>
-                <span style={{ fontFamily:'var(--fb)', fontSize:'0.88rem', color:'var(--clr-muted)' }}>(19)</span>
-              </div>
-            </div>
-            <div className="lcb-title" style={{ color:'var(--clr-black)' }}>{t('DIBUJA ANATOMÍA EN ACCIÓN','DRAW ANATOMY IN ACTION')}</div>
-            <div className="feat-chips" style={{ marginTop:'0.4rem' }}>
-              {[
+      , React.createElement('div', { className: "live-course-banner anim d2"  ,
+        style: { marginBottom:'2.4rem' },}
+        , React.createElement('div', { className: "lcb-top",}
+          , React.createElement('div', { className: "lcb-left",}
+            , React.createElement('div', { style: { display:'flex', alignItems:'center' },}
+              , React.createElement('div', { className: "lcb-eyebrow",}
+                , React.createElement('span', { style: { color:'var(--clr-black)' },}, t('PRÓXIMA CLASE · ','NEXT CLASS · '))
+                , React.createElement('span', { style: { color:'var(--clr-orange)' },}, t('NIVEL INTERMEDIO','INTERMEDIATE LEVEL'))
+              )
+              , React.createElement('div', { style: { marginLeft:'auto', display:'flex', alignItems:'center', gap:'0.3rem' },}
+                , React.createElement('span', { style: { color:'var(--clr-orange)', fontSize:'1.1rem', letterSpacing:'1.5px' },}, "★★★★★")
+                , React.createElement('span', { style: { fontFamily:'var(--fh)', fontWeight:900, fontSize:'1.05rem', color:'var(--clr-black)' },}, "4.9")
+                , React.createElement('span', { style: { fontFamily:'var(--fb)', fontSize:'0.88rem', color:'var(--clr-muted)' },}, "(19)")
+              )
+            )
+            , React.createElement('div', { className: "lcb-title", style: { color:'var(--clr-black)' },}, t('DIBUJA ANATOMÍA EN ACCIÓN','DRAW ANATOMY IN ACTION'))
+            , React.createElement('div', { className: "feat-chips", style: { marginTop:'0.4rem' },}
+              , [
                 t('📅 2 Meses','📅 2 Months'),
                 t('🖥 En Vivo (Discord)','🖥 Live (Discord)'),
                 t('📚 8 Lecciones','📚 8 Lessons'),
@@ -3064,236 +3097,236 @@ function LivePage({ lang, goTo }) {
                 t('✏️ Lápiz y Papel','✏️ Pencil & Paper'),
                 t('✏️ Tablet / Tableta','✏️ Tablet Required'),
                 t('🖥 Cualquier Software','🖥 Any Software'),
-              ].map((f, i) => <span key={i} className="feat-chip" style={{ fontSize:'0.884rem', padding:'3px 9px' }}>{f}</span>)}
-            </div>
-          </div>
-          <div className="lcb-bottom-row">
-            <div className="lcb-date" style={{ color:'var(--clr-muted)', fontSize:'0.82rem' }}>
-              {t('Inicio: Por Anunciar · ','Start: TBA · ')}<span style={{ textDecoration:'line-through', opacity:0.55 }}>{t('Lunes','Mondays')}</span>{t(' · ',' · ')}
-              <span style={{ textDecoration:'line-through', opacity:0.6 }}>{t('7:00 a 10:30 PM Lima','7:00 to 10:30 PM Lima')}</span>
-            </div>
-            <div style={{ display:'flex', gap:'0.7rem', flexWrap:'wrap' }}>
-              <a href="https://ruiveran.gumroad.com/l/dibuja-anatomia-en-accion"
-                className="btn btn-outline" style={{ fontWeight:800, textDecoration:'none' }}>
-                {t('VER CLASE','VIEW CLASS')}
-              </a>
-              <button className="btn btn-orange"
-                onClick={() => { if (tiersRef.current) tiersRef.current.scrollIntoView({ behavior:'smooth', block:'start' }); }}>
-                {t('VER PRECIOS','SEE PRICES')} <IcoArr />
-              </button>
-            </div>
-          </div>
-        </div>
-        <div style={{ margin:'0 -1.8rem' }}>
-          {/* ─── RESULTADOS ─── */}
-          <div style={{ padding:'2.4rem 1.8rem 0' }}>
-            <h3 style={{ fontFamily:'var(--fh)', fontWeight:900, fontSize:'2.4rem', letterSpacing:'-0.02em', textTransform:'uppercase', color:'var(--clr-black)', lineHeight:0.95, marginBottom:'1.2rem' }}>
-              {t('RESULTADOS','RESULTS')}
-            </h3>
-            <div
-              style={{ width:'100%', cursor:'zoom-in', position:'relative', overflow:'hidden' }}
-              onClick={() => setResultadosLightbox(true)}
-            >
-              <div
+              ].map((f, i) => React.createElement('span', { key: i, className: "feat-chip", style: { fontSize:'0.884rem', padding:'3px 9px' },}, f))
+            )
+          )
+          , React.createElement('div', { className: "lcb-bottom-row",}
+            , React.createElement('div', { className: "lcb-date", style: { color:'var(--clr-muted)', fontSize:'0.82rem' },}
+              , t('Inicio: Por Anunciar · ','Start: TBA · '), React.createElement('span', { style: { textDecoration:'line-through', opacity:0.55 },}, t('Lunes','Mondays')), t(' · ',' · ')
+              , React.createElement('span', { style: { textDecoration:'line-through', opacity:0.6 },}, t('7:00 a 10:30 PM Lima','7:00 to 10:30 PM Lima'))
+            )
+            , React.createElement('div', { style: { display:'flex', gap:'0.7rem', flexWrap:'wrap' },}
+              , React.createElement('a', { href: "https://ruiveran.gumroad.com/l/dibuja-anatomia-en-accion",
+                className: "btn btn-outline" , style: { fontWeight:800, textDecoration:'none' },}
+                , t('VER CLASE','VIEW CLASS')
+              )
+              , React.createElement('button', { className: "btn btn-orange" ,
+                onClick: () => { if (tiersRef.current) tiersRef.current.scrollIntoView({ behavior:'smooth', block:'start' }); },}
+                , t('VER PRECIOS','SEE PRICES'), " " , React.createElement(IcoArr, null )
+              )
+            )
+          )
+        )
+        , React.createElement('div', { style: { margin:'0 -1.8rem' },}
+          /* ─── RESULTADOS ─── */
+          , React.createElement('div', { style: { padding:'2.4rem 1.8rem 0' },}
+            , React.createElement('h3', { style: { fontFamily:'var(--fh)', fontWeight:900, fontSize:'2.4rem', letterSpacing:'-0.02em', textTransform:'uppercase', color:'var(--clr-black)', lineHeight:0.95, marginBottom:'1.2rem' },}
+              , t('RESULTADOS','RESULTS')
+            )
+            , React.createElement('div', {
+              style: { width:'100%', cursor:'zoom-in', position:'relative', overflow:'hidden' },
+              onClick: () => setResultadosLightbox(true),}
+
+              , React.createElement('div', {
                 /* 🖼️ IMAGEN RESULTADOS — sección 'Clases en Vivo'
                 ✏️  Reemplaza el valor de background con tu imagen real así:
                     background: "url('https://TU-IMAGEN-AQUI.com/resultados-anatomia.jpg') center/cover",
                     O mejor aún: cambia este <div> por un <img src='TU-URL-AQUI' ...> */
-              style={{ width:'100%', aspectRatio:'16/9', display:'block', background:'url(https://via.placeholder.com/1200x675/1a0a0a/FF4500?text=IMAGEN+RESULTADOS+Anatomia+en+Accion+1200x675) center/cover', transition:'transform 0.5s ease' }}
-                onMouseEnter={e => e.currentTarget.style.transform='scale(1.02)'}
-                onMouseLeave={e => e.currentTarget.style.transform='scale(1)'}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+              style: { width:'100%', aspectRatio:'16/9', display:'block', background:'url(https://via.placeholder.com/1200x675/1a0a0a/FF4500?text=IMAGEN+RESULTADOS+Anatomia+en+Accion+1200x675) center/cover', transition:'transform 0.5s ease' },
+                onMouseEnter: e => e.currentTarget.style.transform='scale(1.02)',
+                onMouseLeave: e => e.currentTarget.style.transform='scale(1)',}
+              )
+            )
+          )
+        )
+      )
 
-      {/* Resultados lightbox */}
-      {resultadosLightbox && (
-        <div
-          style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.88)', zIndex:2000, display:'flex', alignItems:'center', justifyContent:'center', padding:'2rem', cursor:'zoom-out' }}
-          onClick={() => setResultadosLightbox(false)}
-        >
-          <div
+      /* Resultados lightbox */
+      , resultadosLightbox && (
+        React.createElement('div', {
+          style: { position:'fixed', inset:0, background:'rgba(0,0,0,0.88)', zIndex:2000, display:'flex', alignItems:'center', justifyContent:'center', padding:'2rem', cursor:'zoom-out' },
+          onClick: () => setResultadosLightbox(false),}
+
+          , React.createElement('div', {
             /* 🖼️ IMAGEN RESULTADOS ampliada (lightbox) — misma imagen de arriba */
-            style={{ width:'min(900px,90vw)', aspectRatio:'16/9', background:'url(https://via.placeholder.com/1200x675/1a0a0a/FF4500?text=IMAGEN+RESULTADOS+Anatomia+en+Accion+1200x675) center/cover', display:'block', cursor:'default' }}
-            onClick={e => e.stopPropagation()}
-          />
-          <button
-            onClick={() => setResultadosLightbox(false)}
-            style={{ position:'fixed', top:'2rem', right:'2rem', background:'none', border:'none', color:'#fff', fontSize:'1.4rem', cursor:'pointer', opacity:0.7, lineHeight:1 }}
-          >✕</button>
-        </div>
-      )}
+            style: { width:'min(900px,90vw)', aspectRatio:'16/9', background:'url(https://via.placeholder.com/1200x675/1a0a0a/FF4500?text=IMAGEN+RESULTADOS+Anatomia+en+Accion+1200x675) center/cover', display:'block', cursor:'default' },
+            onClick: e => e.stopPropagation(),}
+          )
+          , React.createElement('button', {
+            onClick: () => setResultadosLightbox(false),
+            style: { position:'fixed', top:'2rem', right:'2rem', background:'none', border:'none', color:'#fff', fontSize:'1.4rem', cursor:'pointer', opacity:0.7, lineHeight:1 },}
+, "✕")
+        )
+      )
 
-      {/* ─── TESTIMONIALS ─── */}
-      <div style={{ marginBottom:'3rem' }} className="anim d1">
-        <h3 style={{ fontFamily:'var(--fh)', fontWeight:900, fontSize:'2.4rem', letterSpacing:'-0.02em', textTransform:'uppercase', color:'var(--clr-black)', lineHeight:0.95, marginBottom:'1.2rem' }}>
-          {t('TESTIMONIOS','TESTIMONIALS')}
-        </h3>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(5, 1fr)', gap:'1px', background:'var(--clr-border)' }}>
-          {TESTIMONIALS.map(tm => (
-            <div key={tm.id} style={{ background:'var(--clr-bg)', padding:'1.4rem 1.3rem' }}>
-              <div style={{ color:'var(--clr-orange)', fontSize:'0.82rem', letterSpacing:'2px', marginBottom:'0.55rem' }}>{'★'.repeat(tm.stars)}</div>
-              <p style={{ fontFamily:'var(--fb)', fontSize:'0.88rem', lineHeight:1.65, color:'var(--clr-black)', marginBottom:'1rem', fontStyle:'italic',
-                display:'-webkit-box', WebkitLineClamp:6, WebkitBoxOrient:'vertical', overflow:'hidden' }}>
-                "{t(tm.es, tm.en)}"
-              </p>
-              <div style={{ display:'flex', alignItems:'center', gap:'0.55rem' }}>
-                <div style={{
+      /* ─── TESTIMONIALS ─── */
+      , React.createElement('div', { style: { marginBottom:'3rem' }, className: "anim d1" ,}
+        , React.createElement('h3', { style: { fontFamily:'var(--fh)', fontWeight:900, fontSize:'2.4rem', letterSpacing:'-0.02em', textTransform:'uppercase', color:'var(--clr-black)', lineHeight:0.95, marginBottom:'1.2rem' },}
+          , t('TESTIMONIOS','TESTIMONIALS')
+        )
+        , React.createElement('div', { style: { display:'grid', gridTemplateColumns:'repeat(5, 1fr)', gap:'1px', background:'var(--clr-border)' },}
+          , TESTIMONIALS.map(tm => (
+            React.createElement('div', { key: tm.id, style: { background:'var(--clr-bg)', padding:'1.4rem 1.3rem' },}
+              , React.createElement('div', { style: { color:'var(--clr-orange)', fontSize:'0.82rem', letterSpacing:'2px', marginBottom:'0.55rem' },}, '★'.repeat(tm.stars))
+              , React.createElement('p', { style: { fontFamily:'var(--fb)', fontSize:'0.88rem', lineHeight:1.65, color:'var(--clr-black)', marginBottom:'1rem', fontStyle:'italic',
+                display:'-webkit-box', WebkitLineClamp:6, WebkitBoxOrient:'vertical', overflow:'hidden' },}, "\""
+                , t(tm.es, tm.en), "\""
+              )
+              , React.createElement('div', { style: { display:'flex', alignItems:'center', gap:'0.55rem' },}
+                , React.createElement('div', { style: {
                   width:28, height:28, borderRadius:'50%', flexShrink:0,
                   background: tm.avatar, border:'1.5px solid var(--clr-border)',
-                }} />
-                <span style={{ fontFamily:'var(--fh)', fontSize:'0.68rem', fontWeight:700, letterSpacing:'0.1em', color:'var(--clr-muted)', textTransform:'uppercase' }}>
-                  {tm.name} {tm.flag}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+                },} )
+                , React.createElement('span', { style: { fontFamily:'var(--fh)', fontSize:'0.68rem', fontWeight:700, letterSpacing:'0.1em', color:'var(--clr-muted)', textTransform:'uppercase' },}
+                  , tm.name, " " , tm.flag
+                )
+              )
+            )
+          ))
+        )
+      )
 
-      <div className="tier-grid anim d2" ref={tiersRef}>
-        <div className="tier-card">
-          <p className="tier-tag">NIVEL 1 ★ {t('MÁS POPULAR','MOST POPULAR')}</p>
-          <h3 className="tier-name">{t('ACCESO\nGRUPAL','GROUP\nACCESS')}</h3>
-          <div className="tier-price">$65</div>
-          <p className="tier-period">{t('por mes · facturación mensual','per month · monthly billing')}</p>
-          <ul className="feat-list">
-            {f1.map((f,i) => <li key={i} className="feat-item"><span className="fi-dot"><IcoCheck /></span>{f}</li>)}
-          </ul>
-          <button className="btn btn-outline" style={{ width:'100%', justifyContent:'center' }} onClick={scrollToForm}>{t('INSCRIBIRSE — NIVEL 1','SIGN UP — LEVEL 1')}</button>
-        </div>
-        <div className="tier-card featured" style={{ color:'#fff' }}>
-          <div>
-            <p className="tier-tag" style={{ color:'var(--clr-orange)' }}>NIVEL 2</p>
-            <h3 className="tier-name" style={{ color:'#F8F5EF' }}>{t('MENTORÍA\nPRIORITARIA','PRIORITY\nMENTORSHIP')}</h3>
-            <div className="tier-price" style={{ color:'#fff' }}>$150</div>
-            <p className="tier-period" style={{ color:'#ccc' }}>{t('por mes · plazas limitadas','per month · limited spots')}</p>
-            <ul className="feat-list">
-              {f2.map((f,i) => <li key={i} className="feat-item" style={{ color:'#E0DCD4' }}><span className="fi-dot"><IcoPlus /></span>{f}</li>)}
-            </ul>
-          </div>
-          <button className="btn btn-orange" style={{ width:'100%', justifyContent:'center', marginTop:'1rem' }} onClick={() => {
+      , React.createElement('div', { className: "tier-grid anim d2"  , ref: tiersRef,}
+        , React.createElement('div', { className: "tier-card",}
+          , React.createElement('p', { className: "tier-tag",}, "NIVEL 1 ★ "   , t('MÁS POPULAR','MOST POPULAR'))
+          , React.createElement('h3', { className: "tier-name",}, t('ACCESO\nGRUPAL','GROUP\nACCESS'))
+          , React.createElement('div', { className: "tier-price",}, "$65")
+          , React.createElement('p', { className: "tier-period",}, t('por mes · facturación mensual','per month · monthly billing'))
+          , React.createElement('ul', { className: "feat-list",}
+            , f1.map((f,i) => React.createElement('li', { key: i, className: "feat-item",}, React.createElement('span', { className: "fi-dot",}, React.createElement(IcoCheck, null )), f))
+          )
+          , React.createElement('button', { className: "btn btn-outline" , style: { width:'100%', justifyContent:'center' }, onClick: scrollToForm,}, t('INSCRIBIRSE — NIVEL 1','SIGN UP — LEVEL 1'))
+        )
+        , React.createElement('div', { className: "tier-card featured" , style: { color:'#fff' },}
+          , React.createElement('div', null
+            , React.createElement('p', { className: "tier-tag", style: { color:'var(--clr-orange)' },}, "NIVEL 2" )
+            , React.createElement('h3', { className: "tier-name", style: { color:'#F8F5EF' },}, t('MENTORÍA\nPRIORITARIA','PRIORITY\nMENTORSHIP'))
+            , React.createElement('div', { className: "tier-price", style: { color:'#fff' },}, "$150")
+            , React.createElement('p', { className: "tier-period", style: { color:'#ccc' },}, t('por mes · plazas limitadas','per month · limited spots'))
+            , React.createElement('ul', { className: "feat-list",}
+              , f2.map((f,i) => React.createElement('li', { key: i, className: "feat-item", style: { color:'#E0DCD4' },}, React.createElement('span', { className: "fi-dot",}, React.createElement(IcoPlus, null )), f))
+            )
+          )
+          , React.createElement('button', { className: "btn btn-orange" , style: { width:'100%', justifyContent:'center', marginTop:'1rem' }, onClick: () => {
             setForm(f => ({...f, msg: 'Hola, ¡Estoy interesado en el Nivel 2 de este mes! ¿Quedan vacantes?'}));
             setTimeout(() => { if (inscRef.current) inscRef.current.scrollIntoView({ behavior:'smooth', block:'start' }); }, 50);
-          }}>{t('INSCRIBIRSE — NIVEL 2','SIGN UP — LEVEL 2')} <IcoArr /></button>
-        </div>
-      </div>
+          },}, t('INSCRIBIRSE — NIVEL 2','SIGN UP — LEVEL 2'), " " , React.createElement(IcoArr, null ))
+        )
+      )
 
-      <div style={{ marginTop:'4rem' }} className="anim d3">
-        <div className="faq-big-title">FAQ</div>
-        <div className="faq-list">
-          {FAQS.map(faq => (
-            <div key={faq.id} className={`faq-item${openFaq === faq.id ? ' open' : ''}`}>
-              <button className="faq-q" onClick={() => setOpenFaq(openFaq === faq.id ? null : faq.id)}>
-                <span className="faq-icon">{faq.icon}</span>
-                <span className="faq-q-text">{faq.q}</span>
-                <span className="faq-chevron">{openFaq === faq.id ? '−' : '+'}</span>
-              </button>
-              {openFaq === faq.id && (
-                <div className="faq-a">
-                  {faq.id === 'precio' && (
-                    <p className="faq-a-text">
-                      {t('El precio que ves es ', 'The price you see is ')}
-                      <strong style={{ color:'var(--clr-orange)' }}>{t('Por Mes de Clases', 'Per Month of Classes')}</strong>
-                      {t('. No es un pago único si la clase dura más de un mes. Se paga al principio de cada mes de clase mientras estés inscrito.','. Not a one-time payment if the class runs longer than one month. Payment is made at the start of each month of class while you\'re enrolled.')}
-                    </p>
-                  )}
-                  {faq.id === 'pagos' && (
-                    <div className="faq-payments">
-                      <div className="faq-pay-group">
-                        <div className="faq-pay-label">
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                          {t('Internacional','International')}
-                        </div>
-                        <div className="faq-pay-row">
-                          <span className="faq-pay-chip paypal"><svg height="14" viewBox="0 0 80 20" fill="none"><text x="0" y="15" fontFamily="'DM Sans',sans-serif" fontWeight="700" fontSize="15" fill="#003087">Pay</text><text x="28" y="15" fontFamily="'DM Sans',sans-serif" fontWeight="700" fontSize="15" fill="#009cde">Pal</text></svg></span>
-                          <span className="faq-pay-chip global66"><svg height="14" viewBox="0 0 72 20" fill="none"><text x="0" y="15" fontFamily="'Barlow Condensed',sans-serif" fontWeight="800" fontSize="15" fill="currentColor" letterSpacing="-0.3">GLOBAL66</text></svg></span>
-                        </div>
-                      </div>
-                      <div className="faq-pay-group">
-                        <div className="faq-pay-label">🇵🇪 {t('Perú','Perú')}</div>
-                        <div className="faq-pay-row">
-                          <span className="faq-pay-chip yape"><svg height="14" viewBox="0 0 48 20" fill="none"><text x="0" y="15" fontFamily="'Barlow Condensed',sans-serif" fontWeight="900" fontSize="16" fill="#5B21B6">YAPE</text></svg></span>
-                          <span className="faq-pay-chip bcp"><svg height="14" viewBox="0 0 36 20" fill="none"><text x="0" y="15" fontFamily="'Barlow Condensed',sans-serif" fontWeight="900" fontSize="16" fill="#003DA5">BCP</text></svg></span>
-                          <span className="faq-pay-chip interbank"><svg height="14" viewBox="0 0 78 20" fill="none"><text x="0" y="15" fontFamily="'Barlow Condensed',sans-serif" fontWeight="700" fontSize="14" fill="#00A651" letterSpacing="0.3">INTERBANK</text></svg></span>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  {faq.id === 'horario' && (
-                    <p className="faq-a-text">
-                      {t('Sí. Todas las sesiones quedan grabadas y disponibles para verlas de forma','Yes. All sessions are recorded and available to watch')} <strong>{t('permanente','permanently')}</strong>.
-                    </p>
-                  )}
-                  {faq.a && <p className="faq-a-text">{faq.a}</p>}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
+      , React.createElement('div', { style: { marginTop:'4rem' }, className: "anim d3" ,}
+        , React.createElement('div', { className: "faq-big-title",}, "FAQ")
+        , React.createElement('div', { className: "faq-list",}
+          , FAQS.map(faq => (
+            React.createElement('div', { key: faq.id, className: `faq-item${openFaq === faq.id ? ' open' : ''}`,}
+              , React.createElement('button', { className: "faq-q", onClick: () => setOpenFaq(openFaq === faq.id ? null : faq.id),}
+                , React.createElement('span', { className: "faq-icon",}, faq.icon)
+                , React.createElement('span', { className: "faq-q-text",}, faq.q)
+                , React.createElement('span', { className: "faq-chevron",}, openFaq === faq.id ? '−' : '+')
+              )
+              , openFaq === faq.id && (
+                React.createElement('div', { className: "faq-a",}
+                  , faq.id === 'precio' && (
+                    React.createElement('p', { className: "faq-a-text",}
+                      , t('El precio que ves es ', 'The price you see is ')
+                      , React.createElement('strong', { style: { color:'var(--clr-orange)' },}, t('Por Mes de Clases', 'Per Month of Classes'))
+                      , t('. No es un pago único si la clase dura más de un mes. Se paga al principio de cada mes de clase mientras estés inscrito.','. Not a one-time payment if the class runs longer than one month. Payment is made at the start of each month of class while you\'re enrolled.')
+                    )
+                  )
+                  , faq.id === 'pagos' && (
+                    React.createElement('div', { className: "faq-payments",}
+                      , React.createElement('div', { className: "faq-pay-group",}
+                        , React.createElement('div', { className: "faq-pay-label",}
+                          , React.createElement('svg', { width: "14", height: "14", viewBox: "0 0 24 24"   , fill: "none", stroke: "currentColor", strokeWidth: "2",}, React.createElement('circle', { cx: "12", cy: "12", r: "10",}), React.createElement('line', { x1: "2", y1: "12", x2: "22", y2: "12",}), React.createElement('path', { d: "M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"                        ,}))
+                          , t('Internacional','International')
+                        )
+                        , React.createElement('div', { className: "faq-pay-row",}
+                          , React.createElement('span', { className: "faq-pay-chip paypal" ,}, React.createElement('svg', { height: "14", viewBox: "0 0 80 20"   , fill: "none",}, React.createElement('text', { x: "0", y: "15", fontFamily: "'DM Sans',sans-serif" , fontWeight: "700", fontSize: "15", fill: "#003087",}, "Pay"), React.createElement('text', { x: "28", y: "15", fontFamily: "'DM Sans',sans-serif" , fontWeight: "700", fontSize: "15", fill: "#009cde",}, "Pal")))
+                          , React.createElement('span', { className: "faq-pay-chip global66" ,}, React.createElement('svg', { height: "14", viewBox: "0 0 72 20"   , fill: "none",}, React.createElement('text', { x: "0", y: "15", fontFamily: "'Barlow Condensed',sans-serif" , fontWeight: "800", fontSize: "15", fill: "currentColor", letterSpacing: "-0.3",}, "GLOBAL66")))
+                        )
+                      )
+                      , React.createElement('div', { className: "faq-pay-group",}
+                        , React.createElement('div', { className: "faq-pay-label",}, "🇵🇪 " , t('Perú','Perú'))
+                        , React.createElement('div', { className: "faq-pay-row",}
+                          , React.createElement('span', { className: "faq-pay-chip yape" ,}, React.createElement('svg', { height: "14", viewBox: "0 0 48 20"   , fill: "none",}, React.createElement('text', { x: "0", y: "15", fontFamily: "'Barlow Condensed',sans-serif" , fontWeight: "900", fontSize: "16", fill: "#5B21B6",}, "YAPE")))
+                          , React.createElement('span', { className: "faq-pay-chip bcp" ,}, React.createElement('svg', { height: "14", viewBox: "0 0 36 20"   , fill: "none",}, React.createElement('text', { x: "0", y: "15", fontFamily: "'Barlow Condensed',sans-serif" , fontWeight: "900", fontSize: "16", fill: "#003DA5",}, "BCP")))
+                          , React.createElement('span', { className: "faq-pay-chip interbank" ,}, React.createElement('svg', { height: "14", viewBox: "0 0 78 20"   , fill: "none",}, React.createElement('text', { x: "0", y: "15", fontFamily: "'Barlow Condensed',sans-serif" , fontWeight: "700", fontSize: "14", fill: "#00A651", letterSpacing: "0.3",}, "INTERBANK")))
+                        )
+                      )
+                    )
+                  )
+                  , faq.id === 'horario' && (
+                    React.createElement('p', { className: "faq-a-text",}
+                      , t('Sí. Todas las sesiones quedan grabadas y disponibles para verlas de forma','Yes. All sessions are recorded and available to watch'), " " , React.createElement('strong', null, t('permanente','permanently')), "."
+                    )
+                  )
+                  , faq.a && React.createElement('p', { className: "faq-a-text",}, faq.a)
+                )
+              )
+            )
+          ))
+        )
+      )
 
-      <div id="inscripcion" ref={inscRef} className="live-insc-section anim d3">
-        <div className="contact-grid">
-          <div>
-            <h3 className="contact-big" style={{ fontSize:'clamp(2.5rem,7vw,7rem)' }}>
-              {t('INSCRÍBETE','SIGN UP')}
-            </h3>
-            <p className="contact-sub">
-              {t(
+      , React.createElement('div', { id: "inscripcion", ref: inscRef, className: "live-insc-section anim d3"  ,}
+        , React.createElement('div', { className: "contact-grid",}
+          , React.createElement('div', null
+            , React.createElement('h3', { className: "contact-big", style: { fontSize:'clamp(2.5rem,7vw,7rem)' },}
+              , t('INSCRÍBETE','SIGN UP')
+            )
+            , React.createElement('p', { className: "contact-sub",}
+              , t(
                 'Indícame tu nombre, nivel, método de pago y clase escogida. Te confirmaré si quedan vacantes.',
                 'Tell me your name, level, payment method and chosen class. I\'ll confirm if spots are available.'
-              )}
-            </p>
-            <div style={{ display:'flex', flexDirection:'column', gap:'0.75rem' }}>
-              {[
+              )
+            )
+            , React.createElement('div', { style: { display:'flex', flexDirection:'column', gap:'0.75rem' },}
+              , [
                 { label: 'NIVEL 1', price: '$65/mes', desc: t('Acceso Grupal','Group Access'), msg: 'Hola, ¡Estoy interesado en el Nivel 1 de este mes! ¿Quedan vacantes?' },
                 { label: 'NIVEL 2', price: '$150/mes', desc: t('Mentoría Prioritaria','Priority Mentorship'), msg: 'Hola, ¡Estoy interesado en el Nivel 2 de este mes! ¿Quedan vacantes?' },
               ].map(n => (
-                <div key={n.label} className="insc-level-pill" style={{ cursor:'pointer' }} onClick={() => setForm(f => ({...f, msg: n.msg}))}>
-                  <div>
-                    <span className="insc-level-tag">{n.label}</span>
-                    <span className="insc-level-desc">{n.desc}</span>
-                  </div>
-                  <span className="insc-level-price">{n.price}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+                React.createElement('div', { key: n.label, className: "insc-level-pill", style: { cursor:'pointer' }, onClick: () => setForm(f => ({...f, msg: n.msg})),}
+                  , React.createElement('div', null
+                    , React.createElement('span', { className: "insc-level-tag",}, n.label)
+                    , React.createElement('span', { className: "insc-level-desc",}, n.desc)
+                  )
+                  , React.createElement('span', { className: "insc-level-price",}, n.price)
+                )
+              ))
+            )
+          )
 
-          <div>
-            {sent ? (
-              <div className="form-success">
-                <span className="form-success-check">✓</span>
-                <div className="form-success-title">{t('¡ENVIADO!','SENT!')}</div>
-                <p className="form-success-sub">{t('Te responderé en la brevedad posible.','I\'ll get back to you as soon as possible.')}</p>
-              </div>
+          , React.createElement('div', null
+            , sent ? (
+              React.createElement('div', { className: "form-success",}
+                , React.createElement('span', { className: "form-success-check",}, "✓")
+                , React.createElement('div', { className: "form-success-title",}, t('¡ENVIADO!','SENT!'))
+                , React.createElement('p', { className: "form-success-sub",}, t('Te responderé en la brevedad posible.','I\'ll get back to you as soon as possible.'))
+              )
             ) : (
-              <>
-                <div className="fgroup">
-                  <label className="flabel">{t('NOMBRE','NAME')}</label>
-                  <input className="finput" value={form.name} onChange={e => setForm({...form,name:e.target.value})} placeholder={t('Tu nombre completo','Your full name')} />
-                </div>
-                <div className="fgroup">
-                  <label className="flabel">EMAIL</label>
-                  <input className="finput" type="email" value={form.email} onChange={e => setForm({...form,email:e.target.value})} placeholder="tu@email.com" />
-                </div>
-                <div className="fgroup">
-                  <label className="flabel">{t('MENSAJE','MESSAGE')}</label>
-                  <textarea className="ftextarea" value={form.msg} onChange={e => setForm({...form,msg:e.target.value})} style={{ minHeight:'120px' }} />
-                </div>
-                {err && <p style={{ fontFamily:'var(--fb)', fontSize:'0.8rem', color:'var(--clr-orange)', marginBottom:'1rem' }}>{err}</p>}
-                <button className="btn btn-orange" style={{ width:'100%', justifyContent:'center' }} onClick={submitForm}>
-                  {t('ENVIAR SOLICITUD','SEND REQUEST')} <IcoArr />
-                </button>
-              </>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
+              React.createElement(React.Fragment, null
+                , React.createElement('div', { className: "fgroup",}
+                  , React.createElement('label', { className: "flabel",}, t('NOMBRE','NAME'))
+                  , React.createElement('input', { className: "finput", value: form.name, onChange: e => setForm({...form,name:e.target.value}), placeholder: t('Tu nombre completo','Your full name'),} )
+                )
+                , React.createElement('div', { className: "fgroup",}
+                  , React.createElement('label', { className: "flabel",}, "EMAIL")
+                  , React.createElement('input', { className: "finput", type: "email", value: form.email, onChange: e => setForm({...form,email:e.target.value}), placeholder: "tu@email.com",} )
+                )
+                , React.createElement('div', { className: "fgroup",}
+                  , React.createElement('label', { className: "flabel",}, t('MENSAJE','MESSAGE'))
+                  , React.createElement('textarea', { className: "ftextarea", value: form.msg, onChange: e => setForm({...form,msg:e.target.value}), style: { minHeight:'120px' },} )
+                )
+                , err && React.createElement('p', { style: { fontFamily:'var(--fb)', fontSize:'0.8rem', color:'var(--clr-orange)', marginBottom:'1rem' },}, err)
+                , React.createElement('button', { className: "btn btn-orange" , style: { width:'100%', justifyContent:'center' }, onClick: submitForm,}
+                  , t('ENVIAR SOLICITUD','SEND REQUEST'), " " , React.createElement(IcoArr, null )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
   );
 }
 
@@ -3328,80 +3361,80 @@ function ContactPage({ lang }) {
   };
 
   return (
-    <div ref={ref} className="section">
-      <div className="contact-grid">
-        <div className="anim">
-          <h2 className="contact-big" style={{ fontSize:'clamp(2.3rem,5.75vw,5.175rem)' }}>
-            {t('¿TIENES ALGO','GOT SOMETHING')}<br />{t('EN MENTE?','IN MIND?')}
-          </h2>
-          <p className="contact-sub">
-            {t(
+    React.createElement('div', { ref: ref, className: "section",}
+      , React.createElement('div', { className: "contact-grid",}
+        , React.createElement('div', { className: "anim",}
+          , React.createElement('h2', { className: "contact-big", style: { fontSize:'clamp(2.3rem,5.75vw,5.175rem)' },}
+            , t('¿TIENES ALGO','GOT SOMETHING'), React.createElement('br', null ), t('EN MENTE?','IN MIND?')
+          )
+          , React.createElement('p', { className: "contact-sub",}
+            , t(
               'Para preguntas acerca de las clases, colaboraciones, propuestas o simplemente para saludar.',
               'For questions about classes, collaborations, proposals or just to say hello.'
-            )}
-          </p>
-          <div className="socials-row" style={{ marginBottom:'0.4rem' }}>
-            <a href="https://www.instagram.com/ruiveran/" target="_blank" rel="noopener noreferrer" className="social-pill"><IcoInsta /> Instagram</a>
-            <a href="https://www.tiktok.com/@ruiveran" target="_blank" rel="noopener noreferrer" className="social-pill"><IcoTT /> TikTok</a>
-            <a href="https://www.youtube.com/@ruiveran" target="_blank" rel="noopener noreferrer" className="social-pill"><IcoYT /> YouTube</a>
-          </div>
+            )
+          )
+          , React.createElement('div', { className: "socials-row", style: { marginBottom:'0.4rem' },}
+            , React.createElement('a', { href: "https://www.instagram.com/ruiveran/", target: "_blank", rel: "noopener noreferrer" , className: "social-pill",}, React.createElement(IcoInsta, null ), " Instagram" )
+            , React.createElement('a', { href: "https://www.tiktok.com/@ruiveran", target: "_blank", rel: "noopener noreferrer" , className: "social-pill",}, React.createElement(IcoTT, null ), " TikTok" )
+            , React.createElement('a', { href: "https://www.youtube.com/@ruiveran", target: "_blank", rel: "noopener noreferrer" , className: "social-pill",}, React.createElement(IcoYT, null ), " YouTube" )
+          )
 
-          <div style={{ marginTop:'2.4rem' }}>
-            <h3 style={{ fontFamily:'var(--fh)', fontWeight:900, fontSize:'clamp(2.3rem,5.75vw,5.175rem)', letterSpacing:'-0.02em', textTransform:'uppercase', color:'var(--clr-black)', lineHeight:1, marginBottom:'0.6rem' }}>
-              {t('ÚNETE A MI COMUNIDAD','JOIN MY COMMUNITY')}
-            </h3>
-            <p style={{ fontFamily:'var(--fb)', fontSize:'0.92rem', color:'var(--clr-muted)', lineHeight:1.7, marginBottom:'1.1rem', maxWidth:'340px' }}>
-              {t('Estudia, comparte, y compite por premios en mi servidor de Discord.','Study, share, and compete for prizes on my Discord server.')}
-            </p>
-            <a href="https://discord.gg/yaUuCj7k2V" target="_blank" rel="noopener noreferrer" className="social-pill"><IcoDC /> Discord</a>
-          </div>
-        </div>
+          , React.createElement('div', { style: { marginTop:'2.4rem' },}
+            , React.createElement('h3', { style: { fontFamily:'var(--fh)', fontWeight:900, fontSize:'clamp(2.3rem,5.75vw,5.175rem)', letterSpacing:'-0.02em', textTransform:'uppercase', color:'var(--clr-black)', lineHeight:1, marginBottom:'0.6rem' },}
+              , t('ÚNETE A MI COMUNIDAD','JOIN MY COMMUNITY')
+            )
+            , React.createElement('p', { style: { fontFamily:'var(--fb)', fontSize:'0.92rem', color:'var(--clr-muted)', lineHeight:1.7, marginBottom:'1.1rem', maxWidth:'340px' },}
+              , t('Estudia, comparte, y compite por premios en mi servidor de Discord.','Study, share, and compete for prizes on my Discord server.')
+            )
+            , React.createElement('a', { href: "https://discord.gg/yaUuCj7k2V", target: "_blank", rel: "noopener noreferrer" , className: "social-pill",}, React.createElement(IcoDC, null ), " Discord" )
+          )
+        )
 
-        <div className="form-wrap anim d1">
-          <div className="fgroup">
-            <label className="flabel" style={{ color:'var(--clr-orange)' }}>{t('CONTACTO','CONTACT')}</label>
-            <a href="mailto:ruiveran@gmail.com"
-              style={{
+        , React.createElement('div', { className: "form-wrap anim d1"  ,}
+          , React.createElement('div', { className: "fgroup",}
+            , React.createElement('label', { className: "flabel", style: { color:'var(--clr-orange)' },}, t('CONTACTO','CONTACT'))
+            , React.createElement('a', { href: "mailto:ruiveran@gmail.com",
+              style: {
                 display:'block', fontFamily:'var(--fb)', fontSize:'0.92rem',
                 color:'var(--clr-black)', textDecoration:'none',
                 border:'1px solid var(--clr-border)', padding:'0.82rem 1rem',
                 transition:'color 0.2s, border-color 0.2s',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.color='var(--clr-orange)'; e.currentTarget.style.borderColor='var(--clr-orange)'; }}
-              onMouseLeave={e => { e.currentTarget.style.color='var(--clr-black)'; e.currentTarget.style.borderColor='var(--clr-border)'; }}
-            >ruiveran@gmail.com</a>
-          </div>
-          {sent ? (
-            <div className="form-success">
-              <span className="form-success-check">✓</span>
-              <div className="form-success-title">{t('¡ENVIADO!','SENT!')}</div>
-              <p className="form-success-sub">
-                {t('Te responderé en la brevedad posible.','I\'ll get back to you as soon as possible.')}
-              </p>
-            </div>
+              },
+              onMouseEnter: e => { e.currentTarget.style.color='var(--clr-orange)'; e.currentTarget.style.borderColor='var(--clr-orange)'; },
+              onMouseLeave: e => { e.currentTarget.style.color='var(--clr-black)'; e.currentTarget.style.borderColor='var(--clr-border)'; },}
+, "ruiveran@gmail.com")
+          )
+          , sent ? (
+            React.createElement('div', { className: "form-success",}
+              , React.createElement('span', { className: "form-success-check",}, "✓")
+              , React.createElement('div', { className: "form-success-title",}, t('¡ENVIADO!','SENT!'))
+              , React.createElement('p', { className: "form-success-sub",}
+                , t('Te responderé en la brevedad posible.','I\'ll get back to you as soon as possible.')
+              )
+            )
           ) : (
-            <>
-              <div className="fgroup">
-                <label className="flabel">{t('NOMBRE','NAME')}</label>
-                <input className="finput" value={form.name} onChange={e => setForm({...form,name:e.target.value})} placeholder={t('Tu nombre','Your name')} />
-              </div>
-              <div className="fgroup">
-                <label className="flabel">EMAIL</label>
-                <input className="finput" type="email" value={form.email} onChange={e => setForm({...form,email:e.target.value})} placeholder={t('tu@email.com','your@email.com')} />
-              </div>
-              <div className="fgroup">
-                <label className="flabel">{t('MENSAJE','MESSAGE')}</label>
-                <textarea className="ftextarea" value={form.msg} onChange={e => setForm({...form,msg:e.target.value})} placeholder={t('Cuéntame qué tienes en mente...','Tell me what you have in mind...')} />
-              </div>
-              {err && <p style={{ fontFamily:'var(--fb)', fontSize:'0.8rem', color:'var(--clr-orange)', marginBottom:'1rem' }}>{err}</p>}
-              <button className="btn btn-orange" style={{ width:'100%', justifyContent:'center' }} onClick={submit}>
-                {t('ENVIAR MENSAJE','SEND MESSAGE')} <IcoArr />
-              </button>
-            </>
-          )}
-        </div>
-      </div>
-    </div>
+            React.createElement(React.Fragment, null
+              , React.createElement('div', { className: "fgroup",}
+                , React.createElement('label', { className: "flabel",}, t('NOMBRE','NAME'))
+                , React.createElement('input', { className: "finput", value: form.name, onChange: e => setForm({...form,name:e.target.value}), placeholder: t('Tu nombre','Your name'),} )
+              )
+              , React.createElement('div', { className: "fgroup",}
+                , React.createElement('label', { className: "flabel",}, "EMAIL")
+                , React.createElement('input', { className: "finput", type: "email", value: form.email, onChange: e => setForm({...form,email:e.target.value}), placeholder: t('tu@email.com','your@email.com'),} )
+              )
+              , React.createElement('div', { className: "fgroup",}
+                , React.createElement('label', { className: "flabel",}, t('MENSAJE','MESSAGE'))
+                , React.createElement('textarea', { className: "ftextarea", value: form.msg, onChange: e => setForm({...form,msg:e.target.value}), placeholder: t('Cuéntame qué tienes en mente...','Tell me what you have in mind...'),} )
+              )
+              , err && React.createElement('p', { style: { fontFamily:'var(--fb)', fontSize:'0.8rem', color:'var(--clr-orange)', marginBottom:'1rem' },}, err)
+              , React.createElement('button', { className: "btn btn-orange" , style: { width:'100%', justifyContent:'center' }, onClick: submit,}
+                , t('ENVIAR MENSAJE','SEND MESSAGE'), " " , React.createElement(IcoArr, null )
+              )
+            )
+          )
+        )
+      )
+    )
   );
 }
 
@@ -3418,21 +3451,21 @@ function Footer({ lang, goTo }) {
     { key:'contacto', es:'CONTACTO',       en:'CONTACT'      },
   ];
   return (
-    <footer className="footer">
-      <div>
-        <div className="footer-logo">RUIVERAN<span style={{ color:'var(--clr-orange)' }}>.</span></div>
-        <p className="footer-copy">
-          © 2025 Ruiveran. Lima, Perú. {t('Todos los derechos reservados.','All rights reserved.')}
-        </p>
-      </div>
-      <div className="footer-links">
-        {links.map(l => (
-          <button key={l.key} className="footer-link" onClick={() => goTo(l.key)}>
-            {t(l.es, l.en)}
-          </button>
-        ))}
-      </div>
-    </footer>
+    React.createElement('footer', { className: "footer",}
+      , React.createElement('div', null
+        , React.createElement('div', { className: "footer-logo",}, "RUIVERAN", React.createElement('span', { style: { color:'var(--clr-orange)' },}, "."))
+        , React.createElement('p', { className: "footer-copy",}, "© 2025 Ruiveran. Lima, Perú. "
+               , t('Todos los derechos reservados.','All rights reserved.')
+        )
+      )
+      , React.createElement('div', { className: "footer-links",}
+        , links.map(l => (
+          React.createElement('button', { key: l.key, className: "footer-link", onClick: () => goTo(l.key),}
+            , t(l.es, l.en)
+          )
+        ))
+      )
+    )
   );
 }
 
@@ -3487,20 +3520,21 @@ function App() {
   }, []);
 
   return (
-    <>
-      <div className="g-frame" />
-      <Nav lang={lang} setLang={setLang} page={currentPage} goTo={goTo} />
-      <div className="main-wrap">
-        {currentPage === 'home'     && <HomePage   lang={lang} goTo={goTo} />}
-        {currentPage === 'vivo'     && <LivePage   lang={lang} goTo={goTo} />}
-        {currentPage === 'contacto' && <ContactPage lang={lang} />}
-        <div className="line" /><Footer lang={lang} goTo={goTo} />
-      </div>
-    </>
+    React.createElement(React.Fragment, null
+      , React.createElement('div', { className: "g-frame",} )
+      , React.createElement(Nav, { lang: lang, setLang: setLang, page: currentPage, goTo: goTo,} )
+      , React.createElement('div', { className: "main-wrap",}
+        , currentPage === 'home'     && React.createElement(HomePage, {   lang: lang, goTo: goTo,} )
+        , currentPage === 'vivo'     && React.createElement(LivePage, {   lang: lang, goTo: goTo,} )
+        , currentPage === 'contacto' && React.createElement(ContactPage, { lang: lang,} )
+        , React.createElement('div', { className: "line",} ), React.createElement(Footer, { lang: lang, goTo: goTo,} )
+      )
+    )
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(App, null ));
+
 </script>
 </body>
 </html>
