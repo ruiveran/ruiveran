@@ -2634,7 +2634,7 @@ function Nav({ lang, setLang, page, goTo }) {
     { key:'home',     es:'INICIO',        en:'HOME'                                      },
     { key:'cursos',   es:'CURSOS',        en:'COURSES',  href:'https://ruiveran.gumroad.com/', sameTab:true },
     { key:'vivo',     es:'CLASES EN VIVO', en:'LIVE CLASSES' },
-    { key:'prints',   es:'TIENDA',        en:'STORE',    href:'https://www.inprnt.com/', sameTab:true },
+    { key:'prints',   es:'TIENDA',        en:'STORE',    href:'https://www.inprnt.com/gallery/ruiveran/ ', sameTab:true },
     { key:'contacto', es:'CONTACTO',      en:'CONTACT'   },
   ];
 
@@ -3561,7 +3561,7 @@ function App() {
   const currentPage = typeof INITIAL_PAGE !== 'undefined' ? INITIAL_PAGE : 'home';
 
   const goTo = useCallback((p) => {
-    const map = { home: '/', cursos: 'https://ruiveran.gumroad.com/', vivo: '/clases', prints: 'https://www.inprnt.com/', contacto: '/contact' };
+    const map = { home: '/', cursos: 'https://ruiveran.gumroad.com/', vivo: '/clases', prints: 'https://www.inprnt.com/gallery/ruiveran/ ', contacto: '/contact' };
     const url = map[p] || '/';
     if (url.startsWith('http')) { window.location.href = url; }
     else { window.location.href = url; }
