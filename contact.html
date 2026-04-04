@@ -3513,7 +3513,7 @@ function App() {
   const currentPage = typeof INITIAL_PAGE !== 'undefined' ? INITIAL_PAGE : 'home';
 
   const goTo = useCallback((p) => {
-    const map = { home: '/', cursos: 'https://ruiveran.gumroad.com/', vivo: '/clases', prints: 'https://www.inprnt.com/', contacto: '/contact' };
+    const map = { home: '/', cursos: 'https://ruiveran.gumroad.com/', vivo: '/clases', prints: 'https://www.inprnt.com/gallery/ruiveran/ ', contacto: '/contact' };
     const url = map[p] || '/';
     if (url.startsWith('http')) { window.location.href = url; }
     else { window.location.href = url; }
