@@ -2305,6 +2305,85 @@
       html { scroll-behavior: auto; }
     }
 
+    /* ═══════════════════════════════════════════
+       MOBILE STICKY CTA
+    ═══════════════════════════════════════════ */
+    .mob-cta {
+      display: none;
+    }
+    @media (max-width: 767px) {
+      .mob-cta {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 2000;
+        background: var(--clr-black);
+        border-top: 1px solid rgba(255,255,255,0.08);
+        padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
+        align-items: center;
+        gap: 0.75rem;
+        transform: translateY(100%);
+        transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        will-change: transform;
+      }
+      .mob-cta.visible {
+        transform: translateY(0);
+      }
+      .mob-cta-label {
+        flex: 1;
+        min-width: 0;
+      }
+      .mob-cta-label-top {
+        font-family: var(--fh);
+        font-weight: 900;
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        color: rgba(255,255,255,0.45);
+        text-transform: uppercase;
+        line-height: 1;
+        margin-bottom: 0.15rem;
+      }
+      .mob-cta-label-price {
+        font-family: var(--fh);
+        font-weight: 900;
+        font-size: 1.05rem;
+        letter-spacing: 0.04em;
+        color: var(--clr-white);
+        text-transform: uppercase;
+        line-height: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .mob-cta-label-price span {
+        color: var(--clr-orange);
+      }
+      .mob-cta-btn {
+        font-family: var(--fh);
+        font-weight: 900;
+        font-size: 0.82rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        background: var(--clr-orange);
+        color: var(--clr-white);
+        border: none;
+        padding: 0.7rem 1.25rem;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background 0.2s;
+        flex-shrink: 0;
+      }
+      .mob-cta-btn:active {
+        background: var(--clr-orange-d);
+      }
+      /* Push footer content up so it's not hidden behind the bar */
+      .main-wrap {
+        padding-bottom: calc(64px + env(safe-area-inset-bottom));
+      }
+    }
+
     ::selection { background: var(--clr-orange); color: #fff; }
 
   </style>
@@ -3181,6 +3260,22 @@ function LivePage({ lang, goTo }) {
     if (inscRef.current) inscRef.current.scrollIntoView({ behavior:'smooth', block:'start' });
   };
 
+  // Mobile CTA — show after scrolling past hero, hide when form is visible
+  const [ctaVisible, setCtaVisible] = useState(false);
+  useEffect(() => {
+    const onScroll = () => {
+      const scrollY = window.scrollY;
+      const formEl = inscRef.current;
+      if (formEl) {
+        const formTop = formEl.getBoundingClientRect().top;
+        if (formTop < window.innerHeight - 80) { setCtaVisible(false); return; }
+      }
+      setCtaVisible(scrollY > 320);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   // ═══════════════════════════════════════════════════════════════
   // 📧 ENVÍO DE CORREO — FORMSPREE
   // Endpoint: https://formspree.io/f/mbdpawvw
@@ -3774,6 +3869,20 @@ function ContactPage({ lang }) {
         )
       )
     )
+  
+    , React.createElement('div', { className: "mob-cta" + (ctaVisible ? " visible" : ""), "aria-hidden": !ctaVisible },
+        React.createElement('div', { className: "mob-cta-label" },
+          React.createElement('div', { className: "mob-cta-label-top" }, t('Clases en vivo · Inscripciones abiertas', 'Live classes · Open enrollment')),
+          React.createElement('div', { className: "mob-cta-label-price" },
+            t('Desde ', 'From '), React.createElement('span', null, '$65'), t('/mes', '/mo')
+          )
+        ),
+        React.createElement('button', {
+          className: "mob-cta-btn",
+          onClick: scrollToForm,
+          "aria-label": t('Inscribirme a clases en vivo', 'Sign up for live classes'),
+        }, t('INSCRIBIRME', 'SIGN UP'), " →")
+      )
   );
 }
 
