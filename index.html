@@ -3000,14 +3000,16 @@ function HomePage({ lang, goTo }) {
             )
             , React.createElement('div', { className: "hero-ctas",}
               , React.createElement('a', { href: "https://ruiveran.gumroad.com/",
-                className: "btn btn-outline" ,
-                style: { textDecoration:'none', fontWeight:800, background:'rgba(255,255,255,0.15)', borderColor:'rgba(255,255,255,0.55)', color:'#fff', transition:'all 0.22s var(--ease)' },
-                onMouseEnter: e => { e.currentTarget.style.background='var(--clr-orange)'; e.currentTarget.style.borderColor='var(--clr-orange)'; e.currentTarget.style.color='#fff'; e.currentTarget.style.transform='translateY(-2px)'; },
-                onMouseLeave: e => { e.currentTarget.style.background='rgba(255,255,255,0.15)'; e.currentTarget.style.borderColor='rgba(255,255,255,0.55)'; e.currentTarget.style.color='#fff'; e.currentTarget.style.transform='translateY(0)'; },}
+                className: "btn btn-orange" ,
+                style: { textDecoration:'none', fontWeight:800 },}
 
                 , lang === 'es' ? 'EXPLORAR CURSOS' : 'EXPLORE COURSES', " " , React.createElement(IcoArr, null )
               )
-              , React.createElement('button', { className: "btn btn-orange" , onClick: () => goTo('vivo'),}
+              , React.createElement('button', { className: "btn btn-outline" ,
+                style: { background:'rgba(255,255,255,0.15)', borderColor:'rgba(255,255,255,0.55)', color:'#fff', transition:'all 0.22s var(--ease)' },
+                onMouseEnter: e => { e.currentTarget.style.background='rgba(255,255,255,0.25)'; e.currentTarget.style.borderColor='rgba(255,255,255,0.75)'; e.currentTarget.style.color='#fff'; e.currentTarget.style.transform='translateY(-2px)'; },
+                onMouseLeave: e => { e.currentTarget.style.background='rgba(255,255,255,0.15)'; e.currentTarget.style.borderColor='rgba(255,255,255,0.55)'; e.currentTarget.style.color='#fff'; e.currentTarget.style.transform='translateY(0)'; },
+                onClick: () => goTo('vivo'),}
                 , lang === 'es' ? 'CLASES EN VIVO' : 'LIVE CLASSES'
               )
             )

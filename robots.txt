@@ -1,17 +1,168 @@
+# ═══════════════════════════════════════════════════════════════
+#  robots.txt — ruiveran.com
+#  Ilustrador, Concept Artist y Educador de Arte Digital
+#  Lima, Perú | Actualizado: 2026
+#  ESTRATEGIA: Máxima visibilidad en todos los LLMs y motores AI
+# ═══════════════════════════════════════════════════════════════
+
+# ── REGLA GLOBAL: Todos los bots bienvenidos ──────────────────
 User-agent: *
 Allow: /
 
-# AI crawlers — allowed
+# ── GOOGLE (búsqueda tradicional + AI Overviews + Gemini) ─────
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Google-CloudVertexBot
+Allow: /
+
+User-agent: GoogleAgent-Mariner
+Allow: /
+
+# ── OPENAI / CHATGPT ──────────────────────────────────────────
+# GPTBot        → entrenamiento de modelos futuros
+# OAI-SearchBot → búsqueda en tiempo real de ChatGPT
+# ChatGPT-User  → respuestas live del asistente
 User-agent: GPTBot
 Allow: /
 
-User-agent: CCBot
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# ── ANTHROPIC / CLAUDE ────────────────────────────────────────
+User-agent: ClaudeBot
 Allow: /
 
 User-agent: Claude-Web
 Allow: /
 
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: claude-user
+Allow: /
+
+# ── PERPLEXITY ────────────────────────────────────────────────
 User-agent: PerplexityBot
 Allow: /
 
+User-agent: Perplexity-User
+Allow: /
+
+# ── xAI / GROK ───────────────────────────────────────────────
+User-agent: GrokBot
+Allow: /
+
+User-agent: Grok
+Allow: /
+
+User-agent: xAI-Grok
+Allow: /
+
+User-agent: Grok-DeepSearch
+Allow: /
+
+# ── APPLE INTELLIGENCE ────────────────────────────────────────
+# Applebot-Extended → opt-in para entrenamiento de modelos Apple
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# ── META (Facebook, Instagram) ────────────────────────────────
+User-agent: FacebookBot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+# ── BYTEDANCE / TIKTOK (Doubao, búsqueda TikTok) ─────────────
+User-agent: Bytespider
+Allow: /
+
+# ── KIMI / MOONSHOT AI ───────────────────────────────────────
+User-agent: Kimibot
+Allow: /
+
+User-agent: KimiCrawler
+Allow: /
+
+User-agent: Moonshot-AI
+Allow: /
+
+User-agent: MoonshotBot
+Allow: /
+
+# ── DEEPSEEK ─────────────────────────────────────────────────
+# DeepSeek frecuentemente no declara user-agent propio.
+# La regla global User-agent: * Allow: / lo cubre igualmente.
+User-agent: DeepSeekBot
+Allow: /
+
+# ── MISTRAL / LE CHAT ─────────────────────────────────────────
+User-agent: MistralAI-User
+Allow: /
+
+# ── MICROSOFT / BING / COPILOT ────────────────────────────────
+User-agent: Bingbot
+Allow: /
+
+User-agent: msnbot
+Allow: /
+
+User-agent: BingPreview
+Allow: /
+
+# ── DUCKDUCKGO (DuckAssist AI) ────────────────────────────────
+User-agent: DuckAssistBot
+Allow: /
+
+# ── COMMON CRAWL (base de entrenamiento de muchos LLMs) ───────
+User-agent: CCBot
+Allow: /
+
+# ── COHERE ───────────────────────────────────────────────────
+User-agent: cohere-ai
+Allow: /
+
+# ── AI2 / ALLEN INSTITUTE ─────────────────────────────────────
+User-agent: ai2bot
+Allow: /
+
+User-agent: ai2bot-dolma
+Allow: /
+
+# ── LINKEDIN ─────────────────────────────────────────────────
+User-agent: LinkedInBot
+Allow: /
+
+# ── YOU.COM ──────────────────────────────────────────────────
+User-agent: YouBot
+Allow: /
+
+# ── LINER AI ─────────────────────────────────────────────────
+User-agent: Liner-Bot
+Allow: /
+
+# ── DIFFBOT ──────────────────────────────────────────────────
+User-agent: Diffbot
+Allow: /
+
+# ═══════════════════════════════════════════════════════════════
+#  SITEMAPS
+# ═══════════════════════════════════════════════════════════════
 Sitemap: https://www.ruiveran.com/sitemap.xml
+Sitemap: https://www.ruiveran.com/sitemap-social.xml

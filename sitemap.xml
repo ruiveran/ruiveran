@@ -1,21 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- ══════════════════════════════════════════
+       PÁGINA PRINCIPAL
+  ══════════════════════════════════════════ -->
   <url>
     <loc>https://www.ruiveran.com/</loc>
-    <lastmod>2025-01-01</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-05-01</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.ruiveran.com/"/>
+    <image:image>
+      <image:loc>https://ik.imagekit.io/ruiveran/Cards_OG/og-home.png</image:loc>
+      <image:title>Ruiveran — Ilustrador y Concept Artist, Lima Perú</image:title>
+      <image:caption>Portafolio de ilustración digital y concept art de Ruiveran (Rodrigo Rivas), Lima, Perú</image:caption>
+    </image:image>
   </url>
+
+  <!-- ══════════════════════════════════════════
+       CLASES EN VIVO
+  ══════════════════════════════════════════ -->
   <url>
     <loc>https://www.ruiveran.com/clases</loc>
-    <lastmod>2025-01-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <lastmod>2026-05-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.ruiveran.com/clases"/>
   </url>
+
+  <!-- ══════════════════════════════════════════
+       CONTACTO
+  ══════════════════════════════════════════ -->
   <url>
     <loc>https://www.ruiveran.com/contact</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-01-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
+
 </urlset>

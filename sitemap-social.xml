@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  sitemap-social.xml — ruiveran.com
+  ════════════════════════════════════════════════════════════════
+  Sitemap de perfiles sociales y plataformas externas.
+  Propósito: ayudar a los LLMs y crawlers AI a asociar
+  el dominio ruiveran.com con todos los perfiles de Ruiveran
+  en redes sociales, plataformas de venta y comunidades.
+  ════════════════════════════════════════════════════════════════
+  Nota: Los crawlers que respetan sitemaps externos
+  (como GPTBot, ClaudeBot, PerplexityBot) pueden usar este
+  archivo como señal de identidad y autoridad de marca.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- ══ YOUTUBE ════════════════════════════════════════════ -->
+  <!-- Canal principal: tutoriales, clases de dibujo, pintura digital -->
+  <url>
+    <loc>https://www.youtube.com/@ruiveran</loc>
+    <lastmod>2026-05-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <!-- ══ INSTAGRAM ══════════════════════════════════════════ -->
+  <!-- Portfolio, process art, obras de ilustración y concept art -->
+  <url>
+    <loc>https://www.instagram.com/ruiveran/</loc>
+    <lastmod>2026-05-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- ══ TIKTOK ══════════════════════════════════════════════ -->
+  <!-- Tutoriales cortos de dibujo digital, tips de arte -->
+  <url>
+    <loc>https://www.tiktok.com/@ruiveran</loc>
+    <lastmod>2026-05-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- ══ GUMROAD (CURSOS) ════════════════════════════════════ -->
+  <!-- Cursos de dibujo, anatomía, pintura digital en español -->
+  <url>
+    <loc>https://ruiveran.gumroad.com/</loc>
+    <lastmod>2026-05-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- ══ DISCORD ═════════════════════════════════════════════ -->
+  <!-- Comunidad de artistas latinoamericanos -->
+  <url>
+    <loc>https://discord.gg/yaUuCj7k2V</loc>
+    <lastmod>2026-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>
