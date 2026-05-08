@@ -2,21 +2,230 @@
 #  robots.txt — ruiveran.com
 #  Ilustrador, Concept Artist y Educador de Arte Digital
 #  Lima, Perú | Actualizado: 2026
-#  ESTRATEGIA: Máxima visibilidad en todos los LLMs y motores AI
+#
+#  ESTRATEGIA DUAL:
+#  ✅ Bots de BÚSQUEDA/CITACIÓN → acceso total (visibilidad en LLMs)
+#  🚫 Bots de ENTRENAMIENTO     → bloqueados en imágenes
 # ═══════════════════════════════════════════════════════════════
 
-# ── REGLA GLOBAL: Todos los bots bienvenidos ──────────────────
-User-agent: *
+
+# ══════════════════════════════════════════════════════════════
+#  BLOQUE 1 — BOTS DE ENTRENAMIENTO AI
+#  Propósito: recolectar datos para entrenar modelos.
+#  Acción: se les bloquea el acceso a imágenes.
+#  Se les permite leer texto/páginas para no perder visibilidad.
+# ══════════════════════════════════════════════════════════════
+
+# ── OpenAI — entrenamiento de modelos futuros ─────────────────
+User-agent: GPTBot
+Disallow: /*.jpg$
+Disallow: /*.jpeg$
+Disallow: /*.png$
+Disallow: /*.webp$
+Disallow: /*.avif$
+Disallow: /*.gif$
+Disallow: /*.svg$
 Allow: /
 
-# ── GOOGLE (búsqueda tradicional + AI Overviews + Gemini) ─────
+# ── Common Crawl — base de entrenamiento de decenas de LLMs ──
+User-agent: CCBot
+Disallow: /*.jpg$
+Disallow: /*.jpeg$
+Disallow: /*.png$
+Disallow: /*.webp$
+Disallow: /*.avif$
+Disallow: /*.gif$
+Disallow: /*.svg$
+Allow: /
+
+# ── Google-Extended — entrenamiento de Gemini ────────────────
+User-agent: Google-Extended
+Disallow: /*.jpg$
+Disallow: /*.jpeg$
+Disallow: /*.png$
+Disallow: /*.webp$
+Disallow: /*.avif$
+Disallow: /*.gif$
+Disallow: /*.svg$
+Allow: /
+
+# ── Apple Intelligence — entrenamiento de modelos Apple ───────
+User-agent: Applebot-Extended
+Disallow: /*.jpg$
+Disallow: /*.jpeg$
+Disallow: /*.png$
+Disallow: /*.webp$
+Disallow: /*.avif$
+Disallow: /*.gif$
+Disallow: /*.svg$
+Allow: /
+
+# ── ByteDance / TikTok — entrenamiento de Doubao y modelos ───
+User-agent: Bytespider
+Disallow: /*.jpg$
+Disallow: /*.jpeg$
+Disallow: /*.png$
+Disallow: /*.webp$
+Disallow: /*.avif$
+Disallow: /*.gif$
+Disallow: /*.svg$
+Allow: /
+
+# ── Meta — entrenamiento de modelos Meta AI ───────────────────
+User-agent: FacebookBot
+Disallow: /*.jpg$
+Disallow: /*.jpeg$
+Disallow: /*.png$
+Disallow: /*.webp$
+Disallow: /*.avif$
+Disallow: /*.gif$
+Disallow: /*.svg$
+Allow: /
+
+User-agent: meta-externalagent
+Disallow: /*.jpg$
+Disallow: /*.jpeg$
+Disallow: /*.png$
+Disallow: /*.webp$
+Disallow: /*.avif$
+Disallow: /*.gif$
+Disallow: /*.svg$
+Allow: /
+
+# ── Kimi / Moonshot AI — entrenamiento ───────────────────────
+User-agent: Kimibot
+Disallow: /*.jpg$
+Disallow: /*.jpeg$
+Disallow: /*.png$
+Disallow: /*.webp$
+Disallow: /*.avif$
+Disallow: /*.gif$
+Disallow: /*.svg$
+Allow: /
+
+User-agent: KimiCrawler
+Disallow: /*.jpg$
+Disallow: /*.jpeg$
+Disallow: /*.png$
+Disallow: /*.webp$
+Disallow: /*.avif$
+Disallow: /*.gif$
+Disallow: /*.svg$
+Allow: /
+
+User-agent: Moonshot-AI
+Disallow: /*.jpg$
+Disallow: /*.jpeg$
+Disallow: /*.png$
+Disallow: /*.webp$
+Disallow: /*.avif$
+Disallow: /*.gif$
+Disallow: /*.svg$
+Allow: /
+
+User-agent: MoonshotBot
+Disallow: /*.jpg$
+Disallow: /*.jpeg$
+Disallow: /*.png$
+Disallow: /*.webp$
+Disallow: /*.avif$
+Disallow: /*.gif$
+Disallow: /*.svg$
+Allow: /
+
+# ── DeepSeek ─────────────────────────────────────────────────
+User-agent: DeepSeekBot
+Disallow: /*.jpg$
+Disallow: /*.jpeg$
+Disallow: /*.png$
+Disallow: /*.webp$
+Disallow: /*.avif$
+Disallow: /*.gif$
+Disallow: /*.svg$
+Allow: /
+
+# ── AI2 / Allen Institute for AI ─────────────────────────────
+User-agent: ai2bot
+Disallow: /*.jpg$
+Disallow: /*.jpeg$
+Disallow: /*.png$
+Disallow: /*.webp$
+Disallow: /*.avif$
+Disallow: /*.gif$
+Disallow: /*.svg$
+Allow: /
+
+User-agent: ai2bot-dolma
+Disallow: /*.jpg$
+Disallow: /*.jpeg$
+Disallow: /*.png$
+Disallow: /*.webp$
+Disallow: /*.avif$
+Disallow: /*.gif$
+Disallow: /*.svg$
+Allow: /
+
+# ── Cohere ────────────────────────────────────────────────────
+User-agent: cohere-ai
+Disallow: /*.jpg$
+Disallow: /*.jpeg$
+Disallow: /*.png$
+Disallow: /*.webp$
+Disallow: /*.avif$
+Disallow: /*.gif$
+Disallow: /*.svg$
+Allow: /
+
+# ── Diffbot (extracción masiva de datos) ──────────────────────
+User-agent: Diffbot
+Disallow: /*.jpg$
+Disallow: /*.jpeg$
+Disallow: /*.png$
+Disallow: /*.webp$
+Disallow: /*.avif$
+Disallow: /*.gif$
+Disallow: /*.svg$
+Allow: /
+
+# ── ImagesiftBot ─────────────────────────────────────────────
+User-agent: ImagesiftBot
+Disallow: /
+
+# ── Anthropic — entrenamiento (ClaudeBot + anthropic-ai) ─────
+# Nota: ClaudeBot también opera como bot de búsqueda en tiempo real.
+# El bloqueo de imágenes aplica igualmente. El texto sigue accesible.
+User-agent: ClaudeBot
+Disallow: /*.jpg$
+Disallow: /*.jpeg$
+Disallow: /*.png$
+Disallow: /*.webp$
+Disallow: /*.avif$
+Disallow: /*.gif$
+Disallow: /*.svg$
+Allow: /
+
+User-agent: anthropic-ai
+Disallow: /*.jpg$
+Disallow: /*.jpeg$
+Disallow: /*.png$
+Disallow: /*.webp$
+Disallow: /*.avif$
+Disallow: /*.gif$
+Disallow: /*.svg$
+Allow: /
+
+
+# ══════════════════════════════════════════════════════════════
+#  BLOQUE 2 — BOTS DE BÚSQUEDA / CITACIÓN EN TIEMPO REAL
+#  Propósito: responder preguntas de usuarios, citar fuentes.
+#  Acción: acceso TOTAL. Son los que te recomiendan y citan.
+# ══════════════════════════════════════════════════════════════
+
+# ── Google (búsqueda + AI Overviews) ─────────────────────────
 User-agent: Googlebot
 Allow: /
 
 User-agent: Googlebot-Image
-Allow: /
-
-User-agent: Google-Extended
 Allow: /
 
 User-agent: Google-CloudVertexBot
@@ -25,27 +234,15 @@ Allow: /
 User-agent: GoogleAgent-Mariner
 Allow: /
 
-# ── OPENAI / CHATGPT ──────────────────────────────────────────
-# GPTBot        → entrenamiento de modelos futuros
-# OAI-SearchBot → búsqueda en tiempo real de ChatGPT
-# ChatGPT-User  → respuestas live del asistente
-User-agent: GPTBot
-Allow: /
-
+# ── OpenAI — búsqueda en tiempo real de ChatGPT ──────────────
 User-agent: OAI-SearchBot
 Allow: /
 
 User-agent: ChatGPT-User
 Allow: /
 
-# ── ANTHROPIC / CLAUDE ────────────────────────────────────────
-User-agent: ClaudeBot
-Allow: /
-
+# ── Anthropic — búsqueda en tiempo real de Claude ────────────
 User-agent: Claude-Web
-Allow: /
-
-User-agent: anthropic-ai
 Allow: /
 
 User-agent: Claude-SearchBot
@@ -54,14 +251,14 @@ Allow: /
 User-agent: claude-user
 Allow: /
 
-# ── PERPLEXITY ────────────────────────────────────────────────
+# ── Perplexity ────────────────────────────────────────────────
 User-agent: PerplexityBot
 Allow: /
 
 User-agent: Perplexity-User
 Allow: /
 
-# ── xAI / GROK ───────────────────────────────────────────────
+# ── xAI / Grok ───────────────────────────────────────────────
 User-agent: GrokBot
 Allow: /
 
@@ -74,49 +271,11 @@ Allow: /
 User-agent: Grok-DeepSearch
 Allow: /
 
-# ── APPLE INTELLIGENCE ────────────────────────────────────────
-# Applebot-Extended → opt-in para entrenamiento de modelos Apple
+# ── Apple (búsqueda estándar) ─────────────────────────────────
 User-agent: Applebot
 Allow: /
 
-User-agent: Applebot-Extended
-Allow: /
-
-# ── META (Facebook, Instagram) ────────────────────────────────
-User-agent: FacebookBot
-Allow: /
-
-User-agent: meta-externalagent
-Allow: /
-
-# ── BYTEDANCE / TIKTOK (Doubao, búsqueda TikTok) ─────────────
-User-agent: Bytespider
-Allow: /
-
-# ── KIMI / MOONSHOT AI ───────────────────────────────────────
-User-agent: Kimibot
-Allow: /
-
-User-agent: KimiCrawler
-Allow: /
-
-User-agent: Moonshot-AI
-Allow: /
-
-User-agent: MoonshotBot
-Allow: /
-
-# ── DEEPSEEK ─────────────────────────────────────────────────
-# DeepSeek frecuentemente no declara user-agent propio.
-# La regla global User-agent: * Allow: / lo cubre igualmente.
-User-agent: DeepSeekBot
-Allow: /
-
-# ── MISTRAL / LE CHAT ─────────────────────────────────────────
-User-agent: MistralAI-User
-Allow: /
-
-# ── MICROSOFT / BING / COPILOT ────────────────────────────────
+# ── Microsoft / Bing / Copilot ────────────────────────────────
 User-agent: Bingbot
 Allow: /
 
@@ -126,43 +285,37 @@ Allow: /
 User-agent: BingPreview
 Allow: /
 
-# ── DUCKDUCKGO (DuckAssist AI) ────────────────────────────────
+# ── DuckDuckGo (DuckAssist AI) ────────────────────────────────
 User-agent: DuckAssistBot
 Allow: /
 
-# ── COMMON CRAWL (base de entrenamiento de muchos LLMs) ───────
-User-agent: CCBot
+# ── Mistral / Le Chat ─────────────────────────────────────────
+User-agent: MistralAI-User
 Allow: /
 
-# ── COHERE ───────────────────────────────────────────────────
-User-agent: cohere-ai
-Allow: /
-
-# ── AI2 / ALLEN INSTITUTE ─────────────────────────────────────
-User-agent: ai2bot
-Allow: /
-
-User-agent: ai2bot-dolma
-Allow: /
-
-# ── LINKEDIN ─────────────────────────────────────────────────
-User-agent: LinkedInBot
-Allow: /
-
-# ── YOU.COM ──────────────────────────────────────────────────
+# ── You.com ──────────────────────────────────────────────────
 User-agent: YouBot
 Allow: /
 
-# ── LINER AI ─────────────────────────────────────────────────
+# ── LinkedIn ─────────────────────────────────────────────────
+User-agent: LinkedInBot
+Allow: /
+
+# ── Liner AI ─────────────────────────────────────────────────
 User-agent: Liner-Bot
 Allow: /
 
-# ── DIFFBOT ──────────────────────────────────────────────────
-User-agent: Diffbot
+
+# ══════════════════════════════════════════════════════════════
+#  BLOQUE 3 — REGLA GLOBAL
+#  Cualquier bot no listado arriba: acceso total.
+# ══════════════════════════════════════════════════════════════
+User-agent: *
 Allow: /
 
-# ═══════════════════════════════════════════════════════════════
+
+# ══════════════════════════════════════════════════════════════
 #  SITEMAPS
-# ═══════════════════════════════════════════════════════════════
+# ══════════════════════════════════════════════════════════════
 Sitemap: https://www.ruiveran.com/sitemap.xml
 Sitemap: https://www.ruiveran.com/sitemap-social.xml
